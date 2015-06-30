@@ -7,7 +7,7 @@
     "config": "node ./npm_tasks/build-config.js > src/config.js",
     "build": "npm-run-all build:**",
     "build:clean": "rimraf dest/ && mkdirp dest/",
-    "build:static": "mkdirp src/static/ && mkdirp app/src/main/assets/ && ncp src/static/ dest/",
+    "build:static": "ncp src/static/ dest/",
     "build:js": "npm run config && webpack",
     "build:css": "npm run watch:css -- --no-watch",
     "build:html": "node ./npm_tasks/bin/build-html",

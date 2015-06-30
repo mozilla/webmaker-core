@@ -6,8 +6,8 @@ require('colors');
 // For the command line utility, look in npm_tasks/bin
 module.exports = function (options) {
   options = options || {};
-  var baseDir = options.baseDir || './app/src/main/assets/www/pages/';
-  var template = options.template || fs.readFileSync('./node_modules/webmaker-core/html/index.html', {encoding: 'utf-8'});
+  var baseDir = options.baseDir || './dest/pages/';
+  var template = options.template || fs.readFileSync('./src/html/index.html', {encoding: 'utf-8'});
   var pages = getPages();
   pages.forEach(function (page) {
     var html = template.replace('{{ js_src }}', '../../js/' + page + '.bundle.js');
