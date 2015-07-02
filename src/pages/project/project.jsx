@@ -78,7 +78,12 @@ var Project = React.createClass({
     // FIXME: TODO: This should be done by preventDefaulting the touch event, not via CSS.
     document.body.style.overflowY = 'hidden';
     var mode = this.state.params.mode;
-    var isPlayOnly = (mode === 'play' || mode === 'link');
+
+    var isPlayOnly = (mode === 'play');
+    var isLink = (mode === 'link');
+    var isPlayOrLink = isPlayOnly || isLink;
+    var disableMainMenu = isPlayOrLink || !this.state.selectedEl;
+
     return (
       <div id="map" className={this.state.params.mode}>
         <DPad
@@ -97,9 +102,10 @@ var Project = React.createClass({
         </div>
 
         <Menu fullWidth={this.state.params.mode === 'link'}>
+
           <SecondaryButton side="left" onClick={this.zoomFromPage} off={this.state.params.mode !== 'edit' || !this.state.matrix || this.state.matrix[0] < 1} icon="../../img/zoom-out-blue.svg" />
-          <PrimaryButton url={ this.getPageURL(this.state.params, this.state.selectedEl) } off={isPlayOnly || !this.state.selectedEl} href="/pages/page" icon="../../img/pencil.svg" />
-          <SecondaryButton side="right" off={isPlayOnly || !this.state.selectedEl} onClick={this.removePage} icon="../../img/trash.svg" />
+          <PrimaryButton url={ this.getPageURL(this.state.params, this.state.selectedEl) } off={disableMainMenu} href="/pages/page" icon="../../img/pencil.svg" />
+          <SecondaryButton side="right" off={disableMainMenu} onClick={this.removePage} icon="../../img/trash.svg" />
           <FullWidthButton onClick={this.setDestination} off={this.state.params.mode !== 'link' || !this.state.selectedEl}>Set Destination</FullWidthButton>
         </Menu>
 
