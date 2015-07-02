@@ -1,6 +1,6 @@
 # webmaker-core
 
-`webmaker-core` is the React based core for the Webmaker app. It's a series of webviews that are integrated into the various platforms running Webmaker (currently: Android, eventually: iOS) and also the native web version of Webmaker (`webmaker-browser`).
+`webmaker-core` is the React based core for the Webmaker app. It's a series of webviews that are integrated into the various platforms running Webmaker (currently: [Android](https://github.com/mozilla/webmaker-android), [Browser](https://github.com/mozilla/webmaker-browser)).
 
 ## Installation
 
@@ -55,7 +55,7 @@ console.log(config.CLIENT_ID);
 ```
 
 ## API Requests
-The `./lib/api.js` module is the primary way in which you should interact with api.webmaker.org. This module can use Android's `SharedPreferences` API to cache API requests thus reducing network requests. If you would like to use the cache, you can send `useCache: true` to the module:
+The `./lib/api.js` module is the primary way in which you should interact with api.webmaker.org. This module can use the platform's `SharedPreferences` API to cache API requests thus reducing network requests. If you would like to use the cache, you can send `useCache: true` to the module:
 
 ```js
 var api = require('./lib/api.js');
