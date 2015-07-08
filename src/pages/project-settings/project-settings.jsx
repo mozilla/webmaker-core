@@ -31,7 +31,9 @@ var ProjectSettings = React.createClass({
     // Set up the save method when we press the back button
     this.props.update({
       onBackPressed: () => {
-        this.save(() => window.Platform.goBack());
+        if (!(this.state.title.length > 25 || this.state.title.length < 4)) {
+          this.save(() => window.Platform.goBack());
+        }
       }
     });
 
