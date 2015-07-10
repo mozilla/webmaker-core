@@ -67,6 +67,7 @@ var Alpha = React.createClass({
 });
 
 var RGB = React.createClass({
+  mixins: [require('react-intl').IntlMixin],
   generateOnChangeCallback: function (label) {
     return (value) => {
       var color = this.props.color;
@@ -80,7 +81,7 @@ var RGB = React.createClass({
         var lowercaseLabel = label.toLowerCase();
         var currentValue = this.props.color[lowercaseLabel]();
         return (<div key={label} className="form-group">
-          <label>{label}</label>
+          <label>{this.getIntlMessage(label)}</label>
           <Slider value={currentValue} max={255} onChange={this.generateOnChangeCallback(lowercaseLabel)} />
         </div>);
       })}
@@ -89,6 +90,7 @@ var RGB = React.createClass({
 });
 
 var ColorSpectrum = React.createClass({
+  mixins: [require('react-intl').IntlMixin],
   getDefaultProps: function() {
     return {
       defaultColor: 'rgba(0, 0, 0, 0)'
@@ -120,7 +122,7 @@ var ColorSpectrum = React.createClass({
         <RGB color={color} onChange={this.updateColor} />
       </div>
       <div className="form-group" hidden={!this.props.Alpha}>
-        <label>Opacity</label>
+        <label>{this.getIntlMessage('Opacity')}</label>
         <Alpha color={color} onChange={this.updateColor} />
       </div>
     </div>);

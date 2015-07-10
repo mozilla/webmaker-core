@@ -25,6 +25,7 @@ var tabs = [
 ];
 
 var StyleGuide = React.createClass({
+  mixins: [require('react-intl').IntlMixin],
   getInitialState: function () {
     return {
       loading: false

@@ -8,7 +8,7 @@ var colorChoices = ColorGroup.defaultColors.slice();
 colorChoices[0] = '#444444';
 
 var ImageEditor = React.createClass({
-  mixins: [React.addons.LinkedStateMixin],
+  mixins: [React.addons.LinkedStateMixin, require('react-intl').IntlMixin],
   getInitialState: function () {
     // Expose image handler to Android
     window.imageReady = this.imageReady;

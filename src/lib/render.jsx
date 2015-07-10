@@ -5,6 +5,12 @@ var ModalConfirm = require('../components/modal-confirm/modal-confirm.jsx');
 var ModalSwitch = require('../components/modal-switch/modal-switch.jsx');
 var Snackbar = require('../components/snackbar/snackbar.jsx');
 
+// TODO: make this intlData more dynamic based on directory structure and load them here
+// We might also change from JSON to YAML format for better translation support.
+var intlData = {
+    locales : ['en'],
+    messages: require('../locales/en.json')
+};
 var platform = require('./platform');
 
 var Base = React.createClass({
@@ -44,11 +50,11 @@ var Base = React.createClass({
       <Spindicator/>
       <ModalConfirm/>
       <ModalSwitch/>
-      <Route isVisible={this.state.isVisible} update={this.update} />
+      <Route {...intlData} isVisible={this.state.isVisible} update={this.update} />
     </div>);
   }
 });
 
 module.exports = function (Route) {
-  React.render(<Base route={Route} />, document.getElementById('app'));
+  React.render(<Base  route={Route} />, document.getElementById('app'));
 };

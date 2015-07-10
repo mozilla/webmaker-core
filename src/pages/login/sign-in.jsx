@@ -5,6 +5,8 @@ var keyboard = require('../../lib/keyboard');
 
 var FormInput = require('./form-input.jsx');
 var Link = require('../../components/link/link.jsx');
+var FormattedHTMLMessage = require('react-intl').FormattedHTMLMessage;
+var FormattedMessage = require('react-intl').FormattedMessage;
 
 // <SignIn />
 // Component for the Sign in user form. See Login view for usage.
@@ -12,7 +14,8 @@ var SignIn = React.createClass({
 
   mixins: [
     React.addons.LinkedStateMixin,
-    require('../../lib/validators')
+    require('../../lib/validators'),
+    require('react-intl').IntlMixin
   ],
 
   // Props:
@@ -47,18 +50,18 @@ var SignIn = React.createClass({
   fields: [
     {
       name: 'username',
-      label: 'Username',
+      label: 'username',
       type: 'email',
       tabIndex: 1,
       required: true
     },
     {
       name: 'password',
-      label: 'Password',
+      label: 'password',
       type: 'password',
       tabIndex: 2,
       required: true,
-      helpText: <Link external="https://id.webmaker.org/reset-password?android=true">Reset Password</Link>
+      helpText: 'helpText'
     }
   ],
 
@@ -119,6 +122,7 @@ var SignIn = React.createClass({
 
     var errors = this.getValidationErrors();
     var isValid = Object.keys(errors).length === 0;
+    var signinLink = (<a href="#" onClick={this.changeMode}>{this.getIntlMessage('join_webmaker')}</a>);
 
     return (<form hidden={!this.props.show} className="editor-options" onSubmit={this.onSubmit}>
       {this.fields.map(field => {
@@ -130,14 +134,16 @@ var SignIn = React.createClass({
       })}
       <div className="form-group">
         <button className="btn btn-block" disabled={!isValid} onClick={this.onSubmit}>
-          Sign In
+          {this.getIntlMessage('signin')}
         </button>
         <div className="error" hidden={!this.state.globalError}>
-          Looks like there might be a problem with your username or password.
+          {this.getIntlMessage('errorUsernameOrPassword')}
         </div>
       </div>
       <div className="form-group text-center text-larger">
-        Don&rsquo;t have an account? <a href="#" onClick={this.changeMode}>Join Webmaker</a>
+        <FormattedMessage
+          message={this.getIntlMessage('dont_have_account')}
+          joinWebmakerLink={signinLink} />
       </div>
     </form>);
   }
