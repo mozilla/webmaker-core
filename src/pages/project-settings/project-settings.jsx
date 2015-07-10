@@ -5,6 +5,7 @@ var render = require('../../lib/render.jsx');
 var TextInput = require('../../components/text-input/text-input.jsx');
 var Loading = require('../../components/loading/loading.jsx');
 var Link = require('../../components/link/link.jsx');
+var FormattedMessage = require('react-intl').FormattedMessage;
 
 var ProjectSettings = React.createClass({
 
@@ -45,6 +46,7 @@ var ProjectSettings = React.createClass({
   },
 
   render: function () {
+    var creativeCommon = (<Link external="https://creativecommons.org/licenses/by-sa/3.0/">{this.getIntlMessage('ccAttribution')}</Link>);
     return (
       <div id="projectSettings">
         <div>
@@ -55,11 +57,11 @@ var ProjectSettings = React.createClass({
         <div className="cc">
           <p className="mark">
             <img src="../../img/cc.svg"/>
-            <span>Creative Commons</span>
+            <span>{this.getIntlMessage("cc")}</span>
           </p>
           <p>
-            Content published under a Creative Comons license called <Link external="https://creativecommons.org/licenses/by-sa/3.0/">Attribution-ShareAlike 3.0 Unported</Link>.
-            <span className="explanation"> This means that other people can share, adapt, and remix your content if they give you credit and share their work in the same way, as all of this is described in the license.</span>
+            <FormattedMessage message={this.getIntlMessage('ccLicenseSection')} creativecommonsLink={creativeCommon} />
+            <span className="explanation"> {this.getIntlMessage('ccLicenseSectionSub')}</span>
           </p>
         </div>
 

@@ -56,5 +56,5 @@ var Base = React.createClass({
 });
 
 module.exports = function (Route) {
-  React.render(<Base  route={Route} />, document.getElementById('app'));
+  React.render(<Base route={Route} />, document.getElementById('app'));
 };
