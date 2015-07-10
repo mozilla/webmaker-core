@@ -8,7 +8,7 @@ var SignUp = require('./sign-up.jsx');
 // <Login />
 // View that renders sign-in and sign-up forms
 var Login = React.createClass({
-  mixins: [require('../../lib/router')],
+  mixins: [require('react-intl').IntlMixin, require('../../lib/router')],
 
   // Props:
   //   (none)

@@ -1,5 +1,6 @@
 var React = require('react');
 var assign = require('react/lib/Object.assign');
+var FormattedMessage = require('react-intl').FormattedMessage;
 var reportError = require('../../lib/errors');
 var api = require('../../lib/api');
 
@@ -25,7 +26,7 @@ var elementTypes = require('../../components/basic-element/basic-element.jsx').t
  */
 var Tinker = React.createClass({
 
-  mixins: [require('../../lib/router')],
+  mixins: [require('../../lib/router'), require('react-intl').IntlMixin],
 
   getInitialState: function () {
     return {
@@ -127,7 +128,8 @@ var Tinker = React.createClass({
             <button className="debug" onClick={this.save} hidden={window.Platform}>DEBUG:SAVE</button>
           </div>
           <div className="color-preview">
-            <code>color: {this.getEditorValue()};</code>
+            <code><FormattedMessage message={this.getIntlMessage('color_editor')}
+                      rgbaValue={this.getEditorValue()} /></code>
             <div className="color-preview-right">
               <div className="color-preview-swatch"><div style={{backgroundColor: this.getEditorValue()}} /></div>
             </div>

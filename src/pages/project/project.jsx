@@ -16,7 +16,8 @@ var Project = React.createClass({
     require('./pageadmin'),
     require('./loader'),
     require('./setdestination'),
-    require('./renderhelpers')
+    require('./renderhelpers'),
+    require('react-intl').IntlMixin
   ],
 
   getInitialState: function () {
