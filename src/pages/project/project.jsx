@@ -1,3 +1,11 @@
+//
+// WARNING: ********************************************************************
+//   Changes to this page may need to be made in webmaker-browser's "player.jsx"
+//   Make as few updates to this file as possible!
+//   Try to use external shared mixins/components instead.
+// *****************************************************************************
+//
+
 var React = require('react/addons');
 
 var {parseJSON} = require('../../lib/jsonUtils');
@@ -88,7 +96,7 @@ var Project = React.createClass({
     var isPlayOnly = (mode === 'play' || mode === 'link');
     return (
       <div id="map" className={this.state.params.mode}>
-        <DPad onDirectionClick={this.handleDirectionClick}></DPad>
+        <DPad ref="dpad" onDirectionClick={this.handleDirectionClick}></DPad>
 
         <div ref="bounding" className="bounding" style={ this.getBoundingStyle() }>
           <div className="test-container" style={ this.getContainerStyle() }>

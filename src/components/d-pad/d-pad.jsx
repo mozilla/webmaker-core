@@ -15,8 +15,8 @@ module.exports = React.createClass({
   onButtonClick: function (direction, event) {
     this.props.onDirectionClick.call(this, direction)
   },
-  hideButton: function (direction) {
-
+  bulkSetVisibility: function (newState) {
+    this.setState(newState);
   },
   render: function () {
     return (
