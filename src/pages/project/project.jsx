@@ -96,7 +96,11 @@ var Project = React.createClass({
     var isPlayOnly = (mode === 'play' || mode === 'link');
     return (
       <div id="map" className={this.state.params.mode}>
-        <DPad ref="dpad" onDirectionClick={this.handleDirectionClick}></DPad>
+        <DPad
+          ref="dpad"
+          onDirectionClick={ this.handleDirectionClick }
+          isVisible={ this.state.isPageZoomed }>
+        </DPad>
 
         <div ref="bounding" className="bounding" style={ this.getBoundingStyle() }>
           <div className="test-container" style={ this.getContainerStyle() }>

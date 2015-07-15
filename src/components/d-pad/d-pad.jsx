@@ -2,7 +2,8 @@ var React = require('react/addons');
 
 module.exports = React.createClass({
   propTypes: {
-    onDirectionClick: React.PropTypes.func // External handler for button clicks
+    onDirectionClick: React.PropTypes.func, // External handler for button clicks
+    isVisible: React.PropTypes.bool
   },
   getInitialState: function () {
     return {
@@ -20,7 +21,7 @@ module.exports = React.createClass({
   },
   render: function () {
     return (
-      <div className="dPad">
+      <div className={'dPad' + (this.props.isVisible ? '' : ' hidden')}>
         <button className={'up' + (this.state.showUp ? '' : ' hidden')} onClick={this.onButtonClick.bind(this, 'up')}>▲</button>
         <button className={'down' + (this.state.showDown ? '' : ' hidden')} onClick={this.onButtonClick.bind(this, 'down')}>▼</button>
         <button className={'left' + (this.state.showLeft ? '' : ' hidden')} onClick={this.onButtonClick.bind(this, 'left')}>◀</button>
