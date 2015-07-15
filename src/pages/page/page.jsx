@@ -111,6 +111,7 @@ var Page = React.createClass({
               dims={this.state.dims}
               elements={this.state.elements}
               currentElementId={this.state.currentElementId}
+              onTap={this.onTap}
               onTouchEnd={this.onTouchEnd}
               onUpdate={this.onUpdate}
               onDeselect={this.deselectAll} />
@@ -200,20 +201,24 @@ var Page = React.createClass({
     var localSave = this.save(elementId);
 
     return function saveOrReindex(modified) {
-      if(modified) {
-        return localSave();
+      if (modified) {
+        localSave();
       }
+    }.bind(this);
+  },
 
-      // A plain tap without positional modificationss means we need
-      // to raise this element's z-index to "the highest number".
-      var elements = this.state.elements,
-          element = elements[elementId],
-          highestIndex = this.getHighestIndex();
+  onTap: function (elementId) {
+    var localSave = this.save(elementId);
+
+    return () => {
+      var elements = this.state.elements;
+      var element = elements[elementId];
+      var highestIndex = this.getHighestIndex();
       if (element.zIndex !== highestIndex) {
         element.zIndex = highestIndex + 1;
       }
-      this.setState({ elements: elements }, localSave);
-    }.bind(this);
+      this.setState({elements}, localSave);
+    };
   },
 
   /**
