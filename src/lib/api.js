@@ -68,6 +68,21 @@ function api(options, callback) {
       return callback(err);
     }
 
+    // 'err' is used to signal library errors, not network errors,
+    // so we also need ot make sure to check what the network status
+    // code was, before we can assume everything worked fine:
+    if (res.statusCode !== 200 && callback) {
+      try {
+        var errorObj = JSON.parse(body);
+        return callback(errorObj);
+      } catch (e) {
+        return callback({
+          error: "A network error occurred",
+          statusCode: res.statusCode
+        });
+      }
+    }
+
     // Set cache
     platform.setMemStorage(key, JSON.stringify(body), true);
 
