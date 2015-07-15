@@ -36,10 +36,31 @@ module.exports = {
     return coords;
   },
 
+  /**
+   * getMaxPageSize
+   * Get the scale transform that allows a single page fit in the current viewport
+   * @return {int} An integer representing the scale transform
+   */
+  getMaxPageSize: function () {
+    var w = window.innerWidth;
+    var h = window.innerHeight;
+    var scale;
+    if (w / h <= this.cartesian.width/this.cartesian.height) {
+      scale = w/this.cartesian.width;
+    } else {
+      scale = h/this.cartesian.height;
+    }
+    return scale;
+  },
+
   zoomToPage: function (coords) {
+
+    // TODO: Adjust size when window resizes
+    var zoom = this.getMaxPageSize();
+
     this.setState({
-      camera: this.cartesian.getFocusTransform(coords, 1),
-      zoom: 1,
+      camera: this.cartesian.getFocusTransform(coords, zoom),
+      zoom,
       isPageZoomed: true,
       zoomedPageCoords: coords
     });
