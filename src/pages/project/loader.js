@@ -40,7 +40,9 @@ module.exports = {
         var landingPage = findLandingPage(pages);
         var focusTransform = this.cartesian.getFocusTransform(landingPage.coords, this.state.zoom);
 
-        if (this.state.params.mode === 'edit' && !this.state.selectedEl) {
+        if (this.state.params.mode === 'play' && typeof this.state.camera.x === 'undefined') {
+          this.zoomToPage(landingPage.coords);
+        } else if (this.state.params.mode === 'edit' && !this.state.selectedEl) {
           state.selectedEl = landingPage.id;
           state.camera = focusTransform;
         } else if (typeof this.state.camera.x === 'undefined') {
