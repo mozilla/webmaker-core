@@ -18,7 +18,8 @@ var Project = React.createClass({
     require('./loader'),
     require('./setdestination'),
     require('./renderhelpers'),
-    require('react-intl').IntlMixin
+    require('react-intl').IntlMixin,
+    require('./dpad-logic')
   ],
 
   getInitialState: function () {
@@ -87,7 +88,7 @@ var Project = React.createClass({
     var isPlayOnly = (mode === 'play' || mode === 'link');
     return (
       <div id="map" className={this.state.params.mode}>
-        <DPad></DPad>
+        <DPad onDirectionClick={this.handleDirectionClick}></DPad>
 
         <div ref="bounding" className="bounding" style={ this.getBoundingStyle() }>
           <div className="test-container" style={ this.getContainerStyle() }>
