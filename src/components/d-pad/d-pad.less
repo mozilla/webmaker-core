@@ -1,0 +1,35 @@
+.dPad {
+  button {
+    position: absolute;
+    display: block;
+    z-index: 9999;
+
+    &.up {
+      top: 0;
+      left: 50%;
+      width: 40px;
+      margin-left: -20px;
+    }
+
+    &.down {
+      bottom: 0;
+      left: 50%;
+      width: 40px;
+      margin-left: -20px;
+    }
+
+    &.left {
+      top: 50%;
+      left: 0;
+      height: 40px;
+      margin-top: -20px;
+    }
+
+    &.right {
+      top: 50%;
+      right: 0;
+      height: 40px;
+      margin-top: -20px;
+    }
+  }
+}

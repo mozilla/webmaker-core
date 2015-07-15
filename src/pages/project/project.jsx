@@ -6,6 +6,7 @@ var render = require('../../lib/render.jsx');
 var Loading = require('../../components/loading/loading.jsx');
 var {Menu, PrimaryButton, FullWidthButton} = require('../../components/action-menu/action-menu.jsx');
 var PageBlock = require("./pageblock.jsx");
+var DPad = require('../../components/d-pad/d-pad.jsx');
 
 var Project = React.createClass({
   mixins: [
@@ -86,6 +87,8 @@ var Project = React.createClass({
     var isPlayOnly = (mode === 'play' || mode === 'link');
     return (
       <div id="map" className={this.state.params.mode}>
+        <DPad></DPad>
+
         <div ref="bounding" className="bounding" style={ this.getBoundingStyle() }>
           <div className="test-container" style={ this.getContainerStyle() }>
           { this.formPages() }
