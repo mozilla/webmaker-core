@@ -54,6 +54,7 @@ var Link = React.createClass({
     require('./textedit')
   ],
 
+
   statics: {spec},
 
   propTypes: spec.getPropTypes(),
@@ -64,7 +65,19 @@ var Link = React.createClass({
     });
   },
 
+  componentDidMount: function () {
+    dispatcher.on('disableLinks', () => {
+      this.setState({disabled: true});
+    });
+    dispatcher.on('enableLinks', () => {
+      this.setState({disabled: false});
+    });
+  },
+
   onClick: function (event) {
+    if (this.state.disabled) {
+      return;
+    }
     if (this.state.editing) {
       this.activate();
     } else {
@@ -90,7 +103,7 @@ var Link = React.createClass({
     var Element = this.props.activelink ? 'a' : 'span';
     var content = this.makeEditable(props.innerHTML, style);
 
-    return <Element className="btn" style={style} onClick={this.onClick} href={props.href}>{content}</Element>;
+    return <Element disabled={this.state.disabled} className="btn" style={style} onClick={this.onClick} href={props.href}>{content}</Element>;
   }
 });
 
