@@ -328,7 +328,7 @@ var Page = React.createClass({
       var elements = {};
 
       page.elements.forEach(element => {
-        var element = this.flatten(element);
+        element = this.flatten(element);
         if(element) {
           elements[element.id] = element;
         }

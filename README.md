@@ -1,5 +1,7 @@
 # webmaker-core
 
+[![Build Status](https://travis-ci.org/mozilla/webmaker-core.svg)](https://travis-ci.org/mozilla/webmaker-core)
+
 `webmaker-core` is the React based core for the Webmaker app. It's a series of webviews that are integrated into the various platforms running Webmaker (currently: [Android](https://github.com/mozilla/webmaker-android), [Browser](https://github.com/mozilla/webmaker-browser)).
 
 ## Installation
