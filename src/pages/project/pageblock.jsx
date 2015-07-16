@@ -31,6 +31,7 @@ var PageBlock = React.createClass({
         <div className="indicator"/>
       </div>
       <ElementGroup elements={this.props.page.elements} />
+      <div hidden={this.props.interactive} className="block-interaction" />
     </div>);
   }
 });

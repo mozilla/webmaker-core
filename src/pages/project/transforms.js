@@ -1,7 +1,7 @@
 var assign = require('react/lib/Object.assign');
 var calculateSwipe = require('../../lib/swipe.js');
 
-var MAX_ZOOM = 0.8;
+var MAX_ZOOM = 0.5;
 var MIN_ZOOM = 0.18;
 var ZOOM_SENSITIVITY = 300;
 

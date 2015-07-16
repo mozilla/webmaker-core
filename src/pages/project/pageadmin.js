@@ -5,7 +5,7 @@ var api = require('../../lib/api');
 var reportError = require('../../lib/errors');
 var update = React.addons.update;
 
-var MAX_ZOOM = 0.8;
+var MAX_ZOOM = 0.5;
 var DEFAULT_ZOOM = 0.5;
 
 module.exports = {
