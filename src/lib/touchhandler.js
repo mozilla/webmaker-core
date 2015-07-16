@@ -2,6 +2,7 @@
   "use strict";
 
   var debug = false;
+  var MAX_TAP_THRESHOLD = 2;
 
   /**
    * A timed logging function for tracing touch calls during debug
@@ -28,6 +29,8 @@
 
   function generator(positionable) {
     var transform = resetTransform();
+    var tapStart;
+    var tapDiff = 0;
     var mark = copy(positionable.state);
     var handlers = {
       /**
@@ -159,6 +162,42 @@
         // If there are no fingers left on the screen,
         // we have not finished the handling
         return evt.touches.length !== 0;
+      },
+
+      tapStart: function (evt) {
+
+        tapStart = {
+          x1: evt.touches[0].pageX,
+          y1: evt.touches[0].pageY
+        };
+
+      },
+
+      tapMove: function (evt) {
+        var {x1, y1} = tapStart;
+        var x2 = evt.touches[0].pageX;
+        var y2 = evt.touches[0].pageY;
+        var dx = x2 - x1;
+        var dy = y2 - y1;
+        tapDiff = Math.sqrt(dx * dx + dy * dy);
+      },
+
+      tapEnd: function (evt) {
+
+        // Don't do anything for second touches
+        if (evt.touches.length) {
+          return;
+        }
+
+        // Only fire a tap if it's under the threshold
+        if (tapDiff < MAX_TAP_THRESHOLD && positionable.onTap) {
+          positionable.onTap();
+        }
+
+        // Reset
+        tapStart = null;
+        tapDiff = 0;
+
       }
     };
 

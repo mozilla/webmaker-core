@@ -14,7 +14,8 @@ var PageBlock = React.createClass({
       selected: this.props.selected,
       unselected: this.props.unselected,
       source: this.props.source,
-      target: this.props.target
+      target: this.props.target,
+      blurred: this.props.blurred
     });
 
     var style = {
@@ -31,6 +32,7 @@ var PageBlock = React.createClass({
         <div className="indicator"/>
       </div>
       <ElementGroup elements={this.props.page.elements} />
+      <div hidden={this.props.interactive} className="block-interaction" />
     </div>);
   }
 });
