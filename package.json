@@ -9,6 +9,7 @@
     "build:clean": "rimraf dest/ && mkdirp dest/",
     "build:static": "ncp src/static/ dest/",
     "build:js": "npm run config && webpack",
+    "build:l10njson": "yamltoxmljson config.json",
     "build:css": "npm run watch:css -- --no-watch",
     "build:html": "node ./npm_tasks/bin/build-html",
     "test": "npm run config && npm-run-all test:**",
@@ -58,7 +59,8 @@
     "should": "^5.2.0",
     "tmp": "^0.0.25",
     "watch": "^0.14.0",
-    "webpack": "^1.7.3"
+    "webpack": "^1.7.3",
+    "yamltoxmljson": "0.0.6"
   },
   "dependencies": {
     "classnames": "1.2.1",
