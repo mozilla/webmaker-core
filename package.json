@@ -71,5 +71,8 @@
     "react-imageloader": "1.2.0",
     "react-intl": "1.2.0",
     "xhr": "2.0.1"
+  },
+  "jshintConfig": {
+    "esnext": true
   }
 }

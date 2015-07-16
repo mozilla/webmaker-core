@@ -2,10 +2,23 @@ var should = require('should');
 var React = require('react/addons');
 var ColorSpectrum = require('../components/color-spectrum/color-spectrum.jsx');
 
+// https://github.com/facebook/react/issues/3721#issuecomment-106318499
+function shallowRender(makeComponent, context) {
+  context = context || {};
+  var ReactContext = require('react/lib/ReactContext');
+  ReactContext.current = context;
+  var shallowRenderer = React.addons.TestUtils.createRenderer();
+  shallowRenderer.render(makeComponent(), context);
+  ReactContext.current = {};
+  return shallowRenderer.getRenderOutput();;
+}
+
 describe('ColorSpectrum', function() {
   it('does not throw when props.color is an empty string', function() {
-    var renderer = React.addons.TestUtils.createRenderer();
-    renderer.render(React.createElement(ColorSpectrum, {color: ''}));
+    shallowRender(() => React.createElement(ColorSpectrum, {color: ''}), {
+      locales: ['en-US'],
+      messages: {'Opacity': 'Opacity'}
+    });
   });
 
   describe("getColor()", function() {
