@@ -49,6 +49,10 @@ var ElementGroup = React.createClass({
       properties.onTouchEnd = this.props.onTouchEnd(elementId);
     }
 
+    if (this.props.onTap) {
+      properties.onTap = this.props.onTap(elementId);
+    }
+
     if (this.props.onUpdate) {
       properties.onUpdate = this.props.onUpdate(elementId);
     }

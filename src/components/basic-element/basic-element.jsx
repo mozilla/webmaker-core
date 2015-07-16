@@ -83,6 +83,11 @@ var BasicElement = React.createClass({
     dnode.addEventListener("touchmove", touchHandler.panmove);
     dnode.addEventListener("touchend", touchHandler.endmark);
 
+    // Handle taps
+    dnode.addEventListener("touchstart", touchHandler.tapStart);
+    dnode.addEventListener("touchmove", touchHandler.tapMove);
+    dnode.addEventListener("touchend", touchHandler.tapEnd);
+
     // the overlay handles all the two finger touch events
     var onode = this.refs.overlay.getDOMNode();
     onode.addEventListener("touchstart", touchHandler.secondFinger);
@@ -200,6 +205,15 @@ var BasicElement = React.createClass({
   onTouchEnd: function (modified) {
     if (this.props.onTouchEnd) {
       this.props.onTouchEnd(modified);
+    }
+  },
+
+  /**
+   * Propagate the tap listener
+   */
+  onTap: function () {
+    if (this.props.onTap) {
+      this.props.onTap();
     }
   },
 
