@@ -10,6 +10,7 @@ var React = require('react/addons');
 
 var {parseJSON} = require('../../lib/jsonUtils');
 var render = require('../../lib/render.jsx');
+var dispatcher = require('../../lib/dispatcher');
 
 var Loading = require('../../components/loading/loading.jsx');
 var {Menu, PrimaryButton, FullWidthButton} = require('../../components/action-menu/action-menu.jsx');
@@ -48,6 +49,12 @@ var Project = React.createClass({
   componentDidUpdate: function (prevProps) {
     if (this.props.isVisible && !prevProps.isVisible) {
       this.load();
+    }
+
+    if (this.state.isPageZoomed) {
+      dispatcher.fire('enableLinks');
+    } else {
+      dispatcher.fire('disableLinks');
     }
 
     if (window.Platform) {
