@@ -11,7 +11,7 @@ var Loading = require('../../components/loading/loading.jsx');
 var Link = require('../../components/link/link.jsx');
 
 var Make = React.createClass({
-  mixins: [router],
+  mixins: [router, require('react-intl').IntlMixin],
   getInitialState: function () {
     return {
       projects: [],
@@ -59,11 +59,11 @@ var Make = React.createClass({
     });
   },
   addProject: function () {
-    var defaultTitle = 'My project';
+    var defaultTitle = this.getIntlMessage('my_project');
     var user = this.state.user;
 
     if (!user) {
-      return reportError('Tried to create project when no session was found');
+      return reportError(this.getIntlMessage('error_create_make'));
     }
 
     this.setState({loading: true});
@@ -80,7 +80,7 @@ var Make = React.createClass({
       if (!body || !body.project) {
         return this.onEmpty();
       }
-      
+
       platform.trackEvent('Make', 'Create a Project', 'New Project Started');
       platform.setView('/users/' + user.id + '/projects/' + body.project.id);
 
@@ -149,18 +149,18 @@ var Make = React.createClass({
       <div id="make">
         <div className="profile-card">
           <h3>{this.state.user.username}</h3>
-          <p><button className="btn" onClick={this.logout}>Log out</button></p>
+          <p><button className="btn" onClick={this.logout}>{this.getIntlMessage('log_out')}</button></p>
         </div>
         <button onClick={this.addProject} className="btn btn-create btn-block btn-teal">
-          + Create a Project
+          {this.getIntlMessage('create_a_project')}
         </button>
         {cards}
         <Loading on={this.state.loading} />
         <Link url="/style-guide" hidden={platform.isDebugBuild()} className="btn btn-create btn-block btn-teal">
-           Open Style Guide
+           {this.getIntlMessage('open_style_guide')}
         </Link>
         <button hidden={platform.isDebugBuild()} onClick={platform.resetSharedPreferences()} className="btn btn-create btn-block btn-teal">
-          Reset Shared Preferences
+          {this.getIntlMessage('reset_share_preferences')}
         </button>
       </div>
     );

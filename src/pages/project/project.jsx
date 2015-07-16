@@ -1,3 +1,11 @@
+//
+// WARNING: ********************************************************************
+//   Changes to this page may need to be made in webmaker-browser's "player.jsx"
+//   Make as few updates to this file as possible!
+//   Try to use external shared mixins/components instead.
+// *****************************************************************************
+//
+
 var React = require('react/addons');
 
 var {parseJSON} = require('../../lib/jsonUtils');
@@ -6,6 +14,7 @@ var render = require('../../lib/render.jsx');
 var Loading = require('../../components/loading/loading.jsx');
 var {Menu, PrimaryButton, FullWidthButton} = require('../../components/action-menu/action-menu.jsx');
 var PageBlock = require("./pageblock.jsx");
+var DPad = require('../../components/d-pad/d-pad.jsx');
 
 var Project = React.createClass({
   mixins: [
@@ -16,7 +25,9 @@ var Project = React.createClass({
     require('./pageadmin'),
     require('./loader'),
     require('./setdestination'),
-    require('./renderhelpers')
+    require('./renderhelpers'),
+    require('react-intl').IntlMixin,
+    require('./dpad-logic')
   ],
 
   getInitialState: function () {
@@ -85,6 +96,12 @@ var Project = React.createClass({
     var isPlayOnly = (mode === 'play' || mode === 'link');
     return (
       <div id="map" className={this.state.params.mode}>
+        <DPad
+          ref="dpad"
+          onDirectionClick={ this.handleDirectionClick }
+          isVisible={ this.state.isPageZoomed }>
+        </DPad>
+
         <div ref="bounding" className="bounding" style={ this.getBoundingStyle() }>
           <div className="test-container" style={ this.getContainerStyle() }>
           { this.formPages() }

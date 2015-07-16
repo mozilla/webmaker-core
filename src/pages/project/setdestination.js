@@ -7,10 +7,10 @@ module.exports = {
   componentDidMount: function () {
     // Handle button actions
     dispatcher.on('linkClicked', (event) => {
-      if (event.targetPageId && this.state.isPageZoomed) {
-        this.zoomToPage( this.pageIdToCoords(event.targetPageId) );
+      if (event.props.targetPageId && this.state.isPageZoomed) {
+        this.zoomToPage( this.pageIdToCoords(event.props.targetPageId) );
       } else {
-        this.highlightPage(event.targetPageId, 'selected');
+        this.highlightPage(event.props.targetPageId, 'selected');
       }
     });
   },

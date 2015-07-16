@@ -8,7 +8,7 @@ var Loading = require('../../components/loading/loading.jsx');
 
 
 var Discover = React.createClass({
-  mixins: [],
+  mixins: [require('react-intl').IntlMixin],
   getInitialState: function () {
     return {
       projects: [],
@@ -23,11 +23,11 @@ var Discover = React.createClass({
     }, (err, body) => {
       this.setState({loading: false});
       if (err) {
-        return reportError('Error getting discovery projects', err);
+        return reportError(this.getIntlMessage('error_discovery_get'), err);
       }
 
       if (!body || !body.projects || !body.projects.length) {
-        return reportError('No discovery projects found');
+        return reportError(this.getIntlMessage('error_featured_404'));
       }
 
       this.setState({
@@ -54,7 +54,7 @@ var Discover = React.createClass({
     return (
       <div id="discover">
         {cards}
-        <div hidden={this.state.loading || this.state.projects}>Sorry, no projects found.</div>
+        <div hidden={this.state.loading || this.state.projects}>{this.getIntlMessage('no_project_found')}</div>
         <Loading on={this.state.loading} />
       </div>
     );

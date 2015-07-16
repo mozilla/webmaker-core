@@ -1,0 +1,75 @@
+.dPad {
+  &.moons {
+    button {
+      border-bottom-left-radius: 50%;
+      border-bottom-right-radius: 50%;
+      background: #333333 url(./img/nub.svg) no-repeat;
+      background-position: center 48px;
+      background-size: 25px;
+      width: 80px;
+      height: 80px;
+
+      &.up {
+        top: -40px;
+        margin-left: -40px;
+      }
+
+      &.down {
+        bottom: -40px;
+        margin-left: -40px;
+      }
+
+      &.left {
+        left: -40px;
+        margin-top: -40px;
+      }
+
+      &.right {
+        right: -40px;
+        margin-top: -40px;
+      }
+    }
+  }
+
+  button {
+    position: absolute;
+    display: block;
+    z-index: 9999;
+    background: url(./img/nub.svg) no-repeat center center / 50%;
+    border: 0;
+    width: 50px;
+    height: 50px;
+
+    &.up {
+      top: 0;
+      left: 50%;
+      margin-left: -25px;
+    }
+
+    &.down {
+      bottom: 0;
+      left: 50%;
+      margin-left: -25px;
+      transform: rotate(180deg);
+    }
+
+    &.left {
+      top: 50%;
+      left: 0;
+      margin-top: -25px;
+      transform: rotate(-90deg);
+    }
+
+    &.right {
+      top: 50%;
+      right: 0;
+      margin-top: -25px;
+      transform: rotate(90deg);
+    }
+
+  }
+
+  &.hidden, .hidden {
+    display: none;
+  }
+}

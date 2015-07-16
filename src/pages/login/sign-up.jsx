@@ -5,12 +5,14 @@ var keyboard = require('../../lib/keyboard');
 
 var FormInput = require('./form-input.jsx');
 var Link = require('../../components/link/link.jsx');
+var FormattedHTMLMessage = require('react-intl').FormattedHTMLMessage;
+var FormattedMessage = require('react-intl').FormattedMessage;
 
 // <SignUp />
 // Component for the Sign Up/Create user form. See Login view for usage.
 var SignUp = React.createClass({
 
-  mixins: [React.addons.LinkedStateMixin, require('../../lib/validators')],
+  mixins: [require('react-intl').IntlMixin, React.addons.LinkedStateMixin, require('../../lib/validators')],
 
   // Props:
   //   show
@@ -52,7 +54,7 @@ var SignUp = React.createClass({
   fields: [
     {
       name: 'username',
-      label: 'Username',
+      label: 'username',
       type: 'email',
       tabIndex: 1,
       required: true,
@@ -60,7 +62,7 @@ var SignUp = React.createClass({
     },
     {
       name: 'email',
-      label: 'Email',
+      label: 'email',
       type: 'email',
       tabIndex: 2,
       required: true,
@@ -68,7 +70,7 @@ var SignUp = React.createClass({
     },
     {
       name: 'password',
-      label: 'Password',
+      label: 'password',
       type: 'password',
       tabIndex: 3,
       required: true,
@@ -143,6 +145,9 @@ var SignUp = React.createClass({
   },
 
   render: function () {
+    var termsLink = (<Link external="https://webmaker.org/en-US/terms">{this.getIntlMessage("terms")}</Link>);
+    var privacyLink = (<Link external="https://webmaker.org/en-US/privacy">{this.getIntlMessage("privacy_policy")}</Link>);
+    var signinLink = (<a href="#" onClick={this.changeMode}>{this.getIntlMessage('signin')}</a>);
     // getValidationErrors is from validationMixin
     var errors = this.getValidationErrors();
     var isValid = Object.keys(errors).length === 0;
@@ -161,20 +166,27 @@ var SignUp = React.createClass({
         <label className="checkbox">
           <input type="checkbox" checked={this.state.feedback} onChange={this.toggleState('feedback')} />
           <span className="checkbox-ui" />
-          <span>Email me updates about Webmaker</span>
+          <span>{this.getIntlMessage('email_me_updates')}</span>
         </label>
       </div>
       <div className="form-group">
         <button className="btn btn-block" onClick={this.onSubmit} disabled={!isValid}>
-          Join Webmaker
+          <FormattedHTMLMessage message={this.getIntlMessage('join_webmaker')} />
         </button>
         <div className="error" hidden={!this.state.globalError}>
           {this.state.globalError}
         </div>
-        <p className="by-joining">By joining, I agree to Mozilla Webmaker&rsquo;s <Link external="https://webmaker.org/en-US/terms">Terms</Link> and <Link external="https://webmaker.org/en-US/privacy">Privacy Policy</Link></p>
+        <p className="by-joining">
+        <FormattedMessage
+          message={this.getIntlMessage('by_joining')}
+          linkTerms={termsLink}
+          linkPrivacyPolicy={privacyLink} />
+        </p>
       </div>
       <div className="form-group text-center text-larger already-joined">
-        Already joined? <a href="#" onClick={this.changeMode}>Sign in</a>
+      <FormattedMessage
+        message={this.getIntlMessage('already_join_signin')}
+        signinLink={signinLink} />
       </div>
     </form>);
   }
