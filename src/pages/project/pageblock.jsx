@@ -14,7 +14,8 @@ var PageBlock = React.createClass({
       selected: this.props.selected,
       unselected: this.props.unselected,
       source: this.props.source,
-      target: this.props.target
+      target: this.props.target,
+      blurred: this.props.blurred
     });
 
     var style = {

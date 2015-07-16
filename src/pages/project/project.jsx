@@ -13,7 +13,6 @@ var render = require('../../lib/render.jsx');
 
 var Loading = require('../../components/loading/loading.jsx');
 var {Menu, PrimaryButton, FullWidthButton} = require('../../components/action-menu/action-menu.jsx');
-var PageBlock = require("./pageblock.jsx");
 var DPad = require('../../components/d-pad/d-pad.jsx');
 
 var Project = React.createClass({
@@ -27,7 +26,8 @@ var Project = React.createClass({
     require('./setdestination'),
     require('./renderhelpers'),
     require('react-intl').IntlMixin,
-    require('./dpad-logic')
+    require('./dpad-logic'),
+    require('./form-pages')
   ],
 
   getInitialState: function () {
@@ -69,21 +69,6 @@ var Project = React.createClass({
         }
       }
     }
-  },
-
-  formPages: function() {
-    return this.state.pages.map((page) => {
-      var props = {
-        page,
-        selected: page.id === this.state.selectedEl,
-        source: page.id === this.state.sourcePageID,
-        target: page.id === this.state.selectedEl && this.state.params.mode === 'link',
-        transform: this.cartesian.getTransform(page.coords),
-        interactive: this.state.isPageZoomed,
-        onClick: this.onPageClick.bind(this, page)
-      };
-      return <PageBlock {...props} />;
-    });
   },
 
   render: function () {
