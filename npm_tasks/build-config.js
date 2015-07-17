@@ -7,7 +7,9 @@ var prodPath = path.join(__dirname, '../config/production.env');
 
 function fileErrors() {
   process.stderr.write(
-    'Looks like there is a problem with your config paths.\n' +
+    'Looks like there is a problem with your config paths:\n' +
+    '> ' + defaultPath + '\n' +
+    '> ' + prodPath + '\n' +
     'See npm_tasks/build-config.js\n'
   );
   process.exit(1);
