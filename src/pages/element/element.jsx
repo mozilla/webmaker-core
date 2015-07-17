@@ -2,6 +2,7 @@ var React = require('react/addons');
 var reportError = require('../../lib/errors');
 var router = require('../../lib/router');
 var api = require('../../lib/api');
+var platform = require('../../lib/platform');
 
 var Loading = require('../../components/loading/loading.jsx');
 var render = require('../../lib/render.jsx');
@@ -33,21 +34,21 @@ render(React.createClass({
     return `/users/${params.user}/projects/${params.project}/pages/${params.page}/elements/${element}`;
   },
 
-  componentWillMount: function() {
-    this.load();
+  saveBeforeSwitch: function() {
+    if (!this.edits) {
+      return platform.goBack();
+    }
 
-    var saveBeforeSwitch = function() {
-      var goBack = function() {
-        window.Platform.goBack();
-      };
-      if (!this.edits) {
-        return goBack();
-      }
-      this.save(goBack);
-    }.bind(this);
+    this.save(function() {
+      platform.goBack();
+    });
+  },
+
+  componentWillMount: function() {
+    this.loadComponentData();
 
     this.props.update({
-      onBackPressed: saveBeforeSwitch
+      onBackPressed: this.saveBeforeSwitch
     });
   },
 
@@ -64,7 +65,7 @@ render(React.createClass({
       if (this.state.noDataRefresh) {
         this.setState({noDataRefresh: false});
       } else {
-        this.load();
+        this.checkCache();
       }
     }
   },
@@ -95,30 +96,53 @@ render(React.createClass({
 
     this.setState({loading: true});
 
-    api({method: 'patch', uri: this.uri(), json: {
-      styles: json.styles,
-      attributes: json.attributes
-    }}, (err, data) => {
-      this.setState({loading: false});
-      if (err) {
-        reportError(this.getIntlMessage('error_update_element'), err);
-      }
-
-      this.setState({
-        elements: edits
-      });
-      this.edits = false;
+    // Attempt to track change on the java side
+    var java = platform.getAPI();
+    if (java) {
+      java.queue("edited-element", JSON.stringify({
+        element: this.params,
+        data: json
+      }));
 
       if (typeof onSaveComplete === 'function') {
         onSaveComplete();
       }
-    });
+    }
+
+    else {
+      api({
+        method: 'patch',
+        uri: this.uri(),
+        json: {
+          styles: json.styles,
+          attributes: json.attributes
+        }
+      }, (err, data) => {
+        this.setState({loading: false});
+        if (err) {
+          reportError(this.getIntlMessage('error_update_element'), err);
+        }
+        this.setState({
+          elements: edits
+        });
+        this.edits = false;
+        if (typeof onSaveComplete === 'function') {
+          onSaveComplete();
+        }
+      });
+    }
   },
 
-  load: function () {
+  loadComponentData: function() {
     this.setState({loading: true});
-    api({uri: this.uri()}, (err, data) => {
+
+    if (this.checkCache()) {
+      return this.setState({loading: false});
+    }
+
+    api({ uri: this.uri() }, (err, data) => {
       this.setState({loading: false});
+
       if (err) {
         return reportError(this.getIntlMessage('error_element'), err);
       }
@@ -129,6 +153,31 @@ render(React.createClass({
 
       this.setState({element: data.element});
     });
+
+  },
+
+  checkCache: function () {
+    var java = platform.getAPI();
+
+    if (java) {
+      var payloads = java.getPayloads("edit-element");
+      if (payloads !== undefined) {
+        try {
+          payloads = JSON.parse(payloads);
+          var element = payloads[0].data;
+          java.clearPayloads("edit-element");
+          this.setState({
+            loading: false,
+            element: element
+          });
+          return true;
+        } catch (e) {
+          console.error("malformed payload JSON for tinker mode:", payloads);
+        }
+      }
+    }
+
+    return false;
   },
 
   render: function () {

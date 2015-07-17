@@ -62,6 +62,16 @@ Platform.prototype.clearUserSession = function() {
 };
 
 // -----------------------------------------------------------------------------
+// Java caching
+// -----------------------------------------------------------------------------
+
+Platform.prototype.getAPI = function() {
+  // True only if platform was supplied via the Android "windows.Platform"
+  // mechanism, otherwise this is very much false.
+  return false;
+};
+
+// -----------------------------------------------------------------------------
 // Memory (LRU) storage
 // -----------------------------------------------------------------------------
 
