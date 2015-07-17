@@ -1,15 +1,40 @@
 var habitat = require('habitat');
+var path = require('path');
+var fs = require('fs');
+
+var defaultPath = path.join(__dirname, '../config/defaults.env');
+var prodPath = path.join(__dirname, '../config/production.env');
+
+function fileErrors() {
+  process.stderr.write(
+    'Looks like there is a problem with your config paths:\n' +
+    '> ' + defaultPath + '\n' +
+    '> ' + prodPath + '\n' +
+    'See npm_tasks/build-config.js\n'
+  );
+  process.exit(1);
+}
+
+// Check paths to make sure they exist
+try {
+  if (!fs.statSync(defaultPath).isFile() || !fs.statSync(defaultPath)) {
+    fileErrors();
+  }
+} catch (e) {
+  fileErrors();
+}
 
 // Local environment in .env overwrites everything else
 habitat.load('.env');
 
 var environment = habitat.get('NODE_ENV', '').toLowerCase();
 
+
 if (environment === 'production') {
-  habitat.load('config/production.env');
+  habitat.load(prodPath);
 }
 
-habitat.load('config/defaults.env');
+habitat.load(defaultPath);
 
 var config = {
   CLIENT_ID: habitat.get('CLIENT_ID'),
