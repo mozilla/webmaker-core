@@ -40,5 +40,18 @@ module.exports = {
         showRight: verifyCoordsExist(this.state.pages, getTargetCoords(this.state.zoomedPageCoords, 'right'))
       });
     }
+
+    if (this.state.params.mode === 'play' && this.state.isPageZoomed) {
+      // Pass bounding box of the currently focused page to the DPad for display logic
+      var elFocusedElementGroup = document.querySelector('.page-container:not(.blurred) .element-group');
+
+      if (elFocusedElementGroup) {
+        // There is a potential race condition here:
+        setTimeout(function () {
+          this.refs.dpad.setDisplayState(elFocusedElementGroup.getBoundingClientRect());
+        }.bind(this), 500); // 300ms transition on bounding DIV + a bit of extra time
+      }
+    }
+
   }
 };
