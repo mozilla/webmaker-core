@@ -20,6 +20,36 @@ module.exports = {
 
   load: function () {
     this.setState({loading: true});
+
+
+    // Cross-view API test
+    if (window.Platform) {
+      console.log("QUEUE CHECK TEST");
+      var JavaAPI = window.Platform.getAPI();
+
+      // how many bins do we have?
+      var keys = JSON.parse(JavaAPI.getQueueOrigins());
+      console.log("keys", keys);
+
+      // get the first bin to work with
+      var origin = keys[0];
+      var size = JavaAPI.getQueueSize(origin);
+      console.log("size", size);
+
+      // get the first entry from the first bin
+      if(size > 0) {
+        var entryPayload = JavaAPI.getPayload(origin, 0);
+        console.log(origin, entryPayload);
+
+        JavaAPI.removePayload(origin, 0);
+        size = JavaAPI.getQueueSize(origin);
+        console.log("size after removal", size);
+
+      } else { console.log("nothing in the queue"); }
+
+    }
+    else { console.error("there is no " + window.Platform + "!"); }
+
     api({uri: this.uri()}, (err, data) => {
 
       this.setState({loading: false});

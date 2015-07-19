@@ -66,6 +66,17 @@ var Make = React.createClass({
       return reportError(this.getIntlMessage('error_create_make'));
     }
 
+    if (window.Platform) {
+      var JavaAPI = window.Platform.getAPI();
+      console.log("QUEUE TEST");
+      JavaAPI.queue("make.jsx", JSON.stringify({
+        test: true,
+        message: "This is a cross-view storage test"
+      }));
+    } else {
+      console.error("there is no " + window.Platform);
+    }
+
     this.setState({loading: true});
     api({
       method: 'post',
