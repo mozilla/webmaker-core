@@ -24,10 +24,14 @@ module.exports = {
 
     // Cross-view API test
     if (window.Platform) {
-      console.log("QUEUE CHECK TEST");
       var JavaAPI = window.Platform.getAPI();
 
+      // try GET
+      console.log("JavaAPI get test");
+      JavaAPI.get("https://raw.githubusercontent.com/mozilla/webmaker-core/develop/README.md");
+
       // how many bins do we have?
+      console.log("QUEUE CHECK TEST");
       var keys = JSON.parse(JavaAPI.getQueueOrigins());
       console.log("keys", keys);
 
