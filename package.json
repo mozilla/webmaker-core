@@ -8,6 +8,7 @@
     "build": "npm-run-all build:**",
     "build:clean": "rimraf dest/ && mkdirp dest/",
     "build:static": "ncp src/static/ dest/",
+    "build:l10njson": "yamlconvert intl-config.json",
     "build:js": "npm run config && webpack",
     "build:css": "npm run watch:css -- --no-watch",
     "build:html": "node ./npm_tasks/bin/build-html",
@@ -58,7 +59,8 @@
     "should": "^5.2.0",
     "tmp": "^0.0.25",
     "watch": "^0.14.0",
-    "webpack": "^1.7.3"
+    "webpack": "^1.7.3",
+    "yaml-intl-xml-json-converter": "0.0.7"
   },
   "dependencies": {
     "classnames": "1.2.1",
