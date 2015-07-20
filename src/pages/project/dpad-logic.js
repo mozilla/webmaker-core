@@ -42,16 +42,20 @@ module.exports = {
     }
 
     if (this.state.params.mode === 'play' && this.state.isPageZoomed) {
-      // Pass bounding box of the currently focused page to the DPad for display logic
-      var elFocusedElementGroup = document.querySelector('.page-container:not(.blurred) .element-group');
+      // Calculate how tight of a fit the current page is in the map container
+      // This affects what style of arrow button is used
 
-      if (elFocusedElementGroup) {
-        // There is a potential race condition here:
-        setTimeout(function () {
-          this.refs.dpad.setDisplayState(elFocusedElementGroup.getBoundingClientRect());
-        }.bind(this), 500); // 300ms transition on bounding DIV + a bit of extra time
-      }
+      var scale = this.getMaxPageSize();
+      var tileWidth = this.cartesian.width * scale;
+      var tileHeight = this.cartesian.height * scale;
+      var elMap = document.querySelector('#map');
+      var mapHeight = elMap.clientHeight;
+      var mapWidth = elMap.clientWidth;
+
+      this.refs.dpad.setState({
+        constrainedX: ((mapWidth - tileWidth) / 2 < 20),
+        constrainedY: ((mapHeight - tileHeight) / 2 < 20)
+      });
     }
-
   }
 };

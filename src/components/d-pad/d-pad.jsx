@@ -5,16 +5,6 @@ module.exports = React.createClass({
     onDirectionClick: React.PropTypes.func, // External handler for button clicks
     isVisible: React.PropTypes.bool
   },
-  // Do CSS updates that are programatically derived from the result of `getBoundingClientRect`
-  setDisplayState: function (boundingRect) {
-    var verticalMargin = boundingRect.top;
-    var horizontalMargin = boundingRect.left;
-
-    this.setState({
-      constrainedY: verticalMargin > 20 ? false : true,
-      constrainedX: horizontalMargin > 20 ? false : true
-    });
-  },
   getInitialState: function () {
     return {
       showUp: true,
