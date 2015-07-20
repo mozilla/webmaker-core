@@ -124,4 +124,20 @@
       background: rgb(255, 255, 255, 0.9) url('img/zoom-out.svg') center center / 50% no-repeat;
     }
   }
+
+  .btn-zoom-out {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    z-index: 999;
+    background: url('img/zoom-out.svg') @blue no-repeat center center / 60%;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    border: 0;
+
+    &.hidden {
+      display: none;
+    }
+  }
 }
