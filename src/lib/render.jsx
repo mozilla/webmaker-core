@@ -8,8 +8,8 @@ var Snackbar = require('../components/snackbar/snackbar.jsx');
 // TODO: make this intlData more dynamic based on directory structure and load them here
 // We might also change from JSON to YAML format for better translation support.
 var intlData = {
-    locales : ['en'],
-    messages: require('../locales/en.json')
+    locales : ['en-US'],
+    messages: require('../locales/en-US.json')
 };
 var platform = require('./platform');
 
