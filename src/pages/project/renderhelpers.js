@@ -11,8 +11,10 @@ module.exports = {
   },
 
   getBoundingStyle: function() {
+    var transformString = `translate(${this.state.camera.x || 0}px, ${this.state.camera.y || 0}px) scale(${this.state.zoom})`;
     return assign({
-        transform: `translate(${this.state.camera.x || 0}px, ${this.state.camera.y || 0}px) scale(${this.state.zoom})`,
+        transform: transformString,
+        WebkitTransform: transformString,
         opacity: this.state.pages.length ? 1 : 0
       },
       this.cartesian.getBoundingSize()
@@ -29,7 +31,11 @@ module.exports = {
     }
 
     return this.cartesian.edges.map(coords => {
-      return (<div className="page-container add" style={{transform: this.cartesian.getTransform(coords)}} onClick={this.addPage(coords)}>
+      var transformString = this.cartesian.getTransform(coords);
+      return (<div className="page-container add" style={{
+        transform: transformString,
+        WebkitTransform: transformString
+      }} onClick={this.addPage(coords)}>
         <img className="icon" src="../../img/plus.svg" />
       </div>);
     });
