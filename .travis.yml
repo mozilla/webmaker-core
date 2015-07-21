@@ -6,3 +6,14 @@ sudo: false
 cache:
   directories:
   - node_modules
+deploy:
+  provider: npm
+  skip_cleanup: true
+  email: k88hudson@gmail.com
+  api_key:
+    secure: QMKJbGyVK1aYrNO3SWZa5dKtaCyT7i4fVVmFMlmKzpqISnVrkCDMvZpJrqXdhnq/S4Bef+Dgrt3RmRafohFkmn0OzyKu931G6Sqj3rXuVqMTrU+BNh1WtEsJIheac1+rAba5iVFfiL0HSGM10Y66O/F54CjcjRHRyV/aZ9XLXgaWRYSGC3cmjzFsvG7aI1S2xknGfTgqZWh0EnSO3elgBblOXYJdFdZpOCyyeDMSvTZn15kTAX4kmxqAhixtBN+5HW/wmtBurUQtepf4oZqA+6Zt6jipZQQOOUQQNs+z7OWyqJKdJ6O/mIAT5HZ4RkVq2WwT8E2D6pUwZo1rHnnQxt4y3COrs6k93hmBMgx57JnfAE+yES20dFlZCwRlmnyfD3tG0qL3sIiZ0hTvDyysWQGEwgUTmWI8Egg8u+lniROERc5UGBka1BzgEg92IqbwqPXehrhe2AfeVzTc29XdN64qdvtLHsaHkAJdDm6uXnnzmxuF0PuqyOksdEbvPO1NMSahKff5xThxLNoa6tFB0B4N7sP3/v9CHRIwbda/Cz0YlT1ruN1/XK1x4h4rG0XSxTiy0JEKFfYq4uD0I8yPvT9tcHENtACdHCZSqJNXLWDrljthcTTUs+qsoqiNR3aetftyCVk24wrdKCxfqPjnlteOb9Z73CB+0AcV6N4mh5c=
+  on:
+    tags: true
+    repo: mozilla/webmaker-core
+    all_branches: true
+    node: '0.12'
