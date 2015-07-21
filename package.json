@@ -53,6 +53,7 @@
     "mocha": "^2.2.1",
     "ncp": "^2.0.0",
     "npm-run-all": "^1.2.2",
+    "panzoom": "https://github.com/k88hudson/pinch.git",
     "parallelshell": "^1.1.1",
     "proxyquire": "^1.4.0",
     "rimraf": "^2.3.2",

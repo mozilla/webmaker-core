@@ -11,7 +11,7 @@ module.exports = {
   },
 
   getBoundingStyle: function() {
-    var transformString = `translate(${this.state.camera.x || 0}px, ${this.state.camera.y || 0}px) scale(${this.state.zoom})`;
+    var transformString = `matrix(${this.state.matrix.join(', ')})`;
     return assign({
         transform: transformString,
         WebkitTransform: transformString,

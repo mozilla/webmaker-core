@@ -29,7 +29,9 @@ module.exports = {
       } else if (!data || !data.pages) {
         reportError('No project found...');
       } else {
-        var state = {};
+        var state = {
+          isFirstLoad: false
+        };
         var pages = this.formatPages(data.pages);
 
         // Set cartesian coordinates
@@ -38,15 +40,15 @@ module.exports = {
         state.pages = pages;
 
         var landingPage = findLandingPage(pages);
-        var focusTransform = this.cartesian.getFocusTransform(landingPage.coords, this.state.zoom);
+        var {x, y} = this.cartesian.getFocusTransform(landingPage.coords, this.state.matrix[0]);
 
-        if (this.state.params.mode === 'play' && typeof this.state.camera.x === 'undefined') {
+        if (this.state.params.mode === 'play' && typeof this.state.isFirstLoad) {
           this.zoomToPage(landingPage.coords);
         } else if (this.state.params.mode === 'edit' && !this.state.selectedEl) {
           state.selectedEl = landingPage.id;
-          state.camera = focusTransform;
-        } else if (typeof this.state.camera.x === 'undefined') {
-          state.camera = focusTransform;
+          state.matrix = [this.state.matrix[0], 0, 0, this.state.matrix[0], x, y];
+        } else if (this.state.isFirstLoad) {
+          state.matrix = [this.state.matrix[0], 0, 0, this.state.matrix[0], x, y];
         }
 
         this.setState(state);

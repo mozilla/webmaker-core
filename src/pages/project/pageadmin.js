@@ -29,8 +29,10 @@ module.exports = {
         return;
       }
 
+      var currentZoom = this.state.matrix[0];
+      var {x, y} = this.cartesian.getFocusTransform(selectedPage.coords, this.state.matrix[0]);
       var newState = {
-        camera: this.cartesian.getFocusTransform(selectedPage.coords, this.state.zoom)
+        matrix: [currentZoom, 0, 0, currentZoom, x, y]
       };
 
       if (type === 'selected') {
@@ -92,9 +94,12 @@ module.exports = {
         delete json.x;
         delete json.y;
         this.cartesian.allCoords.push(coords);
+
+        var currentZoom = this.state.matrix[0];
+        var {x, y} = this.cartesian.getFocusTransform(coords, currentZoom);
         this.setState({
           pages: update(this.state.pages, {$push: [json]}),
-          camera: this.cartesian.getFocusTransform(coords, this.state.zoom),
+          matrix: [currentZoom, 0, 0, currentZoom, x, y],
           selectedEl: json.id
         });
       });
@@ -129,9 +134,12 @@ module.exports = {
       }
 
       this.cartesian.allCoords.splice(index, 1);
+      var newZoom = this.state.matrix[0] >= MAX_ZOOM ? DEFAULT_ZOOM : this.state.matrix[0];
+      var x = this.state.matrix[4];
+      var y = this.state.matrix[5];
       this.setState({
         pages: update(this.state.pages, {$splice: [[index, 1]]}),
-        zoom: this.state.zoom >= MAX_ZOOM ? DEFAULT_ZOOM : this.state.zoom,
+        matrix: [newZoom, 0, 0, newZoom, x, y],
         selectedEl: ''
       });
     });

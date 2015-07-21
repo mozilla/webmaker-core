@@ -57,19 +57,20 @@ module.exports = {
 
     // TODO: Adjust size when window resizes
     var zoom = this.getMaxPageSize();
+    var {x, y} = this.cartesian.getFocusTransform(coords, zoom);
 
     this.setState({
-      camera: this.cartesian.getFocusTransform(coords, zoom),
-      zoom,
+      matrix: [zoom, 0, 0, zoom, x, y],
       isPageZoomed: true,
       zoomedPageCoords: coords
     });
   },
 
   zoomFromPage: function () {
+    var {x, y} = this.cartesian.getFocusTransform(this.state.zoomedPageCoords, DEFAULT_ZOOM);
+
     this.setState({
-      camera: this.cartesian.getFocusTransform(this.state.zoomedPageCoords, DEFAULT_ZOOM),
-      zoom: DEFAULT_ZOOM,
+      matrix: [DEFAULT_ZOOM, 0, 0, DEFAULT_ZOOM, x, y],
       isPageZoomed: false
     });
   },
@@ -82,18 +83,26 @@ module.exports = {
    * @return {void}
    */
   zoomToSelection: function (coords) {
+    var {x, y} = this.cartesian.getFocusTransform(coords, 1);
     this.setState({
-      camera: this.cartesian.getFocusTransform(coords, 1),
-      zoom: 1,
+      matrix: [1, 0, 0, 1, x, y],
       zoomedPageCoords: coords
     });
   },
 
   zoomOut: function () {
-    this.setState({zoom: this.state.zoom / 2});
+    var matrix = this.state.matrix.slice();
+    var zoom = this.state.zoom / 2;
+    matrix[0] = zoom;
+    matrix[3] = zoom;
+    this.setState({matrix});
   },
 
   zoomIn: function () {
-    this.setState({zoom: this.state.zoom * 2});
+    var matrix = this.state.matrix.slice();
+    var zoom = this.state.zoom * 2;
+    matrix[0] = zoom;
+    matrix[3] = zoom;
+    this.setState({matrix});
   }
 };
