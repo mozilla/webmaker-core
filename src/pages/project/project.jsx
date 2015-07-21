@@ -35,7 +35,7 @@ var Project = React.createClass({
       loading: true,
       selectedEl: '',
       pages: [],
-      matrix: Project.DEFAULT_ZOOM, 0, 0, Project.DEFAULT_ZOOM, 0, 0 ],
+      matrix: [Project.DEFAULT_ZOOM, 0, 0, Project.DEFAULT_ZOOM, 0, 0 ],
       isPageZoomed: false,
       isFirstLoad: true
     };
@@ -63,7 +63,7 @@ var Project = React.createClass({
         if (state.params && state.params.project === this.state.params.project) {
           this.setState({
             selectedEl: state.selectedEl,
-            state.matrix
+            matrix: state.matrix
           });
         }
       }

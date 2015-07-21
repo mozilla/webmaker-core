@@ -92,7 +92,7 @@ module.exports = {
 
   zoomOut: function () {
     var matrix = this.state.matrix.slice();
-    var zoom = this.state.zoom / 2;
+    var zoom = this.state.matrix[0] / 2;
     matrix[0] = zoom;
     matrix[3] = zoom;
     this.setState({matrix});
@@ -100,7 +100,7 @@ module.exports = {
 
   zoomIn: function () {
     var matrix = this.state.matrix.slice();
-    var zoom = this.state.zoom * 2;
+    var zoom = this.state.matix[0] * 2;
     matrix[0] = zoom;
     matrix[3] = zoom;
     this.setState({matrix});

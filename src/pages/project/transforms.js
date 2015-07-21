@@ -80,10 +80,12 @@ var handleTouches = function(component) {
    * @return {[type]}       [description]
    */
   var handleTouchStart = (event) => {
+
     if (!component.state.isPageZoomed) {
       didMove = false;
       var touches = event.touches,
           t0 = { x: touches[0].clientX, y: touches[0].clientY };
+
       // multiple fingers
       if (touches.length > 1) {
         startDX = touches[1].clientX - t0.x;
@@ -134,9 +136,7 @@ var handleTouches = function(component) {
       endY = t0.y;
 
       // and finally, bind the transform
-      var translation = 'translate(' + currentX + 'px, ' + currentY + 'px)',
-          scale = 'scale(' + zoom + ')',
-          transform = [translation, scale].join(' ');
+      var transform = `matrix(${zoom}, 0, 0, ${zoom}, ${currentX}, ${currentY})`;
       dangerouslySetStyle(master, {
         transform: transform,
         WebkitTransform: transform
@@ -159,8 +159,9 @@ var handleTouches = function(component) {
         dangerouslySetStyle(master, { transition: "" });
         if (!didMove) { return; }
         if (!component.state.isPageZoomed) {
-          var zoom = currentZoom ? currentZoom : component.state.zoom;
+          var zoom = currentZoom ? currentZoom : component.state.matrix[0];
           var matrixUpdate = [zoom, 0, 0, zoom, currentX, currentY];
+
           component.setState({
             matrix: matrixUpdate
           });
