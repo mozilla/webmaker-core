@@ -1,38 +1,38 @@
 .dPad {
   button.moon {
-    @moon-width: 30px;
+    @moon-width: 33px;
 
     border-bottom-left-radius: 50%;
     border-bottom-right-radius: 50%;
-    background: rgba(109, 120, 134, 0.9) url(./img/nub-white.svg) no-repeat;
-    background-position: center 1.2 * @moon-width;
-    background-size: 0.625 * @moon-width;
+    background: rgba(109, 120, 135, 0.9) url(./img/nub-white.svg) no-repeat;
+    background-position: center 1.225 * @moon-width;
+    background-size: 0.525 * @moon-width;
     width: @moon-width * 2;
     height: @moon-width * 2;
 
     &.up {
-      top: -@moon-width;
+      top: -@moon-width - 2;
       margin-left: -@moon-width;
     }
 
     &.down {
-      bottom: -@moon-width;
+      bottom: -@moon-width - 2;
       margin-left: -@moon-width;
     }
 
     &.left {
-      left: -@moon-width;
+      left: -@moon-width - 2;
       margin-top: -@moon-width;
     }
 
     &.right {
-      right: -@moon-width;
+      right: -@moon-width - 2;
       margin-top: -@moon-width;
     }
   }
 
   button {
-    @nub-width: 30px;
+    @nub-width: 36px;
 
     position: absolute;
     display: block;
