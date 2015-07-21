@@ -97,7 +97,8 @@ var SignUp = React.createClass({
       username: this.state.username,
       password: this.state.password,
       email: this.state.email,
-      feedback: this.state.feedback
+      feedback: this.state.feedback,
+      lang: navigator.language
     };
 
     this.props.setParentState({loading: true});
