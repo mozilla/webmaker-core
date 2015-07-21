@@ -1,0 +1,49 @@
+pt-BR:
+  username: Nome de usuário
+  password: Senha
+  email: E-mail
+  helpText: Resetar senha
+  email_me_updates: Me envie atualizações por e-mail sobre o Webmaker
+  join_webmaker: Faça parte do Webmaker
+  by_joining: Ao entrar, Eu concordo com os  {linkTerms} e  {linkPrivacyPolicy} do Mozilla Webmaker
+  privacy_policy: Política de privacidade
+  terms: Condições
+  already_join_signin: Já faz parte? {signinLink}
+  signin: Entrar
+  dont_have_account: Não tem uma conta? {joinWebmakerLink}
+  errorUsernameOrPassword: Parece que existe um problema com o seu nome de  usuário ou senha.
+  color_editor: 'Cor: {rgbaValue};'
+  Red: Vermelho
+  Green: Verde
+  Blue: Azul
+  Opacity: Opacidade
+  my_project: Meu projeto
+  log_out: Sair
+  create_a_project: +Criar um Projeto
+  open_style_guide: Guia Aberta de Estilo
+  reset_share_preferences: Reinicializar preferências compartilhadas
+  loading: Carregando!
+  title: Título
+  done: Concluído
+  edit_label: Editar rótulo
+  change_link_dest: Trocar destino do link
+  set_link_dest: Definir destino do link
+  corner_radius: Raio do canto
+  Font: Fonte
+  background_color: Cor de fundo
+  no_project_found: Desculpa, não foram encontrados projetos.
+  error_featured: Erro ao procurar projetos em destaques
+  error_featured_404: Não há projetos em destaques encontrados
+  error_update_element: Houve um erro ao atualizar o elemento
+  error_element: Erro ao carregar o elemento
+  error_element_404: Nenhum elemento encontrado
+  error_create_make: Tentou criar um projeto quando estava em um sessão não encontrada
+  error_create_element: Houve algum erro ao criar um elemento
+  error_delete_element: Houve um problema ao remover o elemento
+  error_page: Houve um erro ao carregar a página
+  error_page_404: Não conseguimos encontrar a página carregada
+  error_404_element_save: Não conseguimos encontrar o elemento salvo
+  cc: Creative Commons
+  ccLicenseSection: Conteúdo publicado sob uma licença chamada Creative Commons {creativecommonsLink}.
+  ccLicenseSectionSub: Isso significa que outras pessoas podem compartilhar, adaptar e remixar o seu conteúdo, com isso devem dar os créditos e compartilhar o seu trabalho,do mesmo modo,  como tudo isto está descrito na licença.
+  ccAttribution: Compartilhada pela mesma licença atrubuída 3.0 não adaptada

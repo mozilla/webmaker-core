@@ -4,12 +4,15 @@ var Spindicator = require('../components/spindicator/spindicator.jsx');
 var ModalConfirm = require('../components/modal-confirm/modal-confirm.jsx');
 var ModalSwitch = require('../components/modal-switch/modal-switch.jsx');
 var Snackbar = require('../components/snackbar/snackbar.jsx');
-
-// TODO: make this intlData more dynamic based on directory structure and load them here
-// We might also change from JSON to YAML format for better translation support.
+var messages;
+try {
+  messages = require('../locales/' + navigator.language + '.json');
+} catch (e) {
+  messages = require('../locales/en-US.json');
+}
 var intlData = {
     locales : ['en-US'],
-    messages: require('../locales/en-US.json')
+    messages: messages
 };
 var platform = require('./platform');
 
