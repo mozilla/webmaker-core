@@ -32,7 +32,7 @@ module.exports = {
   },
   componentDidUpdate: function () {
     // Check what directions have pages that exist and update the dpad UI accordingly
-    if (this.state.pages.length) {
+    if (this.state.isPageZoomed && this.state.pages.length) {
       this.refs.dpad.bulkSetVisibility({
         showUp: verifyCoordsExist(this.state.pages, getTargetCoords(this.state.zoomedPageCoords, 'up')),
         showDown: verifyCoordsExist(this.state.pages, getTargetCoords(this.state.zoomedPageCoords, 'down')),
