@@ -140,7 +140,10 @@ var BasicElement = React.createClass({
     // FIXME: TODO: this should not be here. This data should be read from state (since we
     //              set it purely during the component's life time), and then use that to
     //              render the button with the correct style in render().
-    this.refs.metaButton.getDOMNode().style.transform = Spec.propsToPosition(buttonStyle).transform;
+    var buttonEl = this.refs.metaButton.getDOMNode();
+    var transformString = Spec.propsToPosition(buttonStyle).transform;
+    buttonEl.style.transform = transformString;
+    buttonEl.style.webkitTransform = transformString;
   },
 
   onLinkDestClick: function () {

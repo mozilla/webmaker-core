@@ -138,8 +138,12 @@ var handleTouches = function(component) {
       var translation = 'translate(' + currentX + 'px, ' + currentY + 'px)',
           scale = 'scale(' + zoom + ')',
           transform = [translation, scale].join(' ');
-      dangerouslySetStyle(master, { transform: transform });
+      dangerouslySetStyle(master, {
+        transform: transform,
+        WebkitTransform: transform
+      });
     }
+
   };
 
   /**

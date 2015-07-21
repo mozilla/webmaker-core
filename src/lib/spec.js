@@ -79,12 +79,13 @@ Spec.propsToPosition = function (props) {
       `rotate(${props.angle * 180/Math.PI}deg)`,
       `scale(${props.scale})`
     ].join(' '),
-    '-webkit-transform': [
+    WebkitTransform: [
       `translate(${props.x}px, ${props.y}px)`,
       `rotate(${props.angle * 180/Math.PI}deg)`,
       `scale(${props.scale})`
     ].join(' '),
     transformOrigin: 'center',
+    WebkitTransformOrigin: 'center',
     zIndex: props.zIndex
   };
 };
