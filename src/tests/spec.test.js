@@ -85,7 +85,7 @@ describe('Spec', () => {
         WebkitTransform: 'translate(50px, -12px) rotate(90deg) scale(2.5)',
         transform: 'translate(50px, -12px) rotate(90deg) scale(2.5)',
         transformOrigin: 'center',
-        WebkitTransformOrigin: 'center'
+        WebkitTransformOrigin: 'center',
         zIndex: 5
       });
     });

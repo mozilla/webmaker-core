@@ -80,10 +80,12 @@ var handleTouches = function(component) {
    * @return {[type]}       [description]
    */
   var handleTouchStart = (event) => {
+
     if (!component.state.isPageZoomed) {
       didMove = false;
       var touches = event.touches,
           t0 = { x: touches[0].clientX, y: touches[0].clientY };
+
       // multiple fingers
       if (touches.length > 1) {
         startDX = touches[1].clientX - t0.x;
@@ -110,10 +112,9 @@ var handleTouches = function(component) {
       didMove = true;
       var touches = event.touches,
           t0 = { x: touches[0].clientX, y: touches[0].clientY },
-          zoom = component.state.zoom,
-          camera = component.state.camera,
-          cx = camera.x,
-          cy = camera.y,
+          zoom = component.state.matrix[0],
+          cx = component.state.matrix[4],
+          cy = component.state.matrix[5],
           dx = 0, dy = 0, d = false;
 
       // update scale, due to multiple finger input
@@ -135,9 +136,7 @@ var handleTouches = function(component) {
       endY = t0.y;
 
       // and finally, bind the transform
-      var translation = 'translate(' + currentX + 'px, ' + currentY + 'px)',
-          scale = 'scale(' + zoom + ')',
-          transform = [translation, scale].join(' ');
+      var transform = `matrix(${zoom}, 0, 0, ${zoom}, ${currentX}, ${currentY})`;
       dangerouslySetStyle(master, {
         transform: transform,
         WebkitTransform: transform
@@ -160,14 +159,12 @@ var handleTouches = function(component) {
         dangerouslySetStyle(master, { transition: "" });
         if (!didMove) { return; }
         if (!component.state.isPageZoomed) {
-          var cameraUpdate = {
-            camera: {
-              x: currentX,
-              y: currentY
-            },
-            zoom: currentZoom ? currentZoom : component.state.zoom
-          };
-          component.setState(cameraUpdate);
+          var zoom = currentZoom ? currentZoom : component.state.matrix[0];
+          var matrixUpdate = [zoom, 0, 0, zoom, currentX, currentY];
+
+          component.setState({
+            matrix: matrixUpdate
+          });
           resetValues();
         }
         // This kicks in when we're at the zoomest level of zoom.
@@ -185,9 +182,9 @@ var handleTouches = function(component) {
         //              through setState() instead. The following code overloads state
         //              as a local variable, even though anything can at anytime invalidate
         //              its content because of an async render() trigger from somewhere else.
-        component.state.camera.x = currentX;
-        component.state.camera.y = currentY;
-        component.state.zoom = currentZoom;
+        component.state.matrix[4] = currentX;
+        component.state.matrix[5] = currentY;
+        component.state.matrix[0] = currentZoom;
       }
     }
   };
