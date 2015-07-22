@@ -54,6 +54,7 @@
     "ncp": "^2.0.0",
     "npm-run-all": "^1.2.2",
     "parallelshell": "^1.1.1",
+    "panzoom": "https://github.com/k88hudson/panzoom.git#b3b698d44ed12129c723f76efbd431678a34d96a",
     "proxyquire": "^1.4.0",
     "rimraf": "^2.3.2",
     "should": "^5.2.0",
