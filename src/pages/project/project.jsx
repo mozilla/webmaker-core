@@ -35,9 +35,9 @@ var Project = React.createClass({
       loading: true,
       selectedEl: '',
       pages: [],
-      camera: {},
-      zoom: Project.DEFAULT_ZOOM,
-      isPageZoomed: false
+      matrix: [Project.DEFAULT_ZOOM, 0, 0, Project.DEFAULT_ZOOM, 0, 0 ],
+      isPageZoomed: false,
+      isFirstLoad: true
     };
   },
 
@@ -63,8 +63,7 @@ var Project = React.createClass({
         if (state.params && state.params.project === this.state.params.project) {
           this.setState({
             selectedEl: state.selectedEl,
-            camera: state.camera,
-            zoom: state.zoom
+            matrix: state.matrix
           });
         }
       }
@@ -88,6 +87,8 @@ var Project = React.createClass({
           isVisible={ this.state.isPageZoomed }>
         </DPad>
 
+        <button className={'btn-zoom-out' + (this.state.isPageZoomed ? '' : ' hidden') } onClick={this.zoomFromPage} />
+
         <div ref="bounding" className="bounding" style={ this.getBoundingStyle() }>
           <div className="test-container" style={ this.getContainerStyle() }>
           { this.formPages() }
@@ -98,7 +99,6 @@ var Project = React.createClass({
         <Menu fullWidth={this.state.params.mode === 'link'}>
           { this.getRemovePageButton(isPlayOnly) }
           <PrimaryButton url={ this.getPageURL(this.state.params, this.state.selectedEl) } off={isPlayOnly || !this.state.selectedEl} href="/pages/page" icon="../../img/pencil.svg" />
-          <PrimaryButton onClick={this.zoomFromPage} off={!this.state.isPageZoomed} icon="../../img/zoom-out.svg" />
           <FullWidthButton onClick={this.setDestination} off={this.state.params.mode !== 'link' || !this.state.selectedEl}>Set Destination</FullWidthButton>
         </Menu>
 

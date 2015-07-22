@@ -80,22 +80,26 @@ var handleTouches = function(component) {
    * @return {[type]}       [description]
    */
   var handleTouchStart = (event) => {
-    didMove = false;
-    var touches = event.touches,
-        t0 = { x: touches[0].clientX, y: touches[0].clientY };
-    // multiple fingers
-    if (touches.length > 1) {
-      startDX = touches[1].clientX - t0.x;
-      startDY = touches[1].clientY - t0.y;
-      startDistance = Math.sqrt(startDX*startDX + startDY*startDY);
+
+    if (!component.state.isPageZoomed) {
+      didMove = false;
+      var touches = event.touches,
+          t0 = { x: touches[0].clientX, y: touches[0].clientY };
+
+      // multiple fingers
+      if (touches.length > 1) {
+        startDX = touches[1].clientX - t0.x;
+        startDY = touches[1].clientY - t0.y;
+        startDistance = Math.sqrt(startDX*startDX + startDY*startDY);
+      }
+      // single finger
+      else {
+        startX = t0.x;
+        startY = t0.y;
+        dangerouslySetStyle(master, { transition: "none" });
+      }
+      // interaction continues in handleTouchMove
     }
-    // single finger
-    else {
-      startX = t0.x;
-      startY = t0.y;
-      dangerouslySetStyle(master, { transition: "none" });
-    }
-    // interaction continues in handleTouchMove
   };
 
   /**
@@ -104,38 +108,41 @@ var handleTouches = function(component) {
    * @return {[type]}       [description]
    */
   var handleTouchMove = (event) => {
-    didMove = true;
-    var touches = event.touches,
-        t0 = { x: touches[0].clientX, y: touches[0].clientY },
-        zoom = component.state.zoom,
-        camera = component.state.camera,
-        cx = camera.x,
-        cy = camera.y,
-        dx = 0, dy = 0, d = false;
+    if (!component.state.isPageZoomed) {
+      didMove = true;
+      var touches = event.touches,
+          t0 = { x: touches[0].clientX, y: touches[0].clientY },
+          zoom = component.state.matrix[0],
+          cx = component.state.matrix[4],
+          cy = component.state.matrix[5],
+          dx = 0, dy = 0, d = false;
 
-    // update scale, due to multiple finger input
-    if (touches.length > 1) {
-      dx = touches[1].clientX - t0.x;
-      dy = touches[1].clientY - t0.y;
+      // update scale, due to multiple finger input
+      if (touches.length > 1) {
+        dx = touches[1].clientX - t0.x;
+        dy = touches[1].clientY - t0.y;
 
-      d  = Math.sqrt(dx*dx + dy*dy);
-      currentZoom = constrain( zoom + (d-startDistance)/ZOOM_SENSITIVITY, MIN_ZOOM, MAX_ZOOM);
-      zoom = currentZoom;
+        d  = Math.sqrt(dx*dx + dy*dy);
+        currentZoom = constrain( zoom + (d-startDistance)/ZOOM_SENSITIVITY, MIN_ZOOM, MAX_ZOOM);
+        zoom = currentZoom;
+      }
+
+      // update translation, corrected for our zoom center
+      currentX = cx + (t0.x - startX) + (dx - startDX);
+      currentY = cy + (t0.y - startY) + (dy - startDY);
+
+      // update tracking value
+      endX = t0.x;
+      endY = t0.y;
+
+      // and finally, bind the transform
+      var transform = `matrix(${zoom}, 0, 0, ${zoom}, ${currentX}, ${currentY})`;
+      dangerouslySetStyle(master, {
+        transform: transform,
+        WebkitTransform: transform
+      });
     }
 
-    // update translation, corrected for our zoom center
-    currentX = cx + (t0.x - startX) + (dx - startDX);
-    currentY = cy + (t0.y - startY) + (dy - startDY);
-
-    // update tracking value
-    endX = t0.x;
-    endY = t0.y;
-
-    // and finally, bind the transform
-    var translation = 'translate(' + currentX + 'px, ' + currentY + 'px)',
-        scale = 'scale(' + zoom + ')',
-        transform = [translation, scale].join(' ');
-    dangerouslySetStyle(master, { transform: transform });
   };
 
   /**
@@ -144,41 +151,41 @@ var handleTouches = function(component) {
    * @return {[type]}       [description]
    */
   var handleTouchEnd = (event) => {
-    var touches = event.touches;
+    if (!component.state.isPageZoomed) {
+      var touches = event.touches;
 
-    // there are no more fingers on the screen
-    if (touches.length === 0) {
-      dangerouslySetStyle(master, { transition: "" });
-      if (!didMove) { return; }
-      if (!component.state.isPageZoomed) {
-        var cameraUpdate = {
-          camera: {
-            x: currentX,
-            y: currentY
-          },
-          zoom: currentZoom ? currentZoom : component.state.zoom
-        };
-        component.setState(cameraUpdate);
-        resetValues();
+      // there are no more fingers on the screen
+      if (touches.length === 0) {
+        dangerouslySetStyle(master, { transition: "" });
+        if (!didMove) { return; }
+        if (!component.state.isPageZoomed) {
+          var zoom = currentZoom ? currentZoom : component.state.matrix[0];
+          var matrixUpdate = [zoom, 0, 0, zoom, currentX, currentY];
+
+          component.setState({
+            matrix: matrixUpdate
+          });
+          resetValues();
+        }
+        // This kicks in when we're at the zoomest level of zoom.
+        // On a phone: page view. On a Nexus 7: nothing like page view.
+        else { handleSwipe(); }
       }
-      // This kicks in when we're at the zoomest level of zoom.
-      // On a phone: page view. On a Nexus 7: nothing like page view.
-      else { handleSwipe(); }
-    }
-    // there fingers left on the screen
-    else {
-      startX = touches[0].clientX;
-      startY = touches[0].clientY;
-      startDX = 0;
-      startDY = 0;
-      // FIXME: TODO: we should not do this. We cannot modify "state" unless we intend
-      //              for that to immediately cause a render(), which means setting them
-      //              through setState() instead. The following code overloads state
-      //              as a local variable, even though anything can at anytime invalidate
-      //              its content because of an async render() trigger from somewhere else.
-      component.state.camera.x = currentX;
-      component.state.camera.y = currentY;
-      component.state.zoom = currentZoom;
+      // there fingers left on the screen
+      else {
+        startX = touches[0].clientX;
+        startY = touches[0].clientY;
+        startDX = 0;
+        startDY = 0;
+        // FIXME: TODO: we should not do this. We cannot modify "state" unless we intend
+        //              for that to immediately cause a render(), which means setting them
+        //              through setState() instead. The following code overloads state
+        //              as a local variable, even though anything can at anytime invalidate
+        //              its content because of an async render() trigger from somewhere else.
+        component.state.matrix[4] = currentX;
+        component.state.matrix[5] = currentY;
+        component.state.matrix[0] = currentZoom;
+      }
     }
   };
 

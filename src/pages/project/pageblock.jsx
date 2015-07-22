@@ -20,7 +20,8 @@ var PageBlock = React.createClass({
 
     var style = {
       backgroundColor: this.props.page.styles.backgroundColor,
-      transform: this.props.transform
+      transform: this.props.transform,
+      WebkitTransform: this.props.transform
     };
 
     // The "shim" and "indicator" divs don't actually house any content,

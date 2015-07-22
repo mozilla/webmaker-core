@@ -1,69 +1,71 @@
 .dPad {
-  &.moons {
-    button {
-      border-bottom-left-radius: 50%;
-      border-bottom-right-radius: 50%;
-      background: #333333 url(./img/nub.svg) no-repeat;
-      background-position: center 48px;
-      background-size: 25px;
-      width: 80px;
-      height: 80px;
+  button.moon {
+    @moon-width: 33px;
 
-      &.up {
-        top: -40px;
-        margin-left: -40px;
-      }
+    border-bottom-left-radius: 50%;
+    border-bottom-right-radius: 50%;
+    background: rgba(109, 120, 135, 0.9) url(./img/nub-white.svg) no-repeat;
+    background-position: center 1.225 * @moon-width;
+    background-size: 0.525 * @moon-width;
+    width: @moon-width * 2;
+    height: @moon-width * 2;
 
-      &.down {
-        bottom: -40px;
-        margin-left: -40px;
-      }
+    &.up {
+      top: -@moon-width - 2;
+      margin-left: -@moon-width;
+    }
 
-      &.left {
-        left: -40px;
-        margin-top: -40px;
-      }
+    &.down {
+      bottom: -@moon-width - 2;
+      margin-left: -@moon-width;
+    }
 
-      &.right {
-        right: -40px;
-        margin-top: -40px;
-      }
+    &.left {
+      left: -@moon-width - 2;
+      margin-top: -@moon-width;
+    }
+
+    &.right {
+      right: -@moon-width - 2;
+      margin-top: -@moon-width;
     }
   }
 
   button {
+    @nub-width: 36px;
+
     position: absolute;
     display: block;
     z-index: 9999;
     background: url(./img/nub.svg) no-repeat center center / 50%;
     border: 0;
-    width: 50px;
-    height: 50px;
+    width: @nub-width;
+    height: @nub-width;
 
     &.up {
       top: 0;
       left: 50%;
-      margin-left: -25px;
+      margin-left: -(@nub-width / 2);
     }
 
     &.down {
       bottom: 0;
       left: 50%;
-      margin-left: -25px;
+      margin-left: -(@nub-width / 2);
       transform: rotate(180deg);
     }
 
     &.left {
       top: 50%;
       left: 0;
-      margin-top: -25px;
+      margin-top: -(@nub-width / 2);
       transform: rotate(-90deg);
     }
 
     &.right {
       top: 50%;
       right: 0;
-      margin-top: -25px;
+      margin-top: -(@nub-width / 2);
       transform: rotate(90deg);
     }
 
