@@ -4,15 +4,16 @@ var Spindicator = require('../components/spindicator/spindicator.jsx');
 var ModalConfirm = require('../components/modal-confirm/modal-confirm.jsx');
 var ModalSwitch = require('../components/modal-switch/modal-switch.jsx');
 var Snackbar = require('../components/snackbar/snackbar.jsx');
-var messages;
-try {
-  messages = require('../locales/' + navigator.language + '.json');
-} catch (e) {
-  messages = require('../locales/en-US.json');
-}
+var messages = require('./messages');
+
+var locale = navigator.language.split('-')
+locale = locale[1] ? `${locale[0]}-${locale[1].toUpperCase()}` : navigator.language
+
+var strings = messages[locale] ? messages[locale] : messages['en-US']
+
 var intlData = {
     locales : ['en-US'],
-    messages: messages
+    messages: strings
 };
 var platform = require('./platform');
 
