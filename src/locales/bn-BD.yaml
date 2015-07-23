@@ -1,0 +1,9 @@
+bn-BD: {username: ইউজারনেম, password: পাসওয়ার্ড, email: ইমেইল, email_me_updates: ওয়েবমেকার
+    সম্পর্কে খবরাখবর আমাকে ইমেইল করো, join_webmaker: ওয়েবমেকারে যোগ দিন, privacy_policy: প্রাইভেসি
+    পলিসি, signin: সাইন ইন, errorUsernameOrPassword: মনে হচ্ছে আপনার ইউজারনেম বা পাসওয়ার্ডে
+    কোন সমস্যা হয়েছে।, Red: লাল, Green: সবুজ, Blue: নীল, Opacity: সচ্ছতা, log_out: লগ আউট,
+  title: শিরোনাম, done: সম্পন্ন, edit_label: লেবেল সম্পাদনা, change_link_dest: লিঙ্ক গন্তব্যের
+    পরিবর্তন, set_link_dest: লিঙ্ক গন্তব্য নির্ধারণ করুন, corner_radius: কোণের মাপ, Font: ফন্ট,
+  background_color: ব্যাকগ্রাউন্ডের রঙ, error_update_element: উপকরণ হালনাগাদে সমস্যা হয়েছে,
+  error_element: উপকরণ লোডিং এ সমস্যা হয়েছে, error_element_404: কোন উপকরণ পাওয়া যায়নি, error_delete_element: উপকরণ
+    মুছে ফেলতে সমস্যা হয়েছে}
