@@ -1,5 +1,5 @@
 var React = require('react');
-var ObjectAssign = require('object-assign');
+var assign = require('react/lib/Object.assign')
 
 var Spindicator = require('../components/spindicator/spindicator.jsx');
 var ModalConfirm = require('../components/modal-confirm/modal-confirm.jsx');
@@ -15,7 +15,7 @@ var strings = messages[locale] ? messages[locale] : messages['en-US']
 // Sometimes we will include a language with partial translation
 // and we need to make sure the object that we pass to `intlData`
 // contains all keys based on the `en-US` messages.
-strings = ObjectAssign(messages['en-US'], strings);
+strings = assign(messages['en-US'], strings);
 
 var intlData = {
     locales : ['en-US'],
