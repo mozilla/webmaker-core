@@ -39,12 +39,5 @@ module.exports = {
         <img className="icon" src="../../img/plus.svg" />
       </div>);
     });
-  },
-
-  getRemovePageButton: function(isPlayOnly) {
-    if (this.state.pages.length <= 1) {
-      return false;
-    }
-    return <SecondaryButton side="left" off={isPlayOnly || !this.state.selectedEl} onClick={this.removePage} icon="../../img/trash.svg" />;
   }
 };

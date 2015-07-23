@@ -12,7 +12,7 @@ var {parseJSON} = require('../../lib/jsonUtils');
 var render = require('../../lib/render.jsx');
 
 var Loading = require('../../components/loading/loading.jsx');
-var {Menu, PrimaryButton, FullWidthButton} = require('../../components/action-menu/action-menu.jsx');
+var {Menu, PrimaryButton, SecondaryButton, FullWidthButton} = require('../../components/action-menu/action-menu.jsx');
 var DPad = require('../../components/d-pad/d-pad.jsx');
 
 var Project = React.createClass({
@@ -97,8 +97,9 @@ var Project = React.createClass({
         </div>
 
         <Menu fullWidth={this.state.params.mode === 'link'}>
-          { this.getRemovePageButton(isPlayOnly) }
+          <SecondaryButton side="left" onClick={this.zoomFromPage} off={this.state.params.mode !== 'edit' || !this.state.matrix || this.state.matrix[0] < 1} icon="../../img/zoom-out-blue.svg" />
           <PrimaryButton url={ this.getPageURL(this.state.params, this.state.selectedEl) } off={isPlayOnly || !this.state.selectedEl} href="/pages/page" icon="../../img/pencil.svg" />
+          <SecondaryButton side="right" off={isPlayOnly || !this.state.selectedEl} onClick={this.removePage} icon="../../img/trash.svg" />
           <FullWidthButton onClick={this.setDestination} off={this.state.params.mode !== 'link' || !this.state.selectedEl}>Set Destination</FullWidthButton>
         </Menu>
 
