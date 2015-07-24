@@ -14,6 +14,12 @@ var Link = React.createClass({
       onClick: (e) => {
         if (window.Platform) {
           e.preventDefault();
+
+          // if there is a pre-navigation handling hook, call that before continuing
+          if (this.props.preNavigation && typeof this.props.preNavigation === 'function') {
+            this.props.preNavigation();
+          }
+
           if (this.props.external) {
             window.Platform.openExternalUrl(this.props.external);
           } else if (this.props.url) {
