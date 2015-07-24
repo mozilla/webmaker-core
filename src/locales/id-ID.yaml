@@ -1,0 +1,49 @@
+id-ID:
+  username: Nama pengguna
+  password: Kata kunci
+  email: Surel
+  helpText: Tetapkan ulang Kata kunci
+  email_me_updates: Kirim saya surel info terbaru tentang Webmaker
+  join_webmaker: Bergabung dengan Webmaker
+  by_joining: Dengan bergabung, saya menyetujui {linkTerms} dan {linkPrivacyPolicy} dari Mozilla Webmaker
+  privacy_policy: Kebijakan Privasi
+  terms: Syarat
+  already_join_signin: Sudah bergabung? {signinLink}
+  signin: Masuk
+  dont_have_account: Tidak punya akun? {joinWebmakerLink}
+  errorUsernameOrPassword: Sepertinya ada kesalahan pada nama pengguna atau kata sandi Anda.
+  color_editor: 'warna: {rgbaValue};'
+  Red: Merah
+  Green: Hijau
+  Blue: Biru
+  Opacity: Tingkat pengaburan
+  my_project: Proyek saya
+  log_out: Keluar
+  create_a_project: + Buat Proyek
+  open_style_guide: Buka Panduan Gaya
+  reset_share_preferences: Tetapkan ulang Preferensi Bersama
+  loading: Memuat!
+  title: Judul
+  done: Selesai
+  edit_label: Atur Label
+  change_link_dest: Ubah Tujuan Tautan
+  set_link_dest: Atur Tujuan Tautan
+  corner_radius: Radius Sudut
+  Font: Jenis Huruf
+  background_color: Warna Latar
+  no_project_found: Maaf, proyek tidak ditemukan.
+  error_featured: Ada kesalahan dalam mendapatkan proyek temuan
+  error_featured_404: Tidak ada proyek temuan ditemukan
+  error_update_element: Ada kesalahan dalam memperbarui elemen
+  error_element: Kesalahan dalam memuat elemen
+  error_element_404: Elemen tidak ditemukan
+  error_create_make: Telah coba membuat proyek ketika tiada sesi ditemukan
+  error_create_element: Ada kesalahan dalam membuat elemen
+  error_delete_element: Ada masalah dalam menghapus elemen
+  error_page: Ada kesalahan dalam memuat halaman
+  error_page_404: Tidak dapat menemukan halaman untuk dimuat
+  error_404_element_save: Tidak dapat menemukan elemen untuk disimpan
+  cc: Creative Commons
+  ccLicenseSection: Konten diterbitkan dibawah lisensi Creative Commons bernama {creativecommonsLink}.
+  ccLicenseSectionSub: Ini berarti orang lain dapat membagi, mengadaptasi dan mengubah-suai konten Anda jika mereka memberi kredit kepada Anda dan membagikan pekerjaan mereka dengan cara yang sama, sebagaimana hal tersebut dijelaskan di dalam lisensi.
+  ccAttribution: Atribusi-BerbagiSerupa 3.0 Tanpa Adaptasi
