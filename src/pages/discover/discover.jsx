@@ -7,7 +7,7 @@ var render = require('../../lib/render.jsx');
 var Card = require('../../components/card/card.jsx');
 var Loading = require('../../components/loading/loading.jsx');
 
-var lang = i18n.isSupportedLanguage(i18n.currentLanguage) ? i18n.currentLanguage : i18n.defaultLanguage;
+var lang = i18n.isSupportedLanguage(i18n.currentLanguage) ? i18n.currentLanguage : i18n.defaultLang;
 
 var Discover = React.createClass({
   mixins: [require('react-intl').IntlMixin],
