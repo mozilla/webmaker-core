@@ -18,4 +18,4 @@ module.exports = {
   isSupportedLanguage: function(lang) {
     return !!messages[lang];
   }
-}
+};
