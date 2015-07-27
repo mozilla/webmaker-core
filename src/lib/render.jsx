@@ -1,5 +1,5 @@
 var React = require('react');
-var assign = require('react/lib/Object.assign')
+var assign = require('react/lib/Object.assign');
 
 var Spindicator = require('../components/spindicator/spindicator.jsx');
 var ModalConfirm = require('../components/modal-confirm/modal-confirm.jsx');
@@ -7,10 +7,10 @@ var ModalSwitch = require('../components/modal-switch/modal-switch.jsx');
 var Snackbar = require('../components/snackbar/snackbar.jsx');
 var messages = require('./messages');
 
-var locale = navigator.language.split('-')
-locale = locale[1] ? `${locale[0]}-${locale[1].toUpperCase()}` : navigator.language
+var locale = navigator.language.split('-');
+locale = locale[1] ? `${locale[0]}-${locale[1].toUpperCase()}` : navigator.language;
 
-var strings = messages[locale] ? messages[locale] : messages['en-US']
+var strings = messages[locale] ? messages[locale] : messages['en-US'];
 
 // Sometimes we will include a language with partial translation
 // and we need to make sure the object that we pass to `intlData`

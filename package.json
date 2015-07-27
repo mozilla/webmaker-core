@@ -14,7 +14,7 @@
     "build:html": "node ./npm_tasks/bin/build-html",
     "test": "npm run config && npm-run-all test:**",
     "test:mocha": "mocha -R spec --compilers js:babel/register \"./{src,npm_tasks}/**/*.test.js\"",
-    "test:lint": "jsxhint --harmony \"src/{components,html,lib,pages,static}/{**,.}/*.{js,jsx}\"",
+    "test:lint": "jsxhint --harmony \"src/{components,html,lib,pages}/{**,.}/*.{js,jsx}\"",
     "watch:static": "watch \"npm run build:static\" src/static",
     "watch:js": "npm run build:js -- -d --watch",
     "watch:css": "autoless --source-map --autoprefix \"last 2 versions, android >= 4.2\" src dest",

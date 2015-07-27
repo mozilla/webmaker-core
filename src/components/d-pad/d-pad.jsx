@@ -11,10 +11,10 @@ module.exports = React.createClass({
       showDown: true,
       showLeft: true,
       showRight: true
-    }
+    };
   },
   onButtonClick: function (direction, event) {
-    this.props.onDirectionClick.call(this, direction)
+    this.props.onDirectionClick.call(this, direction);
   },
   bulkSetVisibility: function (newState) {
     this.setState(newState);
