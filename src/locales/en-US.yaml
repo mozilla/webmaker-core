@@ -45,7 +45,7 @@ en-US:
   error_page_404: Could not find the page to load
   error_404_element_save: Could not find the element to save
   cc: Creative Commons
-  ccLicenseSection: Content published under a Creative Comons license called {creativecommonsLink}.
+  ccLicenseSection: Content published under a Creative Commons license called {creativecommonsLink}.
   ccLicenseSectionSub: This means that other people can share, adapt, and remix your
     content if they give you credit and share their work in the same way, as all of
     this is described in the license.
