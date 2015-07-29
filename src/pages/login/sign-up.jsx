@@ -147,7 +147,7 @@ var SignUp = React.createClass({
 
   render: function () {
     var termsLink = (<Link external="https://webmaker.org/en-US/terms">{this.getIntlMessage("terms")}</Link>);
-    var privacyLink = (<Link external="https://webmaker.org/en-US/privacy">{this.getIntlMessage("privacy_policy")}</Link>);
+    var privacyLink = (<Link external="https://www.mozilla.org/en-US/privacy/websites/">{this.getIntlMessage("privacy_policy")}</Link>);
     var signinLink = (<a href="#" onClick={this.changeMode}>{this.getIntlMessage('signin')}</a>);
     // getValidationErrors is from validationMixin
     var errors = this.getValidationErrors();
