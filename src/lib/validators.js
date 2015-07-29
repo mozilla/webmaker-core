@@ -18,18 +18,18 @@ module.exports = {
   validators: {
     email: {
       regex: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/i,
-      message: 'Please use a valid email address.'
+      message: 'email_error_message'
     },
     password: {
       test: function (input) {
         input = input || '';
         return owasp.test(input).strong;
       },
-      message: 'Your password must be at least 8 characters and contain at least 1 number and 1 letter'
+      message: 'password_error_message'
     },
     username: {
       regex: /^[a-zA-Z0-9\-]{1,20}$/,
-      message: 'Must be 1-20 characters long and use only "-" and alphanumeric symbols.'
+      message: 'username_error_message'
     }
   },
 

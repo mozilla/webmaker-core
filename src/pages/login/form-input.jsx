@@ -18,7 +18,11 @@ var FormInput = React.createClass({
     }
   },
   render: function () {
-    var helpText;
+    var helpText, errorMessage;
+
+    if (this.props.errors) {
+      errorMessage = this.getIntlMessage(this.props.errors.join(' '));
+    };
     if(this.props.helpText) {
       helpText = (<Link external="https://id.webmaker.org/reset-password?android=true"><FormattedHTMLMessage message={this.getIntlMessage(this.props.helpText)} /></Link>);
     }
@@ -26,7 +30,7 @@ var FormInput = React.createClass({
       <label htmlFor={this.props.name}><FormattedHTMLMessage message={this.getIntlMessage(this.props.label)} /></label>
       <input name={this.props.name} type={this.props.type} tabIndex={this.props.tabIndex} onKeyDown={this.checkForReturn} valueLink={this.props.valueLink} required={this.props.required} />
       <div className="error" hidden={!this.props.errors}>
-        {this.props.errors && this.props.errors.join(' ')}
+        {errorMessage}
       </div>
       <p hidden={!this.props.helpText} className="help-text text-right">{helpText}</p>
     </div>);

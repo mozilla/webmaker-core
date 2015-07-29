@@ -65,7 +65,7 @@ var Tinker = React.createClass({
     api.getElement(this.state.params, (err, element) => {
       this.setState({loading: false});
       if (err) {
-        return reportError("Error loading element", err);
+        return reportError(this.getIntlMessage("error_element"), err);
       }
       var spec = elementTypes[element.type].spec;
       if (!spec.spec[this.state.params.propertyName]) {
@@ -97,7 +97,7 @@ var Tinker = React.createClass({
     api.updateElement(options, (err, element) => {
       this.setState({loading: false});
       if (err) {
-        reportError("Error updating element", err);
+        reportError(this.getIntlMessage("error_update_element"), err);
       }
       if (typeof onSaveComplete === 'function') {
         onSaveComplete();

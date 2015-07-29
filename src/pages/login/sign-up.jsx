@@ -109,8 +109,8 @@ var SignUp = React.createClass({
         if (window.Platform) {
           window.Platform.trackEvent('Login', 'Sign Up', 'Sign Up Error');
         }
-        this.setState({globalError: err.message || 'Something went wrong.' });
-        return reportError("Error while trying to sign up", err);
+        this.setState({globalError: err.message || this.getIntlMessage('something_went_wrong') });
+        return reportError(this.getIntlMessage('error_while_trying_signup'), err);
       }
 
       this.replaceState(this.getInitialState());
