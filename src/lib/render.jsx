@@ -1,27 +1,12 @@
 var React = require('react');
-var assign = require('react/lib/Object.assign');
 
 var Spindicator = require('../components/spindicator/spindicator.jsx');
 var ModalConfirm = require('../components/modal-confirm/modal-confirm.jsx');
 var ModalSwitch = require('../components/modal-switch/modal-switch.jsx');
 var Snackbar = require('../components/snackbar/snackbar.jsx');
-var messages = require('./messages');
 
-var locale = navigator.language.split('-');
-locale = locale[1] ? `${locale[0]}-${locale[1].toUpperCase()}` : navigator.language;
-
-var strings = messages[locale] ? messages[locale] : messages['en-US'];
-
-// Sometimes we will include a language with partial translation
-// and we need to make sure the object that we pass to `intlData`
-// contains all keys based on the `en-US` messages.
-strings = assign(messages['en-US'], strings);
-
-var intlData = {
-    locales : ['en-US'],
-    messages: strings
-};
 var platform = require('./platform');
+var intlData = require('./i18n').intlData;
 
 var Base = React.createClass({
   onResume: function () {
