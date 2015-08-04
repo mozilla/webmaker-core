@@ -1,6 +1,6 @@
 {
   "name": "webmaker-core",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Web core for Webmaker App",
   "scripts": {
     "start": "npm run build && npm-run-all --parallel webserver watch:**",
