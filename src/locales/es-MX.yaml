@@ -2,7 +2,7 @@
 en-US:
   username: Usuario
   password: Contraseña
-  email: Email
+  email: Correo electrónico
   helpText: Reiniciar contraseña
   email_me_updates: Enviarme actualizaciones acerca de Webmaker
   join_webmaker: Únete a Webmaker
