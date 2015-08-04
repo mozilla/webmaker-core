@@ -167,5 +167,4 @@ Platform.prototype.isDebugBuild = function() {
   return false;
 };
 
-
 module.exports = new Platform();
