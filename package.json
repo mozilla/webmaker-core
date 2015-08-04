@@ -72,7 +72,6 @@
     "panzoom": "https://github.com/k88hudson/panzoom.git#b3b698d44ed12129c723f76efbd431678a34d96a",
     "react": "0.13.1",
     "react-hammerjs": "0.2.2",
-    "react-imageloader": "1.2.0",
     "react-intl": "1.2.0",
     "xhr": "2.0.1"
   },
