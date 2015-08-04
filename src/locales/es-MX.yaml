@@ -1,0 +1,53 @@
+---
+en-US:
+  username: Usuario
+  password: Contraseña
+  email: Email
+  helpText: Reiniciar contraseña
+  email_me_updates: Enviarme actualizaciones acerca de Webmaker
+  join_webmaker: Únete a Webmaker
+  by_joining: Al unirte, aceptas los {linkTerms} y {linkPrivacyPolicy}
+  privacy_policy: Política de privacidad
+  terms: Términos
+  already_join_signin: ¿Ya te uniste? {signinLink}
+  signin: Entrar
+  dont_have_account: ¿No tienes una cuenta? {joinWebmakerLink}
+  errorUsernameOrPassword: Parece que podría haber un probelam con tu usuario o contraseña.
+  color_editor: 'color: {rgbaValue};'
+  Red: Rojo
+  Green: Verde
+  Blue: Azul
+  Opacity: Opacidad
+  my_project: Mi proyecto
+  log_out: Salir
+  create_a_project: + Crear un proyecto
+  open_style_guide: Abrir la guía de estilo
+  reset_share_preferences: Reiniciar preferencias compartidas
+  loading: ¡Cargando!
+  title: Título
+  done: Hecho
+  edit_label: Editar etiqueta
+  change_link_dest: Cambiar destino del link
+  set_link_dest: Definir destino del link
+  corner_radius: Radio de las esquinas
+  Font: Fuente
+  background_color: Color de fondo
+  no_project_found: Lo sentimos, no encontramos ningún proyecto.
+  error_featured: Error descubriendo proyectos
+  error_featured_404: No se encontraron proyectos en descubre
+  error_update_element: Hubo un error actualizando el elementp
+  error_element: Error cargando el elemento
+  error_element_404: Elemento no encontrado
+  error_create_make: Intentamos crear un proyecto cuando no encotramos una sesión
+  error_create_element: Hubo un error creando un elemento
+  error_delete_element: Hubo un problema eliminando el elemento
+  error_page: Hubo un error al obtener la página para cargar
+  error_page_404: No se pudo encontrar la página para leer
+  error_404_element_save: No se pudo encontrar el elemento para guardar
+  cc: Creative Commons
+  ccLicenseSection: Contenido publicado bajo una licencia llamada Creative Commons {creativecommonsLink}.
+  ccLicenseSectionSub: Esto significa que otra gente puede compartir, adaptar, y mezclar tu
+    contenido si ellos te dan crédito y comparten su trabajo del mismo modo, todo esto
+    se describe en la licencia.
+  ccAttribution: Reconocimiento-CompartirIgual 3.0 Unported
+  error_discovery_get: Error obteniendo proyectos en descubre
