@@ -99,7 +99,7 @@ var Project = React.createClass({
         <Menu fullWidth={this.state.params.mode === 'link'}>
           <SecondaryButton side="left" onClick={this.zoomFromPage} off={this.state.params.mode !== 'edit' || !this.state.matrix || this.state.matrix[0] < 1} icon="../../img/zoom-out-blue.svg" />
           <PrimaryButton url={ this.getPageURL(this.state.params, this.state.selectedEl) } off={isPlayOnly || !this.state.selectedEl} href="/pages/page" icon="../../img/pencil.svg" />
-          <SecondaryButton side="right" off={isPlayOnly || !this.state.selectedEl} onClick={this.removePage} icon="../../img/trash.svg" />
+          <SecondaryButton side="right" off={isPlayOnly || !this.state.selectedEl || this.state.pages.length <= 1} onClick={this.removePage} icon="../../img/trash.svg" />
           <FullWidthButton onClick={this.setDestination} off={this.state.params.mode !== 'link' || !this.state.selectedEl}>Set Destination</FullWidthButton>
         </Menu>
 
