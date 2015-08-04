@@ -18,12 +18,13 @@ var Card = React.createClass({
   componentDidMount: function () {
     var imageEl = this.refs.imageEl.getDOMNode();
     imageEl.onerror = this.onImageError;
+    imageEl.src = this.props.thumbnail || Card.DEFAULT_THUMBNAIL;
   },
   render: function () {
     return (
       <Link url={this.props.url} href={this.props.href} className="card">
         <div className="thumbnail">
-          <img ref="imageEl" src={this.props.thumbnail || Card.DEFAULT_THUMBNAIL} />
+          <img ref="imageEl" />
         </div>
 
         <div className="meta">
