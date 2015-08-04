@@ -27,7 +27,7 @@ var Make = React.createClass({
     this.load();
   },
   onError: function (err) {
-    reportError("Error loading projects", err);
+    reportError(this.getIntlMessage('error_loading_projects'), err);
     this.setState({loading: false});
   },
   onEmpty: function () {

@@ -51,3 +51,10 @@ en-US:
     this is described in the license.
   ccAttribution: Attribution-ShareAlike 3.0 Unported
   error_discovery_get: Error getting discovery projects
+  email_error_message: Please use a valid email address.
+  password_error_message: Your password must be at least 8 characters and contain at least 1 number and 1 letter
+  username_error_message: Must be 1-20 characters long and use only "-" and alphanumeric symbols.
+  something_went_wrong: Something went wrong.
+  error_while_trying_signup: Error while trying to sign up
+  error_while_trying_sign_in: Error while trying to log in
+  error_loading_projects: Error loading projects

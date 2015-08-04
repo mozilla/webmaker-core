@@ -93,7 +93,7 @@ var SignIn = React.createClass({
           window.Platform.trackEvent('Login', 'Sign In', 'Sign In Error');
         }
         this.setState({globalError: true});
-        return reportError("Error while trying to log in", err);
+        return reportError(this.getIntlMessage("error_while_trying_sign_in"), err);
       }
 
       this.replaceState(this.getInitialState());
