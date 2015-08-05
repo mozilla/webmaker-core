@@ -228,6 +228,22 @@ describe('api', function () {
       });
     });
 
+    it('should return correct error message if offline', function (done) {
+
+      resetMocks(createMockXhr({
+        '/authenticate': {
+          statusCode: 0
+        }
+      }));
+
+      global.window.Platform.isNetworkAvailable = () => false;
+
+      api.signUp({json: {username: 'k88', password: '123', email: 'k88@foo.com'}}, function (err, data) {
+        should.equal(err.message, api.ERROR_MESSAGES.offline_sign_up);
+        done();
+      });
+    });
+
     it('should return an error for non-200 response', function (done) {
       resetMocks(createMockXhr({
         '/sign-up': {
