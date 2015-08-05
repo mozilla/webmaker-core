@@ -33,6 +33,9 @@ function resetMocks(xhrMock) {
         },
         token: 'fakeToken'
       };
+    },
+    isNetworkAvailable: function () {
+      return true;
     }
   };
   api = proxyquire('../lib/api', {
@@ -150,7 +153,7 @@ describe('api', function () {
       });
     });
 
-    it('should return an error with a message for non-200 auth response', function (done) {
+    it('should return correct error message for 400 auth response', function (done) {
 
       resetMocks(createMockXhr({
         '/authenticate': {
@@ -163,7 +166,7 @@ describe('api', function () {
       }));
 
       api.authenticate({json: {username: 'k88', password: '123'}}, function (err, data) {
-        should.deepEqual(err, {message: 'Wrong!'});
+        should.equal(err.message, api.ERROR_MESSAGES.wrong_username_password);
         done();
       });
     });

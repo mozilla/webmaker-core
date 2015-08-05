@@ -173,7 +173,7 @@ Platform.prototype.isDebugBuild = function() {
 
 Platform.prototype.isNetworkAvailable = function() {
   // @todo - the android method is synchronous, we need to do the browser chekc async 
-  return true
+  return true;
 };
 
 module.exports = new Platform();

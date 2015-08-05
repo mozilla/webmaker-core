@@ -91,7 +91,7 @@ api.ERROR_MESSAGES = {
   wrong_username_password: 'There was a problem with your username or password.',
   login_server_problem: 'Looks like there was a problem with the login server.',
   offline_sign_up: 'We need an Internet connection to create an account.'
-}
+};
 
 api.requiredOptions = function (options, requiredFields) {
 
