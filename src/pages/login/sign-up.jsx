@@ -88,6 +88,8 @@ var SignUp = React.createClass({
   onSubmit: function (e) {
     e.preventDefault();
 
+    document.activeElement.blur();
+
     var errors = this.getValidationErrors();
     if (Object.keys(errors).length > 0) {
       return;

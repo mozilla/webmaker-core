@@ -74,6 +74,8 @@ var SignIn = React.createClass({
   onSubmit: function (e) {
     e.preventDefault();
 
+    document.activeElement.blur();
+
     var errors = this.getValidationErrors();
     if (Object.keys(errors).length > 0) {
       return;
@@ -133,7 +135,7 @@ var SignIn = React.createClass({
           valueLink={this.linkState(field.name)} />;
       })}
       <div className="form-group">
-        <button className="btn btn-block" disabled={!isValid} onClick={this.onSubmit}>
+        <button ref="submitButton" className="btn btn-block" disabled={!isValid} onClick={this.onSubmit}>
           {this.getIntlMessage('signin')}
         </button>
         <div className="error" hidden={!this.state.globalError}>
