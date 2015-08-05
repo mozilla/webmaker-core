@@ -85,6 +85,14 @@ api.AUTHENTICATE_URI = api.BASE_LOGIN_URI + '/login/oauth/access_token';
 api.SIGN_UP_URI = api.BASE_LOGIN_URI + '/create-user';
 api.USER_URI = api.BASE_LOGIN_URI + '/user';
 
+api.ERROR_MESSAGES = {
+  offline_sign_in: 'Please connect to the Internet to sign in.',
+  login_cant_connect: 'There was a problem connecting to the login server.',
+  wrong_username_password: 'There was a problem with your username or password.',
+  login_server_problem: 'Looks like there was a problem with the login server.',
+  offline_sign_up: 'We need an Internet connection to create an account.'
+};
+
 api.requiredOptions = function (options, requiredFields) {
 
   requiredFields = requiredFields || [];
@@ -134,6 +142,14 @@ api.authenticate = function (options, callback) {
     return callback(new Error('You must supply options.json to login'));
   }
 
+  // Check offline status
+  if (!platform.isNetworkAvailable()) {
+    return callback({
+      statusCode: 0,
+      message: api.ERROR_MESSAGES.offline_sign_in
+    });
+  }
+
   // Add in other required fields
   var json = assign({
     client_id: config.CLIENT_ID,
@@ -150,11 +166,40 @@ api.authenticate = function (options, callback) {
     }
   }, function (err, resp, body) {
 
-    if (err || resp.statusCode !== 200) {
-      return callback(parseJSON(body));
+    body = parseJSON(body);
+
+    // There was an XMLHTTPRequest error, which could mean:
+    // 1. we are offline
+    // 2. CORS issues
+    // 3. the server is down
+    if (err || resp.statusCode === 0) {
+      return callback({
+        statusCode: resp.statusCode,
+        error: err,
+        message: api.ERROR_MESSAGES.login_cant_connect
+      });
     }
 
-    body = parseJSON(body);
+    // 400 errors indicate a problem with credentials,
+    // such as a wrong password or username
+    else if (resp.statusCode >= 400 && resp.statusCode < 500) {
+      return callback({
+        statusCode: resp.statusCode,
+        message: api.ERROR_MESSAGES.wrong_username_password
+      });
+    }
+
+    // Any other errors are probably a server problem (i.e. 500)
+    // We may get a response that is useful but is more likely
+    // not understandable by the user
+    else if (resp.statusCode !== 200) {
+      return callback({
+        statusCode: resp.statusCode,
+        message: api.ERROR_MESSAGES.login_server_problem,
+        error: body
+      });
+    }
+
     var token = body.access_token;
 
     // If we provided a user object already, just return it with the token
@@ -170,10 +215,25 @@ api.authenticate = function (options, callback) {
         Authorization: 'token ' + token
       }
     }, function (err, resp, body) {
-      if (err || resp.statusCode !== 200) {
-        return callback(parseJSON(body));
-      }
+
       body = parseJSON(body);
+
+      // There was an XMLHTTPRequest error, which could mean:
+      // 1. we are offline
+      // 2. CORS issues
+      // 3. the server is down
+      if (err || resp.statusCode === 0) {
+        return callback({
+          statusCode: resp.statusCode,
+          error: err,
+          message: api.ERROR_MESSAGES.login_cant_connect
+        });
+      }
+
+      if (resp.statusCode !== 200) {
+        return callback(body);
+      }
+
       callback(null, {token, user: body});
     });
   });
@@ -202,6 +262,14 @@ api.signUp = function (options, callback) {
     return callback(new Error('You must supply options.json to sign up'));
   }
 
+  // Check offline status
+  if (!platform.isNetworkAvailable()) {
+    return callback({
+      statusCode: 0,
+      message: api.ERROR_MESSAGES.offline_sign_up
+    });
+  }
+
   var json = assign({
     client_id: config.CLIENT_ID
   }, options.json);
@@ -214,10 +282,36 @@ api.signUp = function (options, callback) {
       'Content-Type': 'application/x-www-form-urlencoded'
     }
   }, function (err, resp, body) {
-    if (err || resp.statusCode !== 200) {
-      return callback(parseJSON(body));
-    }
+
     body = parseJSON(body);
+
+    // There was an XMLHTTPRequest error, which could mean:
+    // 1. we are offline
+    // 2. CORS issues
+    // 3. the server is down
+    if (err || resp.statusCode === 0) {
+      return callback({
+        statusCode: resp.statusCode,
+        error: err,
+        message: api.ERROR_MESSAGES.login_cant_connect
+      });
+    }
+
+    // 400 errors should be passed to the user
+    else if (resp.statusCode >= 400 && resp.statusCode < 500) {
+      return callback(body);
+    }
+
+    // 500 responses are probably not the user's fault
+    // and likely not user-readable
+    else if (resp.statusCode !== 200) {
+      return callback({
+        statusCode: resp.statusCode,
+        message: api.ERROR_MESSAGES.login_server_problem,
+        error: body
+      });
+    }
+
     // Cool, let's authenticate now
     api.authenticate({
       user: body,

@@ -88,6 +88,8 @@ var SignUp = React.createClass({
   onSubmit: function (e) {
     e.preventDefault();
 
+    document.activeElement.blur();
+
     var errors = this.getValidationErrors();
     if (Object.keys(errors).length > 0) {
       return;
@@ -110,7 +112,7 @@ var SignUp = React.createClass({
           window.Platform.trackEvent('Login', 'Sign Up', 'Sign Up Error');
         }
         this.setState({globalError: err.message || 'Something went wrong.' });
-        return reportError("Error while trying to sign up", err);
+        return;
       }
 
       this.replaceState(this.getInitialState());
