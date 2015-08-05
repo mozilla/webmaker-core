@@ -39,7 +39,8 @@ function resetMocks(xhrMock) {
     }
   };
   api = proxyquire('../lib/api', {
-    xhr: xhrMock || function() {}
+    xhr: xhrMock || function() {},
+    './platform': global.window.Platform
   });
   api.AUTHENTICATE_URI = '/authenticate';
   api.USER_URI = '/user';
@@ -149,6 +150,22 @@ describe('api', function () {
       api.authenticate({user: {foo: 'bar'}, json: {username: 'k88', password: '123'}}, function (err, data) {
         should.equal(wasCalled, false);
         should.deepEqual(data, {token: 'foo', user: {foo: 'bar'}});
+        done();
+      });
+    });
+
+    it('should return correct error message if offline', function (done) {
+
+      resetMocks(createMockXhr({
+        '/authenticate': {
+          statusCode: 0
+        }
+      }));
+
+      global.window.Platform.isNetworkAvailable = () => false;
+
+      api.authenticate({json: {username: 'k88', password: '123'}}, function (err, data) {
+        should.equal(err.message, api.ERROR_MESSAGES.offline_sign_in);
         done();
       });
     });
