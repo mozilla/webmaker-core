@@ -4,6 +4,7 @@ var LinkBlock = require('../../components/basic-element/types/link.jsx');
 var ColorGroup = require('../../components/color-group/color-group.jsx');
 var Slider = require('../../components/range/range.jsx');
 var api = require('../../lib/api');
+var platform = require('../../lib/platform');
 var types = require('../../components/basic-element/basic-element.jsx').types;
 
 var LinkEditor = React.createClass({
@@ -32,6 +33,8 @@ var LinkEditor = React.createClass({
 
   },
   onDestClick: function () {
+    var expanded = types.link.spec.expand(this.state);
+
     var metadata = {
       elementID: this.props.params.element,
       linkState: this.state,
@@ -40,27 +43,34 @@ var LinkEditor = React.createClass({
       userID: this.props.params.user
     };
 
-    var expanded = types.link.spec.expand(this.state);
-
-    api({
-      method: 'patch',
-      uri: `/users/${metadata.userID}/projects/${metadata.projectID}/pages/${metadata.pageID}/elements/${metadata.elementID}`,
-      json: {
-        attributes: expanded.attributes,
-        styles: expanded.styles
-      }
-    }, (err, data) => {
+    var handler = (err, data) => {
       if (err) {
         console.error('There was an error updating the element', err);
       }
+      var pickerView = `/users/${this.props.params.user}/projects/${this.props.params.project}/link`;
+      platform.setView(pickerView, JSON.stringify(metadata));
+    };
 
-      if (window.Platform) {
-        window.Platform.setView(
-          `/users/${this.props.params.user}/projects/${this.props.params.project}/link`,
-          JSON.stringify(metadata)
-        );
-      }
-    });
+    var java = platform.getAPI();
+
+    if(java) {
+      java.queue("link-element", JSON.stringify({
+        data: expanded
+      }));
+      // TODO: I'm not sure we need the metadata system for this anymore, if we have java-side queueing.
+      handler();
+    }
+
+    else {
+      api({
+        method: 'patch',
+        uri: `/users/${metadata.userID}/projects/${metadata.projectID}/pages/${metadata.pageID}/elements/${metadata.elementID}`,
+        json: {
+          attributes: expanded.attributes,
+          styles: expanded.styles
+        }
+      }, handler);
+    }
   },
   render: function () {
     return (

@@ -1,5 +1,7 @@
 var api = require('../../lib/api');
+var platform = require('../../lib/platform');
 var reportError = require('../../lib/errors');
+var types = require('../../components/basic-element/basic-element.jsx').types;
 
 function findLandingPage(pages) {
   var result;
@@ -54,10 +56,17 @@ module.exports = {
         this.setState(state);
 
         // Highlight the source page if you're in link destination mode
-        if (this.state.params.mode === 'link') {
-          if (window.Platform) {
-            this.highlightPage(this.state.routeData.pageID, 'source');
-          }
+        var java = platform.getAPI();
+        if (java) {
+          var payloads = java.getPayloads("link-element");
+          // do NOT clear the payload, we do that in setdestination.js instead
+          var list = JSON.parse(payloads);
+          var element = types.link.spec.expand(list[0].data);
+          var pageId = element.attributes.targetPageId;
+          if (pageId) { this.highlightPage(pageId, 'source'); }
+        }
+        else if (this.state.params.mode === 'link') {
+          this.highlightPage(this.state.routeData.pageID, 'source');
         }
       }
     });

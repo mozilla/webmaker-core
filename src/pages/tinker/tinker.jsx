@@ -3,6 +3,7 @@ var assign = require('react/lib/Object.assign');
 var FormattedMessage = require('react-intl').FormattedMessage;
 var reportError = require('../../lib/errors');
 var api = require('../../lib/api');
+var platform = require('../../lib/platform');
 
 var render = require('../../lib/render.jsx');
 var Tabs = require('../../components/tabs/tabs.jsx');
@@ -40,7 +41,7 @@ var Tinker = React.createClass({
     //              not by reaching into the DOM.
     // Prevent pull to refresh
     document.body.style.overflowY = 'hidden';
-    this.load();
+    this.loadComponentData();
     this.props.update({
       onBackPressed: () => {
         this.save(() => window.Platform.goBack());
@@ -53,15 +54,21 @@ var Tinker = React.createClass({
    */
   componentDidUpdate: function (prevProps, prevState) {
     if (this.props.isVisible && !prevProps.isVisible) {
-      this.load();
+      this.checkCache();
     }
   },
 
   /**
-   * Load element data from API, based on router params
+   * Load data into this component, either from cache, or
+   * by retrieving the data from the API database
    */
-  load: function () {
+  loadComponentData: function() {
     this.setState({loading: true});
+
+    if (this.checkCache()) {
+      return this.setState({loading: false});
+    }
+
     api.getElement(this.state.params, (err, element) => {
       this.setState({loading: false});
       if (err) {
@@ -80,6 +87,42 @@ var Tinker = React.createClass({
   },
 
   /**
+   * Check the java cache for data that needs to be loaded.
+   * If there is any, load it and return true, otherwise return false.
+   */
+  checkCache: function() {
+    var java = platform.getAPI();
+
+    if (java) {
+      var payloads = java.getPayloads("edited-element");
+      if (payloads !== undefined) {
+        try {
+          payloads = JSON.parse(payloads);
+          var payload = payloads[0].data;
+          var spec = elementTypes[payload.type].spec;
+
+          java.clearPayloads("edited-element");
+
+          this.setState({
+            loading: false,
+            element: spec.flatten(payload, {defaults: true}),
+            editor: spec.spec[this.state.params.propertyName].editor || 'color'
+          });
+
+          return true;
+        }
+        catch (e) {
+          console.error("malformed payload JSON for tinker mode:", payloads);
+        }
+      }
+    }
+
+    // if we get here, we didn't load anything from cache
+    return false;
+  },
+
+
+  /**
    * Save current element state in API
    * Triggered in componentDidUpdate
    */
@@ -90,19 +133,29 @@ var Tinker = React.createClass({
         isStyleOrAttribute = spec.isStyleOrAttribute(propertyName),
         updateObject = {};
 
-    updateObject[isStyleOrAttribute] = spec.expand(element)[isStyleOrAttribute];
+    var java = platform.getAPI();
 
-    this.setState({loading: true});
-    var options = assign({}, this.state.params, {json: updateObject});
-    api.updateElement(options, (err, element) => {
-      this.setState({loading: false});
-      if (err) {
-        reportError("Error updating element", err);
-      }
-      if (typeof onSaveComplete === 'function') {
-        onSaveComplete();
-      }
-    });
+    if (java) {
+      var expanded = spec.expand(element);
+      var payload = { data: expanded };
+      java.queue("edit-element", JSON.stringify(payload));
+      onSaveComplete();
+    }
+
+    else {
+      updateObject[isStyleOrAttribute] = spec.expand(element)[isStyleOrAttribute];
+      this.setState({loading: true});
+      var options = assign({}, this.state.params, {json: updateObject});
+      api.updateElement(options, (err, element) => {
+        this.setState({loading: false});
+        if (err) {
+          reportError("Error updating element", err);
+        }
+        if (typeof onSaveComplete === 'function') {
+          onSaveComplete();
+        }
+      });
+    }
   },
 
   getEditorValue: function () {
