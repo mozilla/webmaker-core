@@ -143,7 +143,7 @@ api.authenticate = function (options, callback) {
   }
 
   // Check offline status
-  if (platform.isNetworkAvailable && !platform.isNetworkAvailable()) {
+  if (!platform.isNetworkAvailable()) {
     return callback({
       statusCode: 0,
       message: api.ERROR_MESSAGES.offline_sign_in
@@ -263,7 +263,7 @@ api.signUp = function (options, callback) {
   }
 
   // Check offline status
-  if (platform.isNetworkAvailable && !platform.isNetworkAvailable()) {
+  if (!platform.isNetworkAvailable()) {
     return callback({
       statusCode: 0,
       message: api.ERROR_MESSAGES.offline_sign_up
