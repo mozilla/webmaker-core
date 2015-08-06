@@ -18,7 +18,7 @@ var BasicElement = React.createClass({
       link: require('./types/link.jsx')
     },
     // the minimum size of the long-edge of an element, in pixels.
-    minScaledEdgeLength: 100,
+    minScaledEdgeLength: 50,
     maxScaledEdgeLength: window.innerWidth - 40,
     /**
      * A static function for determining whether a given scale will
