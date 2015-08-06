@@ -1,8 +1,26 @@
-<svg width="22" height="14" viewBox="0 0 22 14" xmlns="http://www.w3.org/2000/svg">
+<svg width="20" height="16" viewBox="0 0 20 16" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <defs>
+        <filter x="-50%" y="-50%" width="200%" height="200%" filterUnits="objectBoundingBox" id="a">
+            <feOffset dy="3" in="SourceAlpha" result="shadowOffsetOuter1"/>
+            <feGaussianBlur stdDeviation="1" in="shadowOffsetOuter1" result="shadowBlurOuter1"/>
+            <feColorMatrix values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.161 0" in="shadowBlurOuter1" result="shadowMatrixOuter1"/>
+            <feOffset dy="3" in="SourceAlpha" result="shadowOffsetOuter2"/>
+            <feGaussianBlur stdDeviation="1" in="shadowOffsetOuter2" result="shadowBlurOuter2"/>
+            <feColorMatrix values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.112 0" in="shadowBlurOuter2" result="shadowMatrixOuter2"/>
+            <feMerge>
+                <feMergeNode in="shadowMatrixOuter1"/>
+                <feMergeNode in="shadowMatrixOuter2"/>
+                <feMergeNode in="SourceGraphic"/>
+            </feMerge>
+        </filter>
+        <path id="b" d="M607.48 97.092c.096.097.145.244.145.44 0 .227-.08.414-.244.56-.162.147-.357.22-.585.22H592.83c-.228 0-.423-.073-.586-.22-.163-.146-.244-.333-.244-.56 0-.164.05-.294.146-.39l.098-.148 6.64-7.617c.294-.293.603-.44.928-.44.326 0 .635.147.928.44l6.64 7.617.1.098z"/>
+    </defs>
     <g fill="none" fill-rule="evenodd">
-        <g fill="#8495AE">
+        <g transform="translate(-590 -88)" filter="url(#a)" opacity=".7">
             <g>
-                <path d="M21.05 11.965c.134.133.2.332.2.598 0 .31-.11.564-.332.763-.22.2-.487.3-.797.3H1.13c-.31 0-.577-.1-.798-.3-.22-.2-.332-.454-.332-.764 0-.22.066-.398.2-.53l.132-.2 9.03-10.36c.4-.398.82-.597 1.263-.597.443 0 .863.2 1.262.598l9.03 10.36.134.132z"/>
+                <use fill="#fff" xlink:href="#b"/>
+                <use xlink:href="#b"/>
+                <use xlink:href="#b"/>
             </g>
         </g>
     </g>
