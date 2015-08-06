@@ -10,6 +10,10 @@ var Spec = require('../../lib/spec');
 var touchhandler = require("../../lib/touchhandler");
 var dispatcher = require('../../lib/dispatcher');
 
+var PAGE_WIDTH = 320;
+var PAGE_HEIGHT = 440;
+var DRAG_BOUNDS_THRESHOLD = 40;
+
 var BasicElement = React.createClass({
   statics: {
     types: {
@@ -93,13 +97,6 @@ var BasicElement = React.createClass({
     onode.addEventListener("touchstart", touchHandler.secondFinger);
     onode.addEventListener("touchmove", touchHandler.panmove);
     onode.addEventListener("touchend", touchHandler.endmark);
-
-    var threshold = 45;
-    var bbox = document.body.getBoundingClientRect();
-    this.dragLimits = {
-      width: bbox.width/2 - threshold,
-      height: bbox.height/2 - threshold
-    };
   },
 
   componentDidUpdate: function(prevProps, prevState) {
@@ -226,11 +223,17 @@ var BasicElement = React.createClass({
    * if they'd otherwise run off the page.
    */
   handleTranslation: function(x, y) {
-    var dl = this.dragLimits,
-        w_edge = dl.width,
-        h_edge = dl.height;
+
+    var a = this.state.angle;
+    var rect_width = this.rect.width;
+    var rect_height = this.rect.height;
+
+    var w_edge = PAGE_WIDTH/2 + rect_width/2 - DRAG_BOUNDS_THRESHOLD;
+    var h_edge = PAGE_HEIGHT/2 + rect_height/2 - DRAG_BOUNDS_THRESHOLD;
+
     x = (x > w_edge) ? w_edge : (x < -w_edge) ? -w_edge : x;
     y = (y > h_edge) ? h_edge : (y < -h_edge) ? -h_edge : y;
+
     this.setState({ x: x, y: y }, this.onUpdate);
   },
 

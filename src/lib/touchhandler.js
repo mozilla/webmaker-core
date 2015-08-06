@@ -40,6 +40,10 @@
       startmark: function(evt) {
         evt.preventDefault();
         evt.stopPropagation();
+
+        // Calculate actual height of element so we can calculate bounds properly
+        positionable.rect = positionable.refs.styleWrapper.getDOMNode().getBoundingClientRect();
+
         if (debug) { timedLog("startmark"); }
         if(!evt.touches || evt.touches.length === 1) {
           if (debug) { timedLog("startmark - continued"); }
