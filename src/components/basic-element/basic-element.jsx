@@ -224,15 +224,11 @@ var BasicElement = React.createClass({
    */
   handleTranslation: function(x, y) {
 
-    var a = this.state.angle;
-    var rect_width = this.rect.width;
-    var rect_height = this.rect.height;
+    var edgeX = PAGE_WIDTH/2 + this.rect.width/2 - DRAG_BOUNDS_THRESHOLD;
+    var edgeY = PAGE_HEIGHT/2 + this.rect.height/2 - DRAG_BOUNDS_THRESHOLD;
 
-    var w_edge = PAGE_WIDTH/2 + rect_width/2 - DRAG_BOUNDS_THRESHOLD;
-    var h_edge = PAGE_HEIGHT/2 + rect_height/2 - DRAG_BOUNDS_THRESHOLD;
-
-    x = (x > w_edge) ? w_edge : (x < -w_edge) ? -w_edge : x;
-    y = (y > h_edge) ? h_edge : (y < -h_edge) ? -h_edge : y;
+    x = (x > edgeX) ? edgeX : (x < -edgeX) ? -edgeX : x;
+    y = (y > edgeY) ? edgeY : (y < -edgeY) ? -edgeY : y;
 
     this.setState({ x: x, y: y }, this.onUpdate);
   },
