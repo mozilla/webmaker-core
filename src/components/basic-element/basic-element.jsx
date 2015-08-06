@@ -12,7 +12,7 @@ var dispatcher = require('../../lib/dispatcher');
 
 var PAGE_WIDTH = 320;
 var PAGE_HEIGHT = 440;
-var DRAG_BOUNDS_THRESHOLD = 40;
+var DRAG_BOUNDS_THRESHOLD = 100;
 
 var BasicElement = React.createClass({
   statics: {
