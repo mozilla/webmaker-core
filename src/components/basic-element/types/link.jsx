@@ -81,7 +81,7 @@ var Link = React.createClass({
     var style = {
       borderRadius: props.borderRadius,
       backgroundColor: props.backgroundColor,
-      border: `1px solid ${darken(props.backgroundColor, 0.3)}`,
+      border: `1px solid ${darken(props.backgroundColor, 0.4)}`,
       color: getContrastingColor(props.backgroundColor),
       fontFamily: props.fontFamily,
       whiteSpace: props.whiteSpace
