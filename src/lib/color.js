@@ -13,5 +13,11 @@ module.exports = {
           bc = black.contrast(c);
       return (wc < bc && wc >= minimumContrast) ? whiteCSS : blackCSS;
     };
-  }())
+  }()),
+  darken: function(baseColor, shade){
+    var color = Color(baseColor);
+    color.darken(shade);
+
+    return color.hexString();
+  }
 };
