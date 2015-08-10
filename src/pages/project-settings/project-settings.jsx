@@ -52,6 +52,7 @@ var ProjectSettings = React.createClass({
         <div>
           <TextInput id="title" ref="title" label={this.getIntlMessage('title')} maxlength={25} minlength={4} linkState={this.linkState} />
           <button hidden={window.Platform} onClick={this.save}>DEBUG:Save</button>
+          <p className="error" hidden={!this.state.error}>{this.state.error}</p>
         </div>
 
         <div className="cc">
@@ -97,9 +98,12 @@ var ProjectSettings = React.createClass({
    * Persists changes to project settings.
    */
   save: function (onSaveComplete) {
-
-    // @todo Client-side validation
-    // console.log(_this.refs.title.validate());
+    if (!this.refs.title.validate()) {
+      this.setState({error: this.getIntlMessage('error_title_length')});
+      return;
+    } else {
+      this.setState({error: false});
+    }
 
     // Update project settings via the API
     this.setState({loading: true});
