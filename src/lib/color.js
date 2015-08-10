@@ -18,6 +18,6 @@ module.exports = {
     var color = Color(baseColor);
     color.darken(shade);
 
-    return color.hexString();
+    return color.rgbString();
   }
 };
