@@ -1,6 +1,6 @@
 var React = require('react');
 var assign = require('react/lib/Object.assign');
-var getContrastingColor = require('../../../lib/color').getContrastingColor;
+var {getContrastingColor, darken} = require('../../../lib/color');
 var Spec = require('../../../lib/spec');
 var dispatcher = require('../../../lib/dispatcher');
 
@@ -79,9 +79,9 @@ var Link = React.createClass({
     var props = this.props;
 
     var style = {
-      boxShadow: 'none',
       borderRadius: props.borderRadius,
       backgroundColor: props.backgroundColor,
+      border: `1px solid ${darken(props.backgroundColor, 0.4)}`,
       color: getContrastingColor(props.backgroundColor),
       fontFamily: props.fontFamily,
       whiteSpace: props.whiteSpace
