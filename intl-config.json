@@ -1,5 +1,5 @@
 {
-	"supportedLocales": ["en-US", "pt-BR", "bn-BD", "id-ID"],
+	"supportedLocales": ["en-US", "en-GB", "pt-BR", "bn-BD", "id-ID"],
 	"dest": "src/locales",
 	"src": "src/locales",
 	"type": "json"
