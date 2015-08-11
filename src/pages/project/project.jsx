@@ -87,7 +87,7 @@ var Project = React.createClass({
           isVisible={ this.state.isPageZoomed }>
         </DPad>
 
-        <button className={'btn-zoom-out' + (this.state.isPageZoomed ? '' : ' hidden') } onClick={this.zoomFromPage} />
+        <button ref="btnZoomOut" className={'btn-zoom-out' + (this.state.isPageZoomed ? '' : ' hidden') } onClick={this.zoomFromPage} />
 
         <div ref="bounding" className="bounding" style={ this.getBoundingStyle() }>
           <div className="test-container" style={ this.getContainerStyle() }>
