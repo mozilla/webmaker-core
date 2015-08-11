@@ -78,7 +78,7 @@ function api(options, callback) {
         return callback(errorObj);
       } catch (e) {
         return callback({
-          error: "A network error occurred",
+          error: 'A network error occurred',
           statusCode: statusCode
         });
       }
