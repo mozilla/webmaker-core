@@ -59,11 +59,18 @@ module.exports = {
         var java = platform.getAPI();
         if (java) {
           var payloads = java.getPayloads("link-element");
-          // do NOT clear the payload, we do that in setdestination.js instead
-          var list = JSON.parse(payloads);
-          var element = types.link.spec.expand(list[0].data);
-          var pageId = element.attributes.targetPageId;
-          if (pageId) { this.highlightPage(pageId, 'source'); }
+          if (payloads) {
+            // We do not clear the payload, since it is also
+            // required later on in setdestination.js
+            try {
+              var list = JSON.parse(payloads);
+              var element = types.link.spec.expand(list[0].data);
+              var pageId = element.attributes.targetPageId;
+              if (pageId) { this.highlightPage(pageId, 'source'); }
+            } catch (e) {
+              console.error("malformed JSON found while loading in link-element data...");
+            }
+          }
         }
         else if (this.state.params.mode === 'link') {
           this.highlightPage(this.state.routeData.pageID, 'source');
