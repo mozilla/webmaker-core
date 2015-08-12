@@ -6,6 +6,10 @@ var TextInput = require('../../components/text-input/text-input.jsx');
 var Loading = require('../../components/loading/loading.jsx');
 var Link = require('../../components/link/link.jsx');
 var FormattedMessage = require('react-intl').FormattedMessage;
+var Alert = require('../../components/alert/alert.jsx');
+
+var MAX_PROJECT_NAME_LENGTH = 256;
+var MIN_PROJECT_NAME_LENGTH = 4;
 
 var ProjectSettings = React.createClass({
 
@@ -43,6 +47,10 @@ var ProjectSettings = React.createClass({
     if (this.props.isVisible && !prevProps.isVisible) {
       this.load();
     }
+
+    if (this.refs.title.validate()) {
+      this.refs.invalidAlert.hide();
+    }
   },
 
   render: function () {
@@ -50,7 +58,8 @@ var ProjectSettings = React.createClass({
     return (
       <div id="projectSettings">
         <div>
-          <TextInput id="title" ref="title" label={this.getIntlMessage('title')} maxlength={25} minlength={4} linkState={this.linkState} />
+          <TextInput id="title" ref="title" label={this.getIntlMessage('title')} maxlength={MAX_PROJECT_NAME_LENGTH} minlength={MIN_PROJECT_NAME_LENGTH} linkState={this.linkState} />
+          <Alert ref="invalidAlert">{this.getIntlMessage('badTitle')}</Alert>
           <button hidden={window.Platform} onClick={this.save}>DEBUG:Save</button>
         </div>
 
@@ -97,28 +106,28 @@ var ProjectSettings = React.createClass({
    * Persists changes to project settings.
    */
   save: function (onSaveComplete) {
-
-    // @todo Client-side validation
-    // console.log(_this.refs.title.validate());
-
-    // Update project settings via the API
-    this.setState({loading: true});
-    api({
-      method: 'PATCH',
-      uri: this.uri(),
-      json: {
-        title: this.state.title
-      }
-    }, (err, body) => {
-      this.setState({loading: false});
-      if (err) {
-        // @todo Handle error state (GH-1922)
-        console.error('Could not update project settings.');
-      }
-      if (typeof onSaveComplete === 'function') {
-        onSaveComplete();
-      }
-    });
+    if (this.refs.title.validate()) {
+      // Update project settings via the API
+      this.setState({loading: true});
+      api({
+        method: 'PATCH',
+        uri: this.uri(),
+        json: {
+          title: this.state.title
+        }
+      }, (err, body) => {
+        this.setState({loading: false});
+        if (err) {
+          // @todo Handle error state (GH-1922)
+          console.error('Could not update project settings.');
+        }
+        if (typeof onSaveComplete === 'function') {
+          onSaveComplete();
+        }
+      });
+    } else {
+      this.refs.invalidAlert.show();
+    }
   }
 });
 
