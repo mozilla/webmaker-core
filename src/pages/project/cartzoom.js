@@ -75,21 +75,6 @@ module.exports = {
     });
   },
 
-  /**
-   * Zoom into a specified page while retaining the current mode (edit/play)
-   *
-   * @param  {object} coords Co-ordinates (x,y) for page
-   *
-   * @return {void}
-   */
-  zoomToSelection: function (coords) {
-    var {x, y} = this.cartesian.getFocusTransform(coords, 1);
-    this.setState({
-      matrix: [1, 0, 0, 1, x, y],
-      zoomedPageCoords: coords
-    });
-  },
-
   zoomOut: function () {
     var matrix = this.state.matrix.slice();
     var zoom = this.state.matrix[0] / 2;
