@@ -153,9 +153,7 @@ module.exports = {
           this.state.zoomedPageCoords.y !== page.coords.y) {
         this.zoomToPage(page.coords);
       }
-    } else if (page.id === this.state.selectedEl && this.state.params.mode !== 'link') {
-      this.zoomToSelection(page.coords);
-    } else {
+    } else if (page.id !== this.state.selectedEl) {
       this.highlightPage(page.id, 'selected');
     }
   },
