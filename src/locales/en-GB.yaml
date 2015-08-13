@@ -1,5 +1,4 @@
----
-en-US:
+en-GB:
   username: Username
   password: Password
   email: Email
@@ -13,13 +12,13 @@ en-US:
   signin: Sign in
   dont_have_account: Don’t have an account? {joinWebmakerLink}
   errorUsernameOrPassword: Looks like there might be a problem with your username or password.
-  color_editor: 'color: {rgbaValue};'
+  color_editor: 'colour: {rgbaValue};'
   Red: Red
   Green: Green
   Blue: Blue
   Opacity: Opacity
   my_project: My project
-  log_out: Log out
+  log_out: Log Out
   create_a_project: + Create a Project
   open_style_guide: Open Style Guide
   reset_share_preferences: Reset Shared Preferences
@@ -30,8 +29,8 @@ en-US:
   change_link_dest: Change Link Destination
   set_link_dest: Set Link Destination
   corner_radius: Corner Radius
-  Font: Font
-  background_color: Background Color
+  Font: Text
+  background_color: Background Colour
   no_project_found: Sorry, no projects found.
   error_featured: Error getting discovery projects
   error_featured_404: No discovery projects found
@@ -46,9 +45,5 @@ en-US:
   error_404_element_save: Could not find the element to save
   cc: Creative Commons
   ccLicenseSection: Content published under a Creative Commons license called {creativecommonsLink}.
-  ccLicenseSectionSub: This means that other people can share, adapt, and remix your
-    content if they give you credit and share their work in the same way, as all of
-    this is described in the license.
+  ccLicenseSectionSub: This means that other people can share, adapt, and remix your content if they give you credit and share their work in the same way, as all of this is described in the license.
   ccAttribution: Attribution-ShareAlike 3.0 Unported
-  error_discovery_get: Error getting discovery projects
-  badTitle: Title must be between {minLength} and {maxLength} characters

@@ -1,5 +1,4 @@
 var React = require('react/addons');
-var ImageLoader = require('react-imageloader');
 var Link = require('../link/link.jsx');
 
 var Card = React.createClass({
@@ -11,16 +10,21 @@ var Card = React.createClass({
     e.stopPropagation();
     this.props.onActionsClick.call(this, this.props);
   },
-  prerenderImage: function() {
-    return React.createElement('img', {
-      src: Card.DEFAULT_THUMBNAIL
-    });
+  onImageError: function() {
+    var imageEl = this.refs.imageEl.getDOMNode();
+    imageEl.src = Card.DEFAULT_THUMBNAIL;
+    imageEl.onerror = null;
+  },
+  componentDidMount: function () {
+    var imageEl = this.refs.imageEl.getDOMNode();
+    imageEl.onerror = this.onImageError;
+    imageEl.src = this.props.thumbnail || Card.DEFAULT_THUMBNAIL;
   },
   render: function () {
     return (
       <Link url={this.props.url} href={this.props.href} className="card">
         <div className="thumbnail">
-          <ImageLoader src={this.props.thumbnail || Card.DEFAULT_THUMBNAIL} preloader={this.prerenderImage}></ImageLoader>
+          <img ref="imageEl" />
         </div>
 
         <div className="meta">

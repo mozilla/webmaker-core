@@ -1,11 +1,13 @@
 var React = require('react/addons');
 var api = require('../../lib/api');
 var reportError = require('../../lib/errors');
+var i18n = require('../../lib/i18n');
 
 var render = require('../../lib/render.jsx');
 var Card = require('../../components/card/card.jsx');
 var Loading = require('../../components/loading/loading.jsx');
 
+var lang = i18n.isSupportedLanguage(i18n.currentLanguage) ? i18n.currentLanguage : i18n.defaultLang;
 
 var Discover = React.createClass({
   mixins: [require('react-intl').IntlMixin],
@@ -18,7 +20,7 @@ var Discover = React.createClass({
   load: function () {
     this.setState({loading: true});
     api({
-      uri: '/discover?count=25',
+      uri: '/discover/' + lang + '?count=25',
       useCache: true
     }, (err, body) => {
       this.setState({loading: false});

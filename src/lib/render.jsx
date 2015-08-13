@@ -5,13 +5,8 @@ var ModalConfirm = require('../components/modal-confirm/modal-confirm.jsx');
 var ModalSwitch = require('../components/modal-switch/modal-switch.jsx');
 var Snackbar = require('../components/snackbar/snackbar.jsx');
 
-// TODO: make this intlData more dynamic based on directory structure and load them here
-// We might also change from JSON to YAML format for better translation support.
-var intlData = {
-    locales : ['en-US'],
-    messages: require('../locales/en-US.json')
-};
 var platform = require('./platform');
+var intlData = require('./i18n').intlData;
 
 var Base = React.createClass({
   onResume: function () {

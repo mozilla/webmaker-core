@@ -33,10 +33,14 @@ function resetMocks(xhrMock) {
         },
         token: 'fakeToken'
       };
+    },
+    isNetworkAvailable: function () {
+      return true;
     }
   };
   api = proxyquire('../lib/api', {
-    xhr: xhrMock || function() {}
+    xhr: xhrMock || function() {},
+    './platform': global.window.Platform
   });
   api.AUTHENTICATE_URI = '/authenticate';
   api.USER_URI = '/user';
@@ -150,7 +154,23 @@ describe('api', function () {
       });
     });
 
-    it('should return an error with a message for non-200 auth response', function (done) {
+    it('should return correct error message if offline', function (done) {
+
+      resetMocks(createMockXhr({
+        '/authenticate': {
+          statusCode: 0
+        }
+      }));
+
+      global.window.Platform.isNetworkAvailable = () => false;
+
+      api.authenticate({json: {username: 'k88', password: '123'}}, function (err, data) {
+        should.equal(err.message, api.ERROR_MESSAGES.offline_sign_in);
+        done();
+      });
+    });
+
+    it('should return correct error message for 400 auth response', function (done) {
 
       resetMocks(createMockXhr({
         '/authenticate': {
@@ -163,7 +183,7 @@ describe('api', function () {
       }));
 
       api.authenticate({json: {username: 'k88', password: '123'}}, function (err, data) {
-        should.deepEqual(err, {message: 'Wrong!'});
+        should.equal(err.message, api.ERROR_MESSAGES.wrong_username_password);
         done();
       });
     });
@@ -204,6 +224,22 @@ describe('api', function () {
           token: 'foo',
           user: {username: 'k88'}
         });
+        done();
+      });
+    });
+
+    it('should return correct error message if offline', function (done) {
+
+      resetMocks(createMockXhr({
+        '/authenticate': {
+          statusCode: 0
+        }
+      }));
+
+      global.window.Platform.isNetworkAvailable = () => false;
+
+      api.signUp({json: {username: 'k88', password: '123', email: 'k88@foo.com'}}, function (err, data) {
+        should.equal(err.message, api.ERROR_MESSAGES.offline_sign_up);
         done();
       });
     });

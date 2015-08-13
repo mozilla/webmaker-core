@@ -1,5 +1,4 @@
 var React = require('react/addons');
-var reportError = require('../../lib/errors');
 var api = require('../../lib/api');
 var keyboard = require('../../lib/keyboard');
 
@@ -75,6 +74,8 @@ var SignIn = React.createClass({
   onSubmit: function (e) {
     e.preventDefault();
 
+    document.activeElement.blur();
+
     var errors = this.getValidationErrors();
     if (Object.keys(errors).length > 0) {
       return;
@@ -92,8 +93,9 @@ var SignIn = React.createClass({
         if (window.Platform) {
           window.Platform.trackEvent('Login', 'Sign In', 'Sign In Error');
         }
-        this.setState({globalError: true});
-        return reportError("Error while trying to log in", err);
+        this.setState({globalError: err.message || 'Something went wrong.'});
+        console.log(err);
+        return;
       }
 
       this.replaceState(this.getInitialState());
@@ -133,11 +135,11 @@ var SignIn = React.createClass({
           valueLink={this.linkState(field.name)} />;
       })}
       <div className="form-group">
-        <button className="btn btn-block" disabled={!isValid} onClick={this.onSubmit}>
+        <button ref="submitButton" className="btn btn-block" disabled={!isValid} onClick={this.onSubmit}>
           {this.getIntlMessage('signin')}
         </button>
         <div className="error" hidden={!this.state.globalError}>
-          {this.getIntlMessage('errorUsernameOrPassword')}
+          {this.state.globalError}
         </div>
       </div>
       <div className="form-group text-center text-larger">

@@ -101,9 +101,9 @@ var ImageEditor = React.createClass({
   },
   imageReady: function (uri) {
     this.setState({
-      src: uri
+      src: uri,
+      loading: false
     });
-    this.props.save();
   }
 });
 

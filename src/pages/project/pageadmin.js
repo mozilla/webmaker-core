@@ -109,7 +109,6 @@ module.exports = {
   removePage: function () {
     var currentId = this.state.selectedEl;
     var index;
-    this.setState({loading: true});
     this.state.pages.forEach((el, i) => {
       if (el.id === currentId) {
         index = i;
@@ -123,6 +122,8 @@ module.exports = {
     if (parseInt(currentId, 10) === 1) {
       return window.alert('this is a test page, not deleting.');
     }
+
+    this.setState({loading: true});
 
     api({
       method: 'delete',
@@ -152,9 +153,7 @@ module.exports = {
           this.state.zoomedPageCoords.y !== page.coords.y) {
         this.zoomToPage(page.coords);
       }
-    } else if (page.id === this.state.selectedEl && this.state.params.mode !== 'link') {
-      this.zoomToSelection(page.coords);
-    } else {
+    } else if (page.id !== this.state.selectedEl) {
       this.highlightPage(page.id, 'selected');
     }
   },

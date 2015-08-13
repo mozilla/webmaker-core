@@ -70,6 +70,7 @@
   &.el-link {
     .btn {
       margin: 0;
+      box-shadow: inset 0px 2px 0px rgba(255,255,255, 0.3);
     }
   }
 
@@ -82,3 +83,9 @@
   }
 }
 
+// Slightly hacky: this improves rendering consistency x-browser
+#map.play {
+  .el.el-text p {
+    width: 320px;
+  }
+}

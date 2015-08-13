@@ -1,6 +1,21 @@
 var should = require('should');
 var React = require('react/addons');
+
+// Polyfill Intl for node -- some versions (>=10) don't support the Intl API
+var areIntlLocalesSupported = require('intl-locales-supported');
+var localesMyAppSupports = ['en-US'];
+if (global.Intl) {
+  if (!areIntlLocalesSupported(localesMyAppSupports)) {
+    require('intl');
+    Intl.NumberFormat   = IntlPolyfill.NumberFormat;
+    Intl.DateTimeFormat = IntlPolyfill.DateTimeFormat;
+  }
+} else {
+  global.Intl = require('intl');
+}
+
 var ColorSpectrum = require('../components/color-spectrum/color-spectrum.jsx');
+
 
 // https://github.com/facebook/react/issues/3721#issuecomment-106318499
 function shallowRender(makeComponent, context) {

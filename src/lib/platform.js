@@ -62,6 +62,16 @@ Platform.prototype.clearUserSession = function() {
 };
 
 // -----------------------------------------------------------------------------
+// Java caching
+// -----------------------------------------------------------------------------
+
+Platform.prototype.getAPI = function() {
+  // True only if platform was supplied via the Android "windows.Platform"
+  // mechanism, otherwise this is very much false.
+  return false;
+};
+
+// -----------------------------------------------------------------------------
 // Memory (LRU) storage
 // -----------------------------------------------------------------------------
 
@@ -167,5 +177,13 @@ Platform.prototype.isDebugBuild = function() {
   return false;
 };
 
+// -----------------------------------------------------------------------------
+// Check network availability
+// -----------------------------------------------------------------------------
+
+Platform.prototype.isNetworkAvailable = function() {
+  // @todo - the android method is synchronous, we need to do the browser chekc async 
+  return true;
+};
 
 module.exports = new Platform();

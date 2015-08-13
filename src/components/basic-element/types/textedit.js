@@ -143,7 +143,7 @@ module.exports = {
     //
     // See https://github.com/mozilla/webmaker-android/issues/2050 for more details.
     if(!this._replaced && window.Platform) {
-      value = value.replace(this._content, '');
+      value = this._content + value.slice(-1);
       this._replaced = true;
     }
     this.props.updateText(value);

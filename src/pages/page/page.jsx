@@ -5,6 +5,7 @@ var classNames = require('classnames');
 var assign = require('react/lib/Object.assign');
 var reportError = require('../../lib/errors');
 var api = require('../../lib/api');
+var platform = require('../../lib/platform');
 var dispatcher = require('../../lib/dispatcher');
 
 var render = require('../../lib/render.jsx');
@@ -16,6 +17,7 @@ var PageControls = require('./page-controls.jsx');
 var Page = React.createClass({
   mixins: [
     require('../../lib/router'),
+    require('./loader'),
     require('./flattening'),
     require('react-intl').IntlMixin
   ],
@@ -28,6 +30,28 @@ var Page = React.createClass({
   uri: function () {
     var params = this.state.params;
     return `/users/${params.user}/projects/${params.project}/pages/${params.page}`;
+  },
+
+  /**
+   * Maintain the list of elements that have pending edits, so
+   * that they can be synced to the database when we "go back"
+   * from this view.
+   */
+  queueEdit: function(elementId, undoCreate) {
+    elementId = parseInt(elementId,10);
+    var pos = this.edits.indexOf(elementId);
+    if (undoCreate && pos > -1) {
+      return this.edits.splice(pos,1);
+    }
+    if (pos === -1) {
+      return this.edits.push(elementId);
+    }
+  },
+
+  saveBeforeSwitch: function() {
+    this.saveEntirePage(function() {
+      platform.goBack();
+    });
   },
 
   getInitialState: function() {
@@ -45,7 +69,13 @@ var Page = React.createClass({
   },
 
   componentWillMount: function() {
-    this.load();
+    // A list of elements ids for elements with pending edits,
+    // used to make sure we only bulk-write changes for those.
+    this.edits = [];
+
+    this.props.update({
+      onBackPressed: this.saveBeforeSwitch
+    });
   },
 
   componentDidMount: function() {
@@ -61,19 +91,13 @@ var Page = React.createClass({
   },
 
   componentDidUpdate: function (prevProps, prevState) {
-    // resume
-    if (this.props.isVisible && !prevProps.isVisible) {
-      this.load();
-    }
-
     // set parent back button state
     if (this.state.showAddMenu !== prevState.showAddMenu) {
       this.props.update({
-        onBackPressed: this.state.showAddMenu ? this.toggleAddMenu : false
+        onBackPressed: this.state.showAddMenu ? this.toggleAddMenu : this.saveBeforeSwitch
       });
     }
   },
-
 
   /**
    * Follow link destinations tied to a specific parent project
@@ -89,9 +113,14 @@ var Page = React.createClass({
       userID: this.state.params.user
     };
 
-    if (window.Platform) {
-      window.Platform.setView('/users/' + this.state.params.user + '/projects/' + parentProjectID + '/link', JSON.stringify(metadata));
+    var java = platform.getAPI();
+    if (java) {
+      java.queue("link-element", JSON.stringify({
+        data: types.link.spec.flatten(this.state.elements[elementID])
+      }));
     }
+
+    platform.setView('/users/' + this.state.params.user + '/projects/' + parentProjectID + '/link', JSON.stringify(metadata));
   },
 
   /**
@@ -141,6 +170,7 @@ var Page = React.createClass({
                     toggleAddMenu={this.toggleAddMenu}
                     currentElementId={currentId}
                     showAddMenu={this.state.showAddMenu}
+                    currentElement={this.state.elements[this.state.currentElementId]}
                     url={url}
                     href={href} />
     );
@@ -198,26 +228,24 @@ var Page = React.createClass({
    * highest visible element on the page.
    */
   onTouchEnd: function(elementId) {
-    var localSave = this.save(elementId);
-
-    return function saveOrReindex(modified) {
+    return (modified) => {
       if (modified) {
-        localSave();
+        this.queueEdit(elementId);
       }
-    }.bind(this);
+    };
   },
 
   onTap: function (elementId) {
-    var localSave = this.save(elementId);
-
     return () => {
       var elements = this.state.elements;
       var element = elements[elementId];
       var highestIndex = this.getHighestIndex();
       if (element.zIndex !== highestIndex) {
         element.zIndex = highestIndex + 1;
+        this.setState({elements}, function() {
+          this.queueEdit(elementId);
+        });
       }
-      this.setState({elements}, localSave);
     };
   },
 
@@ -234,6 +262,8 @@ var Page = React.createClass({
       this.setState({
         elements: elements,
         currentElementId: elementId
+      }, function() {
+        this.queueEdit(elementId);
       });
     };
   },
@@ -251,23 +281,26 @@ var Page = React.createClass({
       json.styles.zIndex = highestIndex + 1;
       this.setState({loading: true});
 
-      api({spinOnLag: false, method: 'post', uri: this.uri() + '/elements', json}, (err, data) => {
-        var state = {showAddMenu: false, loading: false};
-        if (err) {
-          reportError(this.getIntlMessage('error_create_element'), err);
-        }
-        var localSave = function(){};
-        if (data && data.element) {
-          var elementId = data.element.id;
-          json.id = elementId;
-          state.elements = this.state.elements;
-          state.elements[elementId] = this.flatten(json);
-          state.currentElementId = elementId;
-          localSave = this.save(elementId);
-        }
-        this.setState(state, function() {
-          localSave();
-        });
+      // NOTE: ids 1, 2 and 3 are reserved for test elements
+      var temporaryId = 4;
+      var keys = Object.keys(this.state.elements);
+      if (keys.length > 0) {
+        temporaryId = 1 + keys.map(v => parseInt(v,10)).reduce((a,b) => a > b ? a : b);
+      }
+      json.id = temporaryId;
+
+      var state = {
+        elements: this.state.elements,
+        currentElementId: temporaryId,
+        loading: false,
+        showAddMenu: false
+      };
+
+      state.elements[temporaryId] = this.flatten(json);
+      state.elements[temporaryId].newlyCreated = true;
+
+      this.setState(state, function() {
+        this.queueEdit(temporaryId);
       });
     };
   },
@@ -281,93 +314,22 @@ var Page = React.createClass({
     }
 
     var elements = this.state.elements;
-    var id = this.state.currentElementId;
+    var elementId = this.state.currentElementId;
 
-    // Don't delete test elements for real;
-    if (parseInt(id, 10) <= 3) {
-      return window.alert('this is a test element, not deleting.');
+    // Don't delete test elements.
+    if (parseInt(elementId, 10) <= 3) {
+      return window.alert('This is a test element and cannot be deleted.');
     }
 
-    this.setState({loading: true});
-    api({spinOnLag: false, method: 'delete', uri: this.uri() + '/elements/' + id}, (err, data) => {
-      this.setState({loading: false});
-      if (err) {
-        return reportError(this.getIntlMessage('error_delete_element'));
-      }
+    var newlyCreated = elements[elementId].newlyCreated;
+    delete elements[elementId];
 
-      elements[id] = false;
-      var currentElementId = -1;
-      delete elements[id];
-
-      Object.keys(elements).some(function(e) {
-        if (e.id) { currentElementId = e.id; }
-        return !!e;
-      });
-
-      this.setState({
-        elements: elements,
-        currentElementId: currentElementId
-      });
+    this.setState({
+      elements: elements,
+      currentElementId: -1
+    }, function() {
+      this.queueEdit(elementId, newlyCreated);
     });
-  },
-
-  // FIXME: TODO: load and save probably need to live somewhere else, either getting
-  //              tacked onto the class via mixins, or being part of Base class functionality.
-
-  load: function() {
-    this.setState({loading: true});
-    api({
-      uri: this.uri()
-    }, (err, data) => {
-      this.setState({loading: false});
-      if (err) {
-        return reportError(this.getIntlMessage('error_page'), err);
-      }
-
-      if (!data || !data.page) {
-        return reportError(this.getIntlMessage('error_page_404'));
-      }
-
-      var page = data.page;
-      var styles = page.styles;
-      var elements = {};
-
-      page.elements.forEach(element => {
-        element = this.flatten(element);
-        if(element) {
-          elements[element.id] = element;
-        }
-      });
-
-      this.setState({
-        loading: false,
-        styles,
-        elements
-      });
-    });
-  },
-
-  save: function (elementId) {
-    // generate a named function,
-    return function saveElement() {
-      var el = this.expand(this.state.elements[elementId]);
-      api({
-        spinOnLag: false,
-        method: 'patch',
-        uri: this.uri() + '/elements/' + elementId,
-        json: {
-          styles: el.styles
-        }
-      }, (err, data) => {
-        if (err) {
-          return reportError(this.getIntlMessage('error_update_element'), err);
-        }
-
-        if (!data || !data.element) {
-          reportError(this.getIntlMessage('error_404_element_save'));
-        }
-      });
-    }.bind(this);
   }
 });
 

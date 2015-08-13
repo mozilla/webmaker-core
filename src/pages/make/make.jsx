@@ -27,7 +27,13 @@ var Make = React.createClass({
     this.load();
   },
   onError: function (err) {
-    reportError("Error loading projects", err);
+
+    // TODO: Find a better way to create users in the API db if no attempt
+    // to create a project has happened yet. See https://github.com/mozilla/webmaker-core/issues/532
+    if (err.statusCode !== 404) {
+      reportError("Error loading projects", err);
+    }
+
     this.setState({loading: false});
   },
   onEmpty: function () {
@@ -67,30 +73,65 @@ var Make = React.createClass({
     }
 
     this.setState({loading: true});
+
+    // we will be creating a new project
+    var createProject = {
+      method: "create",
+      type: "projects",
+      data: {
+        title: defaultTitle
+      }
+    };
+
+    // and for user convenience, new projects should start with an empty page
+    var createFirstPage = {
+      method: "create",
+      type: "pages",
+      data: {
+        projectId: "$0.id",
+        x: 0,
+        y: 0,
+        styles: {}
+      }
+    };
+
     api({
       method: 'post',
-      uri: `/users/${user.id}/projects`,
+      uri: `/users/${user.id}/bulk`,
       json: {
-        title: defaultTitle
+        actions: [
+          createProject,
+          createFirstPage
+        ]
       }
     }, (err, body) => {
       if (err) {
         return this.onError(err);
       }
-      if (!body || !body.project) {
+
+      // the bulk API sends back results in a number array, where each position
+      // in the result set corresponds to the same position in the list of actions
+      // that had to be performed "in bulk". As such, the "create project" result
+      // will be in body.results[0], and the "create page" result will be in
+      // body.results[1]
+
+      if (!body || !body.results || body.results.length === 0) {
         return this.onEmpty();
       }
 
-      platform.trackEvent('Make', 'Create a Project', 'New Project Started');
-      platform.setView('/users/' + user.id + '/projects/' + body.project.id);
+      var project = body.results[0];
+      project.author = project.author || user;
 
-      body.project.author = body.project.author || user;
+      platform.trackEvent('Make', 'Create a Project', 'New Project Started');
 
       this.setState({
         loading: false,
-        projects: [body.project].concat(this.state.projects)
+        projects: this.state.projects.concat([project])
+      }, function() {
+        platform.setView('/users/' + user.id + '/projects/' + project.id);
       });
     });
+
   },
 
   logout: function () {
