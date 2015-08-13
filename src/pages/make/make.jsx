@@ -27,7 +27,12 @@ var Make = React.createClass({
     this.load();
   },
   onError: function (err) {
-    reportError("Error loading projects", err);
+
+    // TODO: Users don't exist
+    if (err.statusCode !== 404) {
+      reportError("Error loading projects", err);
+    }
+
     this.setState({loading: false});
   },
   onEmpty: function () {
