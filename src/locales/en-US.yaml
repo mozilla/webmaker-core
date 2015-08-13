@@ -51,3 +51,4 @@ en-US:
     this is described in the license.
   ccAttribution: Attribution-ShareAlike 3.0 Unported
   error_discovery_get: Error getting discovery projects
+  badTitle: Title must be between {minLength} and {maxLength} characters
