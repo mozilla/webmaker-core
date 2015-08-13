@@ -27,7 +27,13 @@ var Make = React.createClass({
     this.load();
   },
   onError: function (err) {
-    reportError("Error loading projects", err);
+
+    // TODO: Find a better way to create users in the API db if no attempt
+    // to create a project has happened yet. See https://github.com/mozilla/webmaker-core/issues/532
+    if (err.statusCode !== 404) {
+      reportError("Error loading projects", err);
+    }
+
     this.setState({loading: false});
   },
   onEmpty: function () {
