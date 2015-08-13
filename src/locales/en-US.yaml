@@ -51,3 +51,4 @@ en-US:
     this is described in the license.
   ccAttribution: Attribution-ShareAlike 3.0 Unported
   error_discovery_get: Error getting discovery projects
+  error_title_length: The title needs to be between 4 and 25 characters.
