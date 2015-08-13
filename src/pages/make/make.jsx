@@ -28,7 +28,8 @@ var Make = React.createClass({
   },
   onError: function (err) {
 
-    // TODO: Users don't exist
+    // TODO: Find a better way to create users in the API db if no attempt
+    // to create a project has happened yet. See https://github.com/mozilla/webmaker-core/issues/532
     if (err.statusCode !== 404) {
       reportError("Error loading projects", err);
     }
