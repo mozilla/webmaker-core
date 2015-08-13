@@ -8,7 +8,7 @@ var Link = require('../../components/link/link.jsx');
 var FormattedMessage = require('react-intl').FormattedMessage;
 var Alert = require('../../components/alert/alert.jsx');
 
-var MAX_PROJECT_NAME_LENGTH = 256;
+var MAX_PROJECT_NAME_LENGTH = 128;
 var MIN_PROJECT_NAME_LENGTH = 4;
 
 var ProjectSettings = React.createClass({
@@ -59,7 +59,9 @@ var ProjectSettings = React.createClass({
       <div id="projectSettings">
         <div>
           <TextInput id="title" ref="title" label={this.getIntlMessage('title')} maxlength={MAX_PROJECT_NAME_LENGTH} minlength={MIN_PROJECT_NAME_LENGTH} linkState={this.linkState} />
-          <Alert ref="invalidAlert">{this.getIntlMessage('badTitle')}</Alert>
+          <Alert ref="invalidAlert">
+            <FormattedMessage message={this.getIntlMessage('badTitle')} minLength={MIN_PROJECT_NAME_LENGTH} maxLength={MAX_PROJECT_NAME_LENGTH} />
+          </Alert>
           <button hidden={window.Platform} onClick={this.save}>DEBUG:Save</button>
         </div>
 
