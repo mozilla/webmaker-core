@@ -55,9 +55,9 @@ var LinkEditor = React.createClass({
 
     if(java) {
       java.queue("link-element", JSON.stringify({
-        data: expanded
+        data: expanded,
+        metadata: metadata
       }));
-      // TODO: I'm not sure we need the metadata system for this anymore, if we have java-side queueing.
       handler();
     }
 

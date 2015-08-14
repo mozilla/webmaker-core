@@ -116,7 +116,8 @@ var Page = React.createClass({
     var java = platform.getAPI();
     if (java) {
       java.queue("link-element", JSON.stringify({
-        data: types.link.spec.flatten(this.state.elements[elementID])
+        data: types.link.spec.flatten(this.state.elements[elementID]),
+        metadata: metadata
       }));
     }
 

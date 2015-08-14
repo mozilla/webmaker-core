@@ -24,7 +24,10 @@ module.exports = {
     this.setState({loading: true});
     api({uri: this.uri()}, (err, data) => {
 
-      this.setState({loading: false});
+      this.setState({
+        loading: false,
+        sourcePageID: false
+      });
 
       if (err) {
         reportError('Error loading project', err);
@@ -63,10 +66,25 @@ module.exports = {
             // We do not clear the payload, since it is also
             // required later on in setdestination.js
             try {
+              var pageId;
               var list = JSON.parse(payloads);
-              var element = types.link.spec.expand(list[0].data);
-              var pageId = element.attributes.targetPageId;
-              if (pageId) { this.highlightPage(pageId, 'source'); }
+              if (list.length > 0) {
+                var entry = list[0];
+                if (entry.metadata) {
+                  var metadata = entry.metadata;
+                  pageId = metadata.pageID;
+                  this.highlightPage(pageId, 'source');
+                } else {
+                  console.error("no entry metadata available...", entry);
+                }
+                var element = types.link.spec.expand(entry.data);
+                pageId = element.attributes.targetPageId;
+                if (pageId) {
+                  this.highlightPage(pageId, 'selected');
+                }
+              } else {
+                console.error("link-element payloads was an empty array:" + payloads);
+              }
             } catch (e) {
               console.error("malformed JSON found while loading in link-element data...");
             }
