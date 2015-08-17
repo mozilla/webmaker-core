@@ -3,6 +3,11 @@
   width: 100%;
   height: 100%;
   overflow: hidden;
+
+  &.play {
+    background: #444;
+  }
+
   .bounding {
     position: absolute;
     top: 50%;
@@ -32,7 +37,7 @@
     top: 0;
 
     &.blurred {
-      opacity: 0.3;
+      opacity: 0.1;
     }
 
     .block-interaction {
@@ -130,7 +135,8 @@
     top: 15px;
     left: 15px;
     z-index: 999;
-    background: url('img/zoom-out.svg') @blue no-repeat center center / 60%;
+    background: url('img/zoom-out.svg') #FAFAFA no-repeat center center / 60%;
+    box-shadow: 0px 3px 3px 0px rgba(0,0,0,0.16), 0px 3px 3px 0px rgba(0,0,0,0.23);
     border-radius: 50%;
     width: 50px;
     height: 50px;

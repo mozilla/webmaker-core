@@ -32,24 +32,22 @@
   }
 
   button {
-    @nub-width: 36px;
+    @nub-width: 30px;
 
     position: absolute;
     display: block;
     z-index: 9999;
-    background: url(./img/nub.svg) no-repeat center center / 50%;
+    background: url(./img/nub.svg) no-repeat center center / 100%;
     border: 0;
     width: @nub-width;
     height: @nub-width;
 
     &.up {
-      top: 0;
       left: 50%;
       margin-left: -(@nub-width / 2);
     }
 
     &.down {
-      bottom: 0;
       left: 50%;
       margin-left: -(@nub-width / 2);
       transform: rotate(180deg);
@@ -57,14 +55,12 @@
 
     &.left {
       top: 50%;
-      left: 0;
       margin-top: -(@nub-width / 2);
       transform: rotate(-90deg);
     }
 
     &.right {
       top: 50%;
-      right: 0;
       margin-top: -(@nub-width / 2);
       transform: rotate(90deg);
     }

@@ -42,14 +42,17 @@ module.exports = {
    * @return {int} An integer representing the scale transform
    */
   getMaxPageSize: function () {
-    var w = window.innerWidth;
-    var h = window.innerHeight;
+    var w = window.innerWidth - 60;
+    var h = window.innerHeight - 60;
+
     var scale;
+
     if (w / h <= this.cartesian.width/this.cartesian.height) {
       scale = w/this.cartesian.width;
     } else {
       scale = h/this.cartesian.height;
     }
+
     return scale;
   },
 
@@ -89,5 +92,40 @@ module.exports = {
     matrix[0] = zoom;
     matrix[3] = zoom;
     this.setState({matrix});
+  },
+
+  // Get the bounding rect for the currently visible page area
+  getPageBoundingRect: function () {
+    // Calculate how the current page is situated in the map container
+    var scale = this.getMaxPageSize();
+    var tileWidth = this.cartesian.width * scale;
+    var tileHeight = this.cartesian.height * scale;
+    var elMap = document.querySelector('#map');
+    var mapHeight = elMap.clientHeight;
+    var mapWidth = elMap.clientWidth;
+
+    // Use the same schema as `getBoundingClientRect`,
+    //  but compute from internal positioning system (cartesian) instead of
+    //  rendered DOM for better accuracy and to avoid race conditions due
+    //  to animation and unpredictable render completion times.
+    return {
+      bottom: mapHeight - ((mapHeight - tileHeight) / 2),
+      height: tileHeight,
+      left: (mapWidth - tileWidth) / 2,
+      right: mapWidth - ((mapWidth - tileWidth) / 2),
+      top: (mapHeight - tileHeight) / 2,
+      width: tileWidth
+    };
+  },
+
+  componentDidUpdate: function () {
+    var boundingBox = this.getPageBoundingRect();
+    var btnZoomOut = this.refs.btnZoomOut.getDOMNode();
+
+    if (btnZoomOut) {
+      btnZoomOut.style.top = (boundingBox.top - (btnZoomOut.clientHeight / 2)) + 'px';
+      btnZoomOut.style.left = (boundingBox.left - (btnZoomOut.clientWidth / 2)) + 'px';
+    }
+
   }
 };
