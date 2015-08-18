@@ -80,7 +80,7 @@ var Project = React.createClass({
     var mode = this.state.params.mode;
     var isPlayOnly = (mode === 'play' || mode === 'link');
     return (
-      <div id="map" className={this.state.params.mode}>
+      <div ref="map" id="map" className={this.state.params.mode}>
         <DPad
           ref="dpad"
           onDirectionClick={ this.handleDirectionClick }
