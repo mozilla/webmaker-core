@@ -121,7 +121,7 @@ var Page = React.createClass({
       }));
     }
 
-    platform.setView('/users/' + this.state.params.user + '/projects/' + parentProjectID + '/link', JSON.stringify(metadata));
+    platform.changeViewWithRouteData('/users/' + this.state.params.user + '/projects/' + parentProjectID + '/link', JSON.stringify(metadata));
   },
 
   /**

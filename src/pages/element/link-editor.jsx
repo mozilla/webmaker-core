@@ -48,7 +48,7 @@ var LinkEditor = React.createClass({
         console.error('There was an error updating the element', err);
       }
       var pickerView = `/users/${this.props.params.user}/projects/${this.props.params.project}/link`;
-      platform.setView(pickerView, JSON.stringify(metadata));
+      platform.changeViewWithRouteData(pickerView, JSON.stringify(metadata));
     };
 
     var java = platform.getAPI();
