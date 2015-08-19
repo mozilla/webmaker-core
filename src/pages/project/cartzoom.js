@@ -44,8 +44,10 @@ module.exports = {
   getMaxPageSize: function () {
     var elWrapper = this.refs.map.getDOMNode();
 
-    var w = elWrapper.clientWidth - 60;
-    var h = elWrapper.clientHeight - 60;
+    var MARGIN = 60; // Gutter around pages
+
+    var w = elWrapper.clientWidth - MARGIN;
+    var h = elWrapper.clientHeight - MARGIN;
 
     var scale;
 
