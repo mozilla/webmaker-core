@@ -24,7 +24,7 @@ var FormInput = React.createClass({
     }
     return (<div className="form-group">
       <label htmlFor={this.props.name}><FormattedHTMLMessage message={this.getIntlMessage(this.props.label)} /></label>
-      <input name={this.props.name} type={this.props.type} tabIndex={this.props.tabIndex} onKeyDown={this.checkForReturn} valueLink={this.props.valueLink} required={this.props.required} />
+      <input name={this.props.name} type={this.props.type} onFocus={this.props.onFocus} tabIndex={this.props.tabIndex} onKeyDown={this.checkForReturn} valueLink={this.props.valueLink} required={this.props.required} />
       <div className="error" hidden={!this.props.errors}>
         {this.props.errors && this.props.errors.join(' ')}
       </div>
