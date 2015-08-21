@@ -160,4 +160,130 @@ module.exports = {
 
     return false;
   },
+
+  // For each page in this project, check if it has pending changes.
+  // If so, propagate those as a bulk action.
+  save: function(callAfterHandling) {
+    // TODO: hook this up as a prenavigation hook for the goBack() operation
+    var actions = [];
+
+    this.state.pages.forEach(page => {
+      this.compileActions(actions, page);
+    });
+
+    this.processBulkOperations(actions, callAfterHandling);
+  },
+
+  processBulkOperations: function(actions, callAfterHandling) {
+    // TODO: validate this route, with all possible content
+    var userId = this.state.params.user;
+    api({
+      method: 'post',
+      uri: `/users/${userId}/bulk`,
+      json: { actions: actions }
+    }, (err, body) => {
+      if (err) {
+        return this.onError(err);
+      }
+
+      if (callAfterHandling) {
+        setTimeout(callAfterHandling, 1);
+      }
+    });
+  },
+
+  // =======================================
+  // BORROWED FROM PAGE.JSX's LOADER FOR NOW
+  // =======================================
+
+  addSaveActions: function (actions, elementId, newpageId) {
+    var pageId = (newpageId ? '$' + newpageId + '.id' : this.state.params.page);
+
+    var element = this.state.elements[elementId];
+    element = this.expand(element);
+
+    // new elements require a CREATE action
+    if (element.newlyCreated) {
+      delete element.newlyCreated;
+
+      actions.push({
+        method: "create",
+        type: "elements",
+        data: {
+          pageId: pageId,
+          type: element.type,
+          styles: element.styles,
+          attributes: element.attributes
+        }
+      });
+    }
+
+    // existing elements require a PATCH action
+    else {
+      actions.push({
+        method: "update",
+        type: "elements",
+        data: {
+          id: elementId,
+          styles: element.styles,
+          attributes: element.attributes
+        }
+      });
+    }
+  },
+
+  compileActions: function(actions, page) {
+    var projectId = this.state.params.project;
+    var newpageId = false;
+
+    // if this is a new page, start with a "create page" action.
+    if (page.newlyCreated) {
+      delete page.newlyCreated;
+      newpageId = actions.length;
+      actions.push({
+        method: "create",
+        type: "pages",
+        data: {
+          projectId: projectId,
+          x: 0,
+          y: 0,
+          styles: {}
+        }
+      });
+    }
+
+    if (page.edits.length > 0) {
+      var elements = page.elements;
+
+      // cascading build function
+      var processNext = (ids) => {
+        if(ids.length === 0) { return; }
+
+        var id = ids.splice(0,1)[0];
+
+        // If this element is still found in the page elements,
+        // then this is a create and/or update operation.
+        if (page.elements[id]) {
+          this.addSaveActions(actions, id, newpageId);
+        }
+
+        // If it is not, then the element was deleted:
+        else {
+          actions.push({
+            method: "remove",
+            type: "elements",
+            data: {
+              id: id
+            }
+          });
+        }
+
+        processNext(ids);
+      };
+
+      processNext(page.edits);
+    }
+    return actions;
+  },
+
 };

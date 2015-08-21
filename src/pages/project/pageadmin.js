@@ -68,13 +68,19 @@ module.exports = {
   },
 
   addPage: function (coords) {
+    // FIXME: TODO: generate a plain object, to be saved once project.save is called.
+    //              mark new pages as "page.newlyCreated = true;" to ensure correct
+    //              action building for the bulk API route
     return () => {
+
       var json = {
         x: coords.x,
         y: coords.y,
         styles: {backgroundColor: '#f2f6fc'}
       };
+
       this.setState({loading: true});
+
       api({
         method: 'post',
         uri: this.uri(),
@@ -107,6 +113,9 @@ module.exports = {
   },
 
   removePage: function () {
+    // FIXME: TODO: mark entry as deletect in the state.pages list,
+    //        to be saved once project.save is called.
+
     var currentId = this.state.selectedEl;
     var index;
     this.state.pages.forEach((el, i) => {
