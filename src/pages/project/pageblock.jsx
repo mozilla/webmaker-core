@@ -24,10 +24,11 @@ var PageBlock = React.createClass({
       WebkitTransform: this.props.transform
     };
 
-    // The "shim" and "indicator" divs don't actually house any content,
+    // FIXME: The "shim" and "indicator" divs don't actually house any content,
     // suggesting that either they are intended to be empty, or they will
     // be hooked into later, in which case we have failed to uphold React
     // practices and reverted to traditional HTML work, which would be bad.
+
     return (<div className={classes} style={style} onClick={this.props.onClick}>
       <div className="shim">
         <div className="indicator"/>

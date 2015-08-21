@@ -146,6 +146,9 @@ module.exports = {
     });
   },
 
+  /**
+   * What happens when you click/tap a selected page
+   */
   onPageClick: function (page) {
     if (this.state.params.mode === 'play') {
       if (!this.state.isPageZoomed ||
@@ -157,4 +160,20 @@ module.exports = {
       this.highlightPage(page.id, 'selected');
     }
   },
+
+  /**
+   * All the page-relevant data that is necessary for caching
+   * between [project view] -> [page view] changes.
+   */
+  getCurrentPageData: function() {
+    var id = this.state.selectedEl;
+    var page = this.state.pages.filter(p => p.id===id)[0];
+    if(!page) { return false; }
+
+    // page data consists of "elements" and "styles"
+    return {
+      elements: page.elements,
+      styles: page.styles
+    };
+  }
 };

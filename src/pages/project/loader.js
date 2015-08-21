@@ -20,8 +20,26 @@ module.exports = {
     return `/users/${this.state.params.user}/projects/${this.state.params.project}/pages`;
   },
 
-  load: function () {
-    this.setState({loading: true});
+  componentWillMount: function() {
+    this.loadComponentData();
+  },
+
+  componentDidUpdate: function (prevProps, prevState) {
+    // The follow code is intended to trigger on a view-resume,
+    // to deal with the app being put to sleep and woken up again.
+    if (this.props.isVisible && !prevProps.isVisible) {
+      // we explicitly check the cache, without database fallback
+      this.checkCache();
+    }
+  },
+
+  loadComponentData: function() {
+    this.setState({loading: false});
+
+    if (this.checkCache()) {
+      return this.setState({loading: false});
+    }
+
     api({uri: this.uri()}, (err, data) => {
 
       this.setState({
@@ -95,5 +113,51 @@ module.exports = {
         }
       }
     });
-  }
+  },
+
+  checkCache: function() {
+    var java = platform.getAPI();
+
+    if (java) {
+      var payloads = java.getPayloads("edited-page");
+      if (payloads !== undefined) {
+        var list = false;
+        try {
+          list = JSON.parse(payloads);
+        } catch (e) {
+          console.error("malformed page payload:", payloads);
+        }
+
+        java.clearPayloads("edited-page");
+        if (list) {
+          var entry = list[0];
+          var data = entry.data;
+          var pageId = data.pageId;
+
+          console.log("finding",pageId,"in",this.state.pages);
+
+          // find the page...
+          var page = this.state.pages.filter(p => p.id == pageId)[0];
+          if(!page) { return false; }
+
+          var elements = data.elements;
+          page.elements = Object.keys(elements).map(id => elements[id]);
+          page.styles = data.styles;
+
+          console.log("updated page:",page);
+
+          this.setState({
+            loading: false,
+            pages: this.state.pages
+          });
+
+          return true;
+        } else {
+          console.log("no JSON error, but no list either...");
+        }
+      }
+    }
+
+    return false;
+  },
 };
