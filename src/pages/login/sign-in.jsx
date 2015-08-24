@@ -74,6 +74,10 @@ var SignIn = React.createClass({
   onSubmit: function (e) {
     e.preventDefault();
 
+    this.setState({
+      globalError: false
+    });
+
     document.activeElement.blur();
 
     var errors = this.getValidationErrors();
@@ -120,6 +124,12 @@ var SignIn = React.createClass({
     this.props.setParentState({mode: 'sign-up'});
   },
 
+  onFormInputFocus: function (event) {
+    this.setState({
+      globalError: false
+    });
+  },
+
   render: function () {
 
     var errors = this.getValidationErrors();
@@ -131,6 +141,7 @@ var SignIn = React.createClass({
         return <FormInput {...field}
           key={field.name}
           onReturn={this.onDoneEditing}
+          onFocus={this.onFormInputFocus}
           errors={errors[field.name]}
           valueLink={this.linkState(field.name)} />;
       })}
