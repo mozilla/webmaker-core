@@ -76,7 +76,9 @@ var LinkEditor = React.createClass({
     return (
       <div id="editor" onClick={this.stopEditing}>
         <div className="editor-preview">
-          <LinkBlock {...this.state} ref="element" active={true} updateText={this.updateText} setEditMode={this.setEditing} />
+          <div className="el el-link">
+            <LinkBlock {...this.state} ref="element" active={true} updateText={this.updateText} setEditMode={this.setEditing} />
+          </div>
         </div>
         <div className="editor-options">
           <div className="form-group">
