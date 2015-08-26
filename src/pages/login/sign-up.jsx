@@ -54,7 +54,7 @@ var SignUp = React.createClass({
   fields: [
     {
       name: 'username',
-      label: 'username',
+      label: 'pick_username',
       type: 'email',
       tabIndex: 1,
       required: true,
@@ -70,7 +70,7 @@ var SignUp = React.createClass({
     },
     {
       name: 'password',
-      label: 'password',
+      label: 'set_password',
       type: 'password',
       tabIndex: 3,
       required: true,
@@ -155,43 +155,45 @@ var SignUp = React.createClass({
     var errors = this.getValidationErrors();
     var isValid = Object.keys(errors).length === 0;
 
-    return (<form hidden={!this.props.show} className="editor-options" onSubmit={this.onSubmit}>
+    return (
+      <form hidden={!this.props.show} className="editor-options" onSubmit={this.onSubmit}>
+        <h3>{this.getIntlMessage('create_account')}</h3>
+        {this.fields.map(field => {
+          return <FormInput {...field}
+            key={field.name}
+            onReturn={this.onDoneEditing}
+            errors={errors[field.name]}
+            valueLink={this.linkState(field.name)}/>;
+        })}
 
-      {this.fields.map(field => {
-        return <FormInput {...field}
-          key={field.name}
-          onReturn={this.onDoneEditing}
-          errors={errors[field.name]}
-          valueLink={this.linkState(field.name)}/>;
-      })}
-
-      <div className="form-group">
-        <label className="checkbox">
-          <input type="checkbox" checked={this.state.feedback} onChange={this.toggleState('feedback')} />
-          <span className="checkbox-ui" />
-          <span>{this.getIntlMessage('email_me_updates')}</span>
-        </label>
-      </div>
-      <div className="form-group">
-        <button className="btn btn-block" onClick={this.onSubmit} disabled={!isValid}>
-          <FormattedHTMLMessage message={this.getIntlMessage('join_webmaker')} />
-        </button>
-        <div className="error" hidden={!this.state.globalError}>
-          {this.state.globalError}
+        <div>
+          <label className="checkbox">
+            <input type="checkbox" checked={this.state.feedback} onChange={this.toggleState('feedback')} />
+            <span className="checkbox-ui" />
+            <span>{this.getIntlMessage('email_me_updates')}</span>
+          </label>
         </div>
-        <p className="by-joining">
+        <div>
+          <button className="btn btn-block" onClick={this.onSubmit} disabled={!isValid}>
+            <FormattedHTMLMessage message={this.getIntlMessage('join_webmaker')} />
+          </button>
+          <div className="error" hidden={!this.state.globalError}>
+            {this.state.globalError}
+          </div>
+          <p className="by-joining">
+          <FormattedMessage
+            message={this.getIntlMessage('by_joining')}
+            linkTerms={termsLink}
+            linkPrivacyPolicy={privacyLink} />
+          </p>
+        </div>
+        <div className="text-center text-larger already-joined">
         <FormattedMessage
-          message={this.getIntlMessage('by_joining')}
-          linkTerms={termsLink}
-          linkPrivacyPolicy={privacyLink} />
-        </p>
-      </div>
-      <div className="form-group text-center text-larger already-joined">
-      <FormattedMessage
-        message={this.getIntlMessage('already_join_signin')}
-        signinLink={signinLink} />
-      </div>
-    </form>);
+          message={this.getIntlMessage('already_join_signin')}
+          signinLink={signinLink} />
+        </div>
+      </form>
+    );
   }
 });
 
