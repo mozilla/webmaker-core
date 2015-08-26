@@ -3,15 +3,17 @@ var classNames = require('classnames');
 var ColorGroup = require('../../components/color-group/color-group.jsx');
 var Slider = require('../../components/range/range.jsx');
 var ImageBlock = require('../../components/basic-element/types/image.jsx');
+var GetMedia = require('../../components/get-media/get-media.jsx');
 
 var colorChoices = ColorGroup.defaultColors.slice();
 colorChoices[0] = '#444444';
 
 var ImageEditor = React.createClass({
-  mixins: [React.addons.LinkedStateMixin, require('react-intl').IntlMixin],
+  mixins: [
+    React.addons.LinkedStateMixin,
+    require('react-intl').IntlMixin
+  ],
   getInitialState: function () {
-    // Expose image handler to Android
-    window.imageReady = this.imageReady;
     return ImageBlock.spec.flatten(this.props.element, {defaults: true});
   },
   componentDidUpdate: function (prevProps) {
@@ -60,46 +62,25 @@ var ImageEditor = React.createClass({
           </div>
         </div>
 
-        <div className={classNames({overlay: true, active: this.state.showMenu})} onClick={this.toggleMenu}/>
-        <div className={classNames({controls: true, active: this.state.showMenu})}>
-          <button hidden={window.Platform && !window.Platform.cameraIsAvailable()} onClick={this.onCameraClick}>
-            <img className="icon" src="../../img/take-photo.svg" />
-            <p>Take Photo</p>
-          </button>
-          <button onClick={this.onMediaClick}>
-            <img className="icon" src="../../img/camera-gallery.svg" />
-            <p>Camera Gallery</p>
-          </button>
-        </div>
+        <GetMedia
+          show={this.state.showMenu}
+          onCancel={this.toggleMenu}
+          onImageReady={this.onImage}
+          onStartMedia={this.onStartMedia} />
       </div>
     );
   },
   toggleMenu: function () {
     this.setState({showMenu: !this.state.showMenu});
   },
-  onCameraClick: function () {
+  onStartMedia: function () {
     // Because a Pause/Resume is caused by the camera activity launching,
     // this will trigger an API call when we resume; we need to cancel this
     // in order for the new image to be loaded/saved.
     this.props.cancelDataRefresh();
-
     this.toggleMenu();
-    if (window.Platform) {
-      window.Platform.getFromCamera();
-    }
   },
-  onMediaClick: function () {
-    // Because a Pause/Resume is caused by the camera activity launching,
-    // this will trigger an API call when we resume; we need to cancel this
-    // in order for the new image to be loaded/saved.
-    this.props.cancelDataRefresh();
-
-    this.toggleMenu();
-    if (window.Platform) {
-      window.Platform.getFromMedia();
-    }
-  },
-  imageReady: function (uri) {
+  onImage: function (uri) {
     this.setState({
       src: uri,
       loading: false
