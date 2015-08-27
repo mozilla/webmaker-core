@@ -40,7 +40,7 @@ var ElementGroup = React.createClass({
     }
 
     properties = assign({}, properties, {
-      isCurrent: this.props.currentElementId === elementId,
+      isCurrent: +this.props.currentElementId === +elementId,
       interactive: this.props.interactive
     });
 
