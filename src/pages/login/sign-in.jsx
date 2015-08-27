@@ -136,29 +136,32 @@ var SignIn = React.createClass({
     var isValid = Object.keys(errors).length === 0;
     var signinLink = (<a href="#" onClick={this.changeMode}>{this.getIntlMessage('join_webmaker')}</a>);
 
-    return (<form hidden={!this.props.show} className="editor-options" onSubmit={this.onSubmit}>
-      {this.fields.map(field => {
-        return <FormInput {...field}
-          key={field.name}
-          onReturn={this.onDoneEditing}
-          onFocus={this.onFormInputFocus}
-          errors={errors[field.name]}
-          valueLink={this.linkState(field.name)} />;
-      })}
-      <div className="form-group">
-        <button ref="submitButton" className="btn btn-block" disabled={!isValid} onClick={this.onSubmit}>
-          {this.getIntlMessage('signin')}
-        </button>
-        <div className="error" hidden={!this.state.globalError}>
-          {this.state.globalError}
+    return (
+      <form hidden={!this.props.show} className="editor-options" onSubmit={this.onSubmit}>
+        <h3>{this.getIntlMessage('signin_webmaker')}</h3>
+        {this.fields.map(field => {
+          return <FormInput {...field}
+            key={field.name}
+            onReturn={this.onDoneEditing}
+            onFocus={this.onFormInputFocus}
+            errors={errors[field.name]}
+            valueLink={this.linkState(field.name)} />;
+        })}
+        <div>
+          <button ref="submitButton" className="btn btn-block" disabled={!isValid} onClick={this.onSubmit}>
+            {this.getIntlMessage('signin')}
+          </button>
+          <div className="error" hidden={!this.state.globalError}>
+            {this.state.globalError}
+          </div>
         </div>
-      </div>
-      <div className="form-group text-center text-larger">
-        <FormattedMessage
-          message={this.getIntlMessage('dont_have_account')}
-          joinWebmakerLink={signinLink} />
-      </div>
-    </form>);
+        <div className="text-center text-larger">
+          <FormattedMessage
+            message={this.getIntlMessage('dont_have_account')}
+            joinWebmakerLink={signinLink} />
+        </div>
+      </form>
+    );
   }
 });
 

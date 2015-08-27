@@ -1,6 +1,10 @@
 ---
 en-US:
+  create_account: Create a Webmaker Account
+  pick_username: Pick a username
   username: Username
+  username_email: Username or Email
+  set_password: Set password
   password: Password
   email: Email
   helpText: Reset Password
@@ -11,6 +15,7 @@ en-US:
   terms: Terms
   already_join_signin: Already joined? {signinLink}
   signin: Sign in
+  signin_webmaker: Sign in to Webmaker
   dont_have_account: Don’t have an account? {joinWebmakerLink}
   errorUsernameOrPassword: Looks like there might be a problem with your username or password.
   color_editor: 'color: {rgbaValue};'
