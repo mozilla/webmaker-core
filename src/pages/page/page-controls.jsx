@@ -9,18 +9,18 @@ var PageControls = React.createClass({
     require("./flattening")
   ],
 
-  cacheElementForEdits: function(evt) {
-    // cache the element on the java side
-    var java = platform.getAPI();
-    if (java) {
-      var element = this.props.currentElement;
-      if (element) {
-        java.queue("edit-element", JSON.stringify({
-          data: this.expand(element)
-        }));
-      }
-    }
-  },
+  // cacheElementForEdits: function(evt) {
+  //   // cache the element on the java side
+  //   var java = platform.getAPI();
+  //   if (java) {
+  //     var element = this.props.currentElement;
+  //     if (element) {
+  //       java.queue("edit-element", JSON.stringify({
+  //         data: this.expand(element)
+  //       }));
+  //     }
+  //   }
+  // },
 
   secondaryButtonClass: function(name) {
     var names = {
@@ -45,7 +45,7 @@ var PageControls = React.createClass({
         <button className="add" onClick={this.props.toggleAddMenu}></button>
         <Link
           className={this.secondaryButtonClass("edit")}
-          preNavigation={this.cacheElementForEdits}
+          preNavigation={this.props.cacheElementForEdits}
           url={this.props.url}
           href={this.props.href}>
           <img className="icon" src="../../img/brush.svg" />
