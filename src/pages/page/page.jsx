@@ -14,6 +14,8 @@ var Loading = require('../../components/loading/loading.jsx');
 var ElementGroup = require('../../components/element-group/element-group.jsx');
 var PageControls = require('./page-controls.jsx');
 
+var GetMedia = require('../../components/get-media/get-media.jsx');
+
 var Page = React.createClass({
   mixins: [
     require('../../lib/router'),
@@ -166,7 +168,9 @@ var Page = React.createClass({
       url = this.uri() + `/elements/${currentId}/editor/${type}`;
     }
     return (
-      <PageControls addElement={this.addElement}
+      <PageControls addImage={this.addImage}
+                    addText = {() => this.addElement('text')}
+                    addLink = {() => this.addElement('link')}
                     deleteElement={this.deleteElement}
                     toggleAddMenu={this.toggleAddMenu}
                     currentElementId={currentId}
@@ -186,6 +190,11 @@ var Page = React.createClass({
         <div className={classNames({overlay: true, active: this.state.showAddMenu})} />
         { this.generatePagesContainer() }
         { this.generateControls() }
+        <GetMedia
+          show={this.state.showGetMedia}
+          onCancel={this.toggleGetMedia}
+          onImageReady={this.onImage}
+          onStartMedia={this.onStartMedia} />
         <Loading on={this.state.loading} />
       </div>
     );
@@ -198,6 +207,12 @@ var Page = React.createClass({
   toggleAddMenu: function () {
     this.setState({
       showAddMenu: !this.state.showAddMenu
+    });
+  },
+
+  toggleGetMedia: function () {
+    this.setState({
+      showGetMedia: !this.state.showGetMedia
     });
   },
 
@@ -273,37 +288,47 @@ var Page = React.createClass({
    * Factory function for adding elements of a particular type
    * to the page.
    */
-  addElement: function(type) {
+  addElement: function(type, properties) {
+    properties = properties || {};
     var highestIndex = this.getHighestIndex();
+    var json = types[type].spec.generate();
+    json.styles.zIndex = highestIndex + 1;
 
-    // actual function, bound to the element type
-    return () => {
-      var json = types[type].spec.generate();
-      json.styles.zIndex = highestIndex + 1;
-      this.setState({loading: true});
+    this.setState({loading: true});
 
-      // NOTE: ids 1, 2 and 3 are reserved for test elements
-      var temporaryId = 4;
-      var keys = Object.keys(this.state.elements);
-      if (keys.length > 0) {
-        temporaryId = 1 + keys.map(v => parseInt(v,10)).reduce((a,b) => a > b ? a : b);
-      }
-      json.id = temporaryId;
+    // NOTE: ids 1, 2 and 3 are reserved for test elements
+    var temporaryId = 4;
+    var keys = Object.keys(this.state.elements);
+    if (keys.length > 0) {
+      temporaryId = 1 + keys.map(v => parseInt(v,10)).reduce((a,b) => a > b ? a : b);
+    }
+    json.id = temporaryId;
 
-      var state = {
-        elements: this.state.elements,
-        currentElementId: temporaryId,
-        loading: false,
-        showAddMenu: false
-      };
-
-      state.elements[temporaryId] = this.flatten(json);
-      state.elements[temporaryId].newlyCreated = true;
-
-      this.setState(state, function() {
-        this.queueEdit(temporaryId);
-      });
+    var state = {
+      elements: this.state.elements,
+      currentElementId: temporaryId,
+      loading: false,
+      showAddMenu: false,
+      showGetMedia: false
     };
+    state.elements[temporaryId] = assign(this.flatten(json), properties);
+    state.elements[temporaryId].newlyCreated = true;
+
+    this.setState(state, function() {
+      this.queueEdit(temporaryId);
+    });
+
+  },
+
+  addImage: function () {
+    this.setState({
+      showAddMenu: false,
+      showGetMedia: true
+    });
+  },
+
+  onImage: function (uri) {
+    this.addElement('image', {src: uri});
   },
 
   /**
