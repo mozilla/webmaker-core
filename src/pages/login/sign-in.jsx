@@ -49,7 +49,7 @@ var SignIn = React.createClass({
   fields: [
     {
       name: 'username',
-      label: 'username_email',
+      label: 'username',
       type: 'email',
       tabIndex: 1,
       required: true
