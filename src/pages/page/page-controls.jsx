@@ -9,19 +9,6 @@ var PageControls = React.createClass({
     require("./flattening")
   ],
 
-  // cacheElementForEdits: function(evt) {
-  //   // cache the element on the java side
-  //   var java = platform.getAPI();
-  //   if (java) {
-  //     var element = this.props.currentElement;
-  //     if (element) {
-  //       java.queue("edit-element", JSON.stringify({
-  //         data: this.expand(element)
-  //       }));
-  //     }
-  //   }
-  // },
-
   secondaryButtonClass: function(name) {
     var names = {
       secondary: true,
