@@ -55,9 +55,9 @@ var LinkEditor = React.createClass({
 
     if(java) {
       java.queue("link-element", JSON.stringify({
-        data: expanded
+        data: expanded,
+        metadata: metadata
       }));
-      // TODO: I'm not sure we need the metadata system for this anymore, if we have java-side queueing.
       handler();
     }
 
@@ -76,7 +76,9 @@ var LinkEditor = React.createClass({
     return (
       <div id="editor" onClick={this.stopEditing}>
         <div className="editor-preview">
-          <LinkBlock {...this.state} ref="element" active={true} updateText={this.updateText} setEditMode={this.setEditing} />
+          <div className="el el-link">
+            <LinkBlock {...this.state} ref="element" active={true} updateText={this.updateText} setEditMode={this.setEditing} />
+          </div>
         </div>
         <div className="editor-options">
           <div className="form-group">

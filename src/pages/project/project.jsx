@@ -80,14 +80,14 @@ var Project = React.createClass({
     var mode = this.state.params.mode;
     var isPlayOnly = (mode === 'play' || mode === 'link');
     return (
-      <div id="map" className={this.state.params.mode}>
+      <div ref="map" id="map" className={this.state.params.mode}>
         <DPad
           ref="dpad"
           onDirectionClick={ this.handleDirectionClick }
           isVisible={ this.state.isPageZoomed }>
         </DPad>
 
-        <button className={'btn-zoom-out' + (this.state.isPageZoomed ? '' : ' hidden') } onClick={this.zoomFromPage} />
+        <button ref="btnZoomOut" className={'btn-zoom-out' + (this.state.isPageZoomed ? '' : ' hidden') } onClick={this.zoomFromPage} />
 
         <div ref="bounding" className="bounding" style={ this.getBoundingStyle() }>
           <div className="test-container" style={ this.getContainerStyle() }>

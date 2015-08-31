@@ -160,6 +160,8 @@ render(React.createClass({
     var java = platform.getAPI();
 
     if (java) {
+      // Clean up possibly outstanding elements due to "back" actions
+      java.clearPayloads("link-element");
       var payloads = java.getPayloads("edit-element");
       if (payloads !== undefined) {
         try {
