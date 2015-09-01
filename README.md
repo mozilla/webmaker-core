@@ -4,6 +4,8 @@
 
 `webmaker-core` is the React based core for the Webmaker app. It's a series of webviews that are integrated into the various platforms running Webmaker (currently: [Android](https://github.com/mozilla/webmaker-android), [Browser](https://github.com/mozilla/webmaker-browser)).
 
+If you'd like to become a beta tester for the Android app, you can opt in by opening this URL on your device: [https://play.google.com/apps/testing/org.mozilla.webmaker](https://play.google.com/apps/testing/org.mozilla.webmaker)
+
 ## Installation
 
 ```bash
