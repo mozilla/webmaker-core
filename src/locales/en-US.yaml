@@ -50,10 +50,9 @@ en-US:
   error_page_404: Could not find the page to load
   error_404_element_save: Could not find the element to save
   cc: Creative Commons
-  ccLicenseSection: Content published under a Creative Commons license called {creativecommonsLink}.
-  ccLicenseSectionSub: This means that other people can share, adapt, and remix your
-    content if they give you credit and share their work in the same way, as all of
-    this is described in the license.
-  ccAttribution: Attribution-ShareAlike 3.0 Unported
+  ccLicenseSection: Your Webmaker content is published under the Creative Commons {creativecommonsLink} as described in the {termsofuse}.
+  ccLicenseSectionSub: This means that others may remix, tweak, and build upon your work even for commercial purposes, as long as they credit you and license their new creations under the identical terms.
+  ccAttribution: Attribution-ShareAlike 3.0 Unported license
+  ccTermsOfUse: terms of use
   error_discovery_get: Error getting discovery projects
   badTitle: Title must be between {minLength} and {maxLength} characters
