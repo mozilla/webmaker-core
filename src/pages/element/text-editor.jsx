@@ -54,6 +54,12 @@ var TextEditor = React.createClass({
     }
 
   },
+  componentDidMount: function () {
+    this.editText();
+    if (window.Platform) {
+      window.Platform.openKeyboard();
+    }
+  },
   render: function () {
     return (
       <div id="editor" onClick={this.stopEditing}>
