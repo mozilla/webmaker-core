@@ -87,7 +87,7 @@ module.exports = {
         validations.forEach(type => {
           var validation = this.validators[type];
           var errorMessage = validation.message;
-          var test = validation.test || (input) => validation.regex.test(input);
+          var test = validation.test || ((input) => validation.regex.test(input));
 
           // Test the value if it is non-emptynpm tun
           if (!isEmpty && !test(value)) {

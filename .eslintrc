@@ -1,0 +1,26 @@
+{
+  "rules": {
+    "indent": [1, 2],
+    "no-extra-boolean-cast": [1],
+    "no-empty": [1],
+    "no-console": [1],
+    "comma-dangle": [1],
+    "no-unused-vars": [1, {"vars": "all", "args": "none"}],
+    "linebreak-style": [2, "unix"],
+    "semi": [1, "always"]
+  },
+  "env": {
+    "commonjs": true,
+    "es6": true,
+    "browser": true
+  },
+  "extends": "eslint:recommended",
+  "ecmaFeatures": {
+    "es6": true,
+    "jsx": true,
+    "experimentalObjectRestSpread": true
+  },
+  "plugins": [
+    "react"
+  ]
+}
