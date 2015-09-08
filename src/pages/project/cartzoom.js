@@ -7,6 +7,12 @@ module.exports = {
     DEFAULT_ZOOM: DEFAULT_ZOOM
   },
 
+  getInitialState: function () {
+    return {
+      isBoundingBoxAnimating: false
+    };
+  },
+
   componentWillMount: function () {
     var width = 320;
     var height = 440;
@@ -17,6 +23,19 @@ module.exports = {
       width,
       height,
       gutter
+    });
+  },
+
+  componentDidMount: function () {
+    var elBounding = this.refs.bounding.getDOMNode();
+
+    // Turn off animation flag (used to block interactions)
+    elBounding.addEventListener('transitionend', (event) => {
+      if (event.propertyName === 'transform') {
+        this.setState({
+          isBoundingBoxAnimating: false
+        });
+      }
     });
   },
 
@@ -61,6 +80,22 @@ module.exports = {
   },
 
   zoomToPage: function (coords) {
+
+    // Validate `coords`
+    if (!coords || typeof coords.x !== 'number' && typeof coords.y !== 'number' ) {
+      console.error('Malformed argument `coords`');
+      return;
+    }
+
+    // Cancel method if an animation is already in progress
+    if (this.state.isBoundingBoxAnimating) {
+      return;
+    }
+
+    this.setState({
+      isBoundingBoxAnimating: true
+    });
+
     // TODO: Adjust size when window resizes
     var zoom = this.getMaxPageSize();
     var {x, y} = this.cartesian.getFocusTransform(coords, zoom);
