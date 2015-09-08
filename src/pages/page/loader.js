@@ -8,8 +8,10 @@ module.exports = {
   },
 
   componentDidUpdate: function (prevProps, prevState) {
-    // resume
+    // The follow code is intended to trigger on a view-resume,
+    // to deal with the app being put to sleep and woken up again.
     if (this.props.isVisible && !prevProps.isVisible) {
+      // we explicitly check the cache, without database fallback
       this.checkCache();
     }
   },
@@ -54,15 +56,47 @@ module.exports = {
     var java = platform.getAPI();
 
     if (java) {
+      var payloads;
       var elements = this.state.elements;
-      var payloads = java.getPayloads("edited-element");
-      var failed = 0;
 
       // TODO: FIXME: DRY this code out, since we're effectively doing
       //              the same thing for keys "edited-element", from the
       //              element editor, and for key "edit-element", from the
       //              projects page (after setting destination)
 
+
+      // check whether there is a full page load from project.jsx
+      payloads = java.getPayloads("edit-page");
+      if (payloads !== undefined) {
+        var list = false;
+        try {
+          list = JSON.parse(payloads);
+        } catch (e) {
+          console.error("malformed page payload JSON:", payloads);
+        }
+
+        java.clearPayloads("edit-page");
+
+        if(list) {
+          var page = list[0];
+
+          elements = {};
+          page.elements.forEach(e => {
+            elements[e.id] = e;
+          });
+
+          this.setState({
+            loading: false,
+            elements: elements,
+            styles: page.styles
+          });
+
+          return true;
+        } else { console.log("no JSON error, but no list either..."); }
+      }
+
+      // check whether an element was edited from the element edit view
+      payloads = java.getPayloads("edited-element");
       if (payloads !== undefined) {
         try {
           payloads = JSON.parse(payloads);
@@ -78,11 +112,14 @@ module.exports = {
             loading: false,
             elements: elements
           });
-        } catch (e) {
-          console.error("malformed payload JSON:", payloads);
-        }
-      } else { failed++; }
 
+          return true;
+        } catch (e) {
+          console.error("malformed element payload JSON:", payloads);
+        }
+      }
+
+      // check whether an element's link destination was set via project.jsx
       payloads = java.getPayloads("edit-element");
       if (payloads !== undefined) {
         try {
@@ -97,13 +134,11 @@ module.exports = {
             loading: false,
             elements: elements
           });
+
+          return true;
         } catch (e) {
           console.error("malformed payload JSON after setDestination:", payloads);
         }
-      } else { failed++; }
-
-      if (failed < 2) {
-        return true;
       }
     }
 

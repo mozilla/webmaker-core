@@ -128,7 +128,7 @@ var Make = React.createClass({
         loading: false,
         projects: this.state.projects.concat([project])
       }, function() {
-        platform.setView('/users/' + user.id + '/projects/' + project.id);
+        platform.changeViewImmediately('/users/' + user.id + '/projects/' + project.id);
       });
     });
 
@@ -137,7 +137,7 @@ var Make = React.createClass({
   logout: function () {
     platform.trackEvent('Login', 'Sign Out', 'Sign Out Success');
     platform.clearUserSession();
-    platform.setView('/login/sign-in');
+    platform.changeViewImmediately('/login/sign-in');
   },
 
   cardActionClick: function (e) {

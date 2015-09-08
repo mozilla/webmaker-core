@@ -93,7 +93,18 @@ Platform.prototype.setMemStorage = function(key, value, global) {
 // Navigation
 // -----------------------------------------------------------------------------
 
-Platform.prototype.setView = function(uri) {
+Platform.prototype.changeViewImmediately = function(uri) {
+  window.location.href = uri;
+};
+
+Platform.prototype.changeViewWithRouteData = function(uri, data) {
+  // TODO: this does something meaningful in Android only.
+  // FIXME: should this do something meaninngful outside of Android?
+  window.location.href = uri;
+};
+
+Platform.prototype.changeViewWithCaching = function(uri, cachegKey, data) {
+  // TODO: perform java caching here
   window.location.href = uri;
 };
 
@@ -182,7 +193,7 @@ Platform.prototype.isDebugBuild = function() {
 // -----------------------------------------------------------------------------
 
 Platform.prototype.isNetworkAvailable = function() {
-  // @todo - the android method is synchronous, we need to do the browser chekc async 
+  // @todo - the android method is synchronous, we need to do the browser chekc async
   return true;
 };
 

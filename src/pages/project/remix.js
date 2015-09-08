@@ -1,5 +1,6 @@
 var dispatcher = require('../../lib/dispatcher');
 var api = require('../../lib/api');
+var platform = require('../../lib/platform');
 
 module.exports = {
   componentDidMount: function() {
@@ -28,16 +29,15 @@ module.exports = {
             return console.error('Error remixing project', err);
           }
 
-          if (window.Platform) {
-            window.Platform.setView(
-              `/users/${this.state.user.id}/projects/${projectID}`,
-              JSON.stringify({
-                isFreshRemix: true,
-                title: projectTitle,
-                originalAuthor: moreData.project.author.username
-              })
-            );
-          }
+          platform.changeViewWithRouteData(
+            `/users/${this.state.user.id}/projects/${projectID}`,
+            JSON.stringify({
+              isFreshRemix: true,
+              title: projectTitle,
+              originalAuthor: moreData.project.author.username
+            })
+          );
+
         });
       });
     };

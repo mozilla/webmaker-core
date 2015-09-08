@@ -68,13 +68,19 @@ module.exports = {
   },
 
   addPage: function (coords) {
+    // FIXME: TODO: generate a plain object, to be saved once project.save is called.
+    //              mark new pages as "page.newlyCreated = true;" to ensure correct
+    //              action building for the bulk API route
     return () => {
+
       var json = {
         x: coords.x,
         y: coords.y,
         styles: {backgroundColor: '#f2f6fc'}
       };
+
       this.setState({loading: true});
+
       api({
         method: 'post',
         uri: this.uri(),
@@ -107,6 +113,9 @@ module.exports = {
   },
 
   removePage: function () {
+    // FIXME: TODO: mark entry as deletect in the state.pages list,
+    //        to be saved once project.save is called.
+
     var currentId = this.state.selectedEl;
     var index;
     this.state.pages.forEach((el, i) => {
@@ -146,6 +155,9 @@ module.exports = {
     });
   },
 
+  /**
+   * What happens when you click/tap a selected page
+   */
   onPageClick: function (page) {
     if (this.state.params.mode === 'play') {
       if (!this.state.isPageZoomed ||
@@ -157,4 +169,20 @@ module.exports = {
       this.highlightPage(page.id, 'selected');
     }
   },
+
+  /**
+   * All the page-relevant data that is necessary for caching
+   * between [project view] -> [page view] changes.
+   */
+  getCurrentPageData: function() {
+    var id = this.state.selectedEl;
+    var page = this.state.pages.filter(p => p.id===id)[0];
+    if(!page) { return false; }
+
+    // page data consists of "elements" and "styles"
+    return {
+      elements: page.elements,
+      styles: page.styles
+    };
+  }
 };

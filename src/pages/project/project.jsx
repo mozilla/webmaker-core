@@ -11,6 +11,8 @@ var React = require('react/addons');
 var {parseJSON} = require('../../lib/jsonUtils');
 var render = require('../../lib/render.jsx');
 
+var platform = require('../../lib/platform');
+
 var Loading = require('../../components/loading/loading.jsx');
 var {Menu, PrimaryButton, SecondaryButton, FullWidthButton} = require('../../components/action-menu/action-menu.jsx');
 var DPad = require('../../components/d-pad/d-pad.jsx');
@@ -41,44 +43,30 @@ var Project = React.createClass({
     };
   },
 
-  componentWillMount: function () {
-    this.load();
-  },
-
   componentDidUpdate: function (prevProps) {
-    if (this.props.isVisible && !prevProps.isVisible) {
-      this.load();
-    }
-
-    if (window.Platform) {
-      window.Platform.setMemStorage('state', JSON.stringify(this.state));
-    }
+    platform.setMemStorage('state', JSON.stringify(this.state));
   },
 
   componentDidMount: function () {
-    if (window.Platform) {
-      var state = window.Platform.getMemStorage('state');
-      if (this.state.params.mode === 'edit') {
-        state = parseJSON(state);
-        if (state.params && state.params.project === this.state.params.project) {
-          this.setState({
-            selectedEl: state.selectedEl,
-            matrix: state.matrix
-          });
-        }
+    var state = platform.getMemStorage('state');
+    if (this.state.params.mode === 'edit') {
+      state = parseJSON(state);
+      if (state.params && state.params.project === this.state.params.project) {
+        this.setState({
+          selectedEl: state.selectedEl,
+          matrix: state.matrix
+        });
       }
     }
   },
 
   render: function () {
-    // FIXME: TODO: this should be handled with a touch preventDefault,
-    //              not by reaching into a DOM element.
-    //
-    // Prevent pull to refresh
-    // FIXME: TODO: This should be done by preventDefaulting the touch event, not via CSS.
+    // FIXME: TODO: This should be done by preventDefault'ing the touch event, not via CSS.
     document.body.style.overflowY = 'hidden';
+
     var mode = this.state.params.mode;
     var isPlayOnly = (mode === 'play' || mode === 'link');
+
     return (
       <div ref="map" id="map" className={this.state.params.mode}>
         <DPad
@@ -97,10 +85,25 @@ var Project = React.createClass({
         </div>
 
         <Menu fullWidth={this.state.params.mode === 'link'}>
-          <SecondaryButton side="left" onClick={this.zoomFromPage} off={this.state.params.mode !== 'edit' || !this.state.matrix || this.state.matrix[0] < 1} icon="../../img/zoom-out-blue.svg" />
-          <PrimaryButton url={ this.getPageURL(this.state.params, this.state.selectedEl) } off={isPlayOnly || !this.state.selectedEl} href="/pages/page" icon="../../img/pencil.svg" />
-          <SecondaryButton side="right" off={isPlayOnly || !this.state.selectedEl || this.state.pages.length <= 1} onClick={this.removePage} icon="../../img/trash.svg" />
-          <FullWidthButton onClick={this.setDestination} off={this.state.params.mode !== 'link' || !this.state.selectedEl}>Set Destination</FullWidthButton>
+          <SecondaryButton side="left"
+                           onClick={this.zoomFromPage}
+                           off={this.state.params.mode !== 'edit' || !this.state.matrix || this.state.matrix[0] < 1}
+                           icon="../../img/zoom-out-blue.svg" />
+
+          <PrimaryButton url={ this.getPageURL(this.state.params, this.state.selectedEl) }
+                         cacheKey={ "edit-page" }
+                         payload={ JSON.stringify(this.getCurrentPageData()) }
+                         off={isPlayOnly || !this.state.selectedEl}
+                         href="/pages/page"
+                         icon="../../img/pencil.svg" />
+
+          <SecondaryButton side="right"
+                           off={isPlayOnly || !this.state.selectedEl || this.state.pages.length <= 1}
+                           onClick={this.removePage}
+                           icon="../../img/trash.svg" />
+
+          <FullWidthButton onClick={this.setDestination}
+                           off={this.state.params.mode !== 'link' || !this.state.selectedEl}>Set Destination</FullWidthButton>
         </Menu>
 
         <Loading on={this.state.loading} />

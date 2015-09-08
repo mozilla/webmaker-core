@@ -50,10 +50,14 @@ var Page = React.createClass({
     }
   },
 
-  saveBeforeSwitch: function() {
-    this.saveEntirePage(function() {
-      platform.goBack();
-    });
+  cacheAndGoBack: function() {
+    platform.goBackWithCaching("edited-page", JSON.stringify({
+      data: {
+        pageId: this.state.params.page,
+        elements: this.state.elements,
+        styles: this.state.styles
+      }
+    }));
   },
 
   getInitialState: function() {
@@ -76,27 +80,31 @@ var Page = React.createClass({
     this.edits = [];
 
     this.props.update({
-      onBackPressed: this.saveBeforeSwitch
+      onBackPressed: this.cacheAndGoBack
     });
   },
 
   componentDidMount: function() {
     var bbox = this.refs.container.getDOMNode().getBoundingClientRect();
+
     if(bbox) {
       this.setState({
         dims: bbox
       });
     }
+
     dispatcher.on('linkDestinationClicked', (event) => {
       this.followLinkDestination(this.state.params.project, event.id);
     });
+
+    console.log(this.state);
   },
 
   componentDidUpdate: function (prevProps, prevState) {
     // set parent back button state
     if (this.state.showAddMenu !== prevState.showAddMenu) {
       this.props.update({
-        onBackPressed: this.state.showAddMenu ? this.toggleAddMenu : this.saveBeforeSwitch
+        onBackPressed: this.state.showAddMenu ? this.toggleAddMenu : this.cacheAndGoBack
       });
     }
   },
@@ -123,7 +131,7 @@ var Page = React.createClass({
       }));
     }
 
-    platform.setView('/users/' + this.state.params.user + '/projects/' + parentProjectID + '/link', JSON.stringify(metadata));
+    platform.changeViewWithRouteData('/users/' + this.state.params.user + '/projects/' + parentProjectID + '/link', JSON.stringify(metadata));
   },
 
   /**
