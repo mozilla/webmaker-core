@@ -26,19 +26,6 @@ module.exports = {
     });
   },
 
-  componentDidMount: function () {
-    var elBounding = this.refs.bounding.getDOMNode();
-
-    // Turn off animation flag (used to block interactions)
-    elBounding.addEventListener('transitionend', (event) => {
-      if (event.propertyName === 'transform') {
-        this.setState({
-          isBoundingBoxAnimating: false
-        });
-      }
-    });
-  },
-
   /**
    * Get the coordinates for a particular page ID
    * @param  {String} id Page ID
@@ -178,6 +165,17 @@ module.exports = {
         }
       });
     }
+
+    var elBounding = this.refs.bounding.getDOMNode();
+
+    // Turn off animation flag (used to block interactions)
+    elBounding.addEventListener('transitionend', (event) => {
+      if (event.propertyName === 'transform') {
+        this.setState({
+          isBoundingBoxAnimating: false
+        });
+      }
+    });
   },
 
   componentDidUpdate: function () {
