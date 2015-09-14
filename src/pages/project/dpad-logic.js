@@ -30,7 +30,17 @@ module.exports = {
       this.zoomToPage(target);
     }
   },
+  componentDidMount: function () {
+    if (window) {
+      window.addEventListener('resize', (event) => {
+        this.setDPadStyle();
+      });
+    }
+  },
   componentDidUpdate: function () {
+    this.setDPadStyle();
+  },
+  setDPadStyle: function () {
     // Check what directions have pages that exist and update the dpad UI accordingly
     if (this.state.isPageZoomed && this.state.pages.length) {
       this.refs.dpad.bulkSetVisibility({
