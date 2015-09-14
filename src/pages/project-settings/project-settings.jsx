@@ -55,6 +55,8 @@ var ProjectSettings = React.createClass({
 
   render: function () {
     var creativeCommon = (<Link external="https://creativecommons.org/licenses/by-sa/3.0/">{this.getIntlMessage('ccAttribution')}</Link>);
+    var termsOfUseLink = (<Link external="https://beta.webmaker.org/#/legal">{this.getIntlMessage('ccTermsOfUse')}</Link>);
+
     return (
       <div id="projectSettings">
         <div>
@@ -71,7 +73,7 @@ var ProjectSettings = React.createClass({
             <span>{this.getIntlMessage("cc")}</span>
           </p>
           <p>
-            <FormattedMessage message={this.getIntlMessage('ccLicenseSection')} creativecommonsLink={creativeCommon} />
+            <FormattedMessage message={this.getIntlMessage('ccLicenseSection')} termsofuse={termsOfUseLink} creativecommonsLink={creativeCommon} />
             <span className="explanation"> {this.getIntlMessage('ccLicenseSectionSub')}</span>
           </p>
         </div>
