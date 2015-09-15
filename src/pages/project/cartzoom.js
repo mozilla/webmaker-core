@@ -61,7 +61,6 @@ module.exports = {
   },
 
   zoomToPage: function (coords) {
-
     // TODO: Adjust size when window resizes
     var zoom = this.getMaxPageSize();
     var {x, y} = this.cartesian.getFocusTransform(coords, zoom);
@@ -122,7 +121,7 @@ module.exports = {
     };
   },
 
-  componentDidUpdate: function () {
+  setZoomOutButtonPosition: function () {
     var boundingBox = this.getPageBoundingRect();
 
     if (this.refs.btnZoomOut) {
@@ -131,6 +130,22 @@ module.exports = {
       btnZoomOut.style.top = (boundingBox.top - (btnZoomOut.clientHeight / 2)) + 'px';
       btnZoomOut.style.left = (boundingBox.left - (btnZoomOut.clientWidth / 2)) + 'px';
     }
+  },
 
+  componentDidMount: function () {
+    if (window) {
+      window.addEventListener('resize', (event) => {
+        this.setZoomOutButtonPosition();
+
+        // Resize zoomed page
+        if (this.state.isPageZoomed) {
+          this.zoomToPage(this.state.zoomedPageCoords);
+        }
+      });
+    }
+  },
+
+  componentDidUpdate: function () {
+    this.setZoomOutButtonPosition();
   }
 };
