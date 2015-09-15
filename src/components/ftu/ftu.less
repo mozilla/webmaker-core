@@ -1,0 +1,51 @@
+.ftu {
+  background-image: linear-gradient(-180deg, rgba(76,136,239,0.94) 25%, rgba(76,136,239,0.50) 93%);
+  color: @white;
+  margin: 0;
+  padding: 0;
+  z-index: @ZINDEX_MAX;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  text-align: center;
+
+  &.hidden {
+    display: none;
+  }
+
+  .helpers {
+    display: none;
+    justify-content: center;
+    font-family: "Sharpie", "Chalkboard", "Comic Sans", serif, sans-serif;
+    padding: 10px;
+
+    &.active {
+      display: flex;
+    }
+
+    &.helpers-single {
+      align-items: flex-start;
+
+      .invisible {
+        visibility: hidden;
+      }
+
+      p {
+        padding-top: 44px;
+      }
+    }
+
+    div {
+      text-align: center;
+      padding: 0 30px 10px 30px;
+      flex: 1;
+
+      &:nth-child(2) img {
+        transform: scaleX(-1);
+      }
+    }
+  }
+}
