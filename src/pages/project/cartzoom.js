@@ -170,7 +170,7 @@ module.exports = {
 
     // Turn off animation flag (used to block interactions)
     elBounding.addEventListener('transitionend', (event) => {
-      if (event.propertyName === 'transform') {
+      if (event.propertyName === 'transform' || event.propertyName === '-webkit-transform') {
         this.setState({
           isBoundingBoxAnimating: false
         });
