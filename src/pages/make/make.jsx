@@ -197,10 +197,10 @@ var Make = React.createClass({
         </button>
         {cards}
         <Loading on={this.state.loading} />
-        <Link url="/style-guide" hidden={!platform.isDebugBuild()} className="btn btn-create btn-block btn-teal">
+        <Link url="/style-guide" hidden={platform.isDebugBuild()} className="btn btn-create btn-block btn-teal">
            {this.getIntlMessage('open_style_guide')}
         </Link>
-        <button hidden={!platform.isDebugBuild()} onClick={platform.resetSharedPreferences()} className="btn btn-create btn-block btn-teal">
+        <button hidden={platform.isDebugBuild()} onClick={platform.resetSharedPreferences()} className="btn btn-create btn-block btn-teal">
           {this.getIntlMessage('reset_share_preferences')}
         </button>
       </div>
