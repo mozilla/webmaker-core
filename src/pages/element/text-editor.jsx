@@ -55,9 +55,9 @@ var TextEditor = React.createClass({
 
   },
   componentDidMount: function () {
-    this.editText();
-    if (window.Platform) {
+    if (window.Platform && window.Platform.openKeyboard) {
       window.Platform.openKeyboard();
+      this.editText();
     }
   },
   render: function () {
