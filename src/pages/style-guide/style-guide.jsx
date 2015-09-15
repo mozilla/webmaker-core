@@ -112,6 +112,9 @@ var StyleGuide = React.createClass({
               <h4>Teal <code>btn btn-teal</code></h4>
               <button className="btn btn-teal">Button</button>
 
+              <h4>Rounded <code>btn btn-rounded</code></h4>
+              <button className="btn btn-rounded">Button</button>
+
               <h3>Alert (JSX)</h3>
               <Alert>Bad bad bad!</Alert>
             </div>
