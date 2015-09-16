@@ -1,5 +1,6 @@
 var React = require('react/addons');
 var classNames = require('classnames');
+var platform = require('../../lib/platform');
 
 var ColorGroup = React.createClass({
   statics: {
@@ -42,14 +43,10 @@ var ColorGroup = React.createClass({
       this.props.onChange(this.valueLink.value);
     }
 
-    if (!window.Platform) {
-      return;
-    }
-
     e.preventDefault();
 
     var launch = () => {
-      window.Platform.setView(this.getTinkerUrl());
+      platform.changeViewImmediately(this.getTinkerUrl());
     };
 
     if (this.props.onLaunchTinker) {

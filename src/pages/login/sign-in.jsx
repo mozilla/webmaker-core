@@ -1,5 +1,6 @@
 var React = require('react/addons');
 var api = require('../../lib/api');
+var platform = require('../../lib/platform');
 var keyboard = require('../../lib/keyboard');
 
 var FormInput = require('./form-input.jsx');
@@ -94,21 +95,17 @@ var SignIn = React.createClass({
     api.authenticate({json}, (err, data) => {
       this.props.setParentState({loading: false});
       if (err) {
-        if (window.Platform) {
-          window.Platform.trackEvent('Login', 'Sign In', 'Sign In Error');
-        }
-        this.setState({globalError: err.message || 'Something went wrong.'});
+        platform.trackEvent('Login', 'Sign In', 'Sign In Error');
         console.log(err);
         return;
       }
 
       this.replaceState(this.getInitialState());
 
-      if (window.Platform) {
-        window.Platform.trackEvent('Login', 'Sign In', 'Sign In Success');
-        window.Platform.setUserSession(JSON.stringify(data));
-        window.Platform.setView('/main');
-      }
+      platform.trackEvent('Login', 'Sign In', 'Sign In Success');
+      platform.setUserSession(JSON.stringify(data));
+      platform.changeViewImmediately('/main');
+
     });
   },
 

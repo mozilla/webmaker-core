@@ -9,6 +9,7 @@ var classes = require('classnames');
 var Spec = require('../../lib/spec');
 var touchhandler = require("../../lib/touchhandler");
 var dispatcher = require('../../lib/dispatcher');
+var platform = require('../../lib/platform');
 
 var PAGE_WIDTH = 320;
 var PAGE_HEIGHT = 440;
@@ -142,9 +143,7 @@ var BasicElement = React.createClass({
 
   onLinkDestClick: function () {
     if (this.props.targetPageId) {
-      if (window.Platform) {
-        window.Platform.setView(`/users/${this.props.targetUserId}/projects/${this.props.targetProjectId}/pages/${this.props.targetPageId}`);
-      }
+      platform.changeViewImmediately(`/users/${this.props.targetUserId}/projects/${this.props.targetProjectId}/pages/${this.props.targetPageId}`);
     } else {
       dispatcher.fire('linkDestinationClicked', this.props);
     }

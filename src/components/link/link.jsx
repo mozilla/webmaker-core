@@ -1,5 +1,6 @@
 var React = require('react');
 var assign = require('react/lib/Object.assign');
+var platform = require('../../lib/platform');
 
 var Link = React.createClass({
   getDefaultProps: function () {
@@ -12,19 +13,17 @@ var Link = React.createClass({
     var props = assign({}, this.props, {
       className,
       onClick: (e) => {
-        if (window.Platform) {
-          e.preventDefault();
+        e.preventDefault();
 
-          // if there is a pre-navigation handling hook, call that before continuing
-          if (this.props.preNavigation && typeof this.props.preNavigation === 'function') {
-            this.props.preNavigation();
-          }
+        // if there is a pre-navigation handling hook, call that before continuing
+        if (this.props.preNavigation && typeof this.props.preNavigation === 'function') {
+          this.props.preNavigation();
+        }
 
-          if (this.props.external) {
-            window.Platform.openExternalUrl(this.props.external);
-          } else if (this.props.url) {
-            window.Platform.setView(this.props.url);
-          }
+        if (this.props.external) {
+          platform.openExternalUrl(this.props.external);
+        } else if (this.props.url) {
+          platform.changeViewImmediately(this.props.url);
         }
       }
     });

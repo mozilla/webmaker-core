@@ -43,34 +43,14 @@ var LinkEditor = React.createClass({
       userID: this.props.params.user
     };
 
-    var handler = (err, data) => {
-      if (err) {
-        console.error('There was an error updating the element', err);
-      }
-      var pickerView = `/users/${this.props.params.user}/projects/${this.props.params.project}/link`;
-      platform.setView(pickerView, JSON.stringify(metadata));
-    };
-
-    var java = platform.getAPI();
-
-    if(java) {
-      java.queue("link-element", JSON.stringify({
+    platform.changeViewWithCaching(
+      `/users/${this.props.params.user}/projects/${this.props.params.project}/link`,
+      "link-element",
+      JSON.stringify({
         data: expanded,
         metadata: metadata
-      }));
-      handler();
-    }
-
-    else {
-      api({
-        method: 'patch',
-        uri: `/users/${metadata.userID}/projects/${metadata.projectID}/pages/${metadata.pageID}/elements/${metadata.elementID}`,
-        json: {
-          attributes: expanded.attributes,
-          styles: expanded.styles
-        }
-      }, handler);
-    }
+      })
+    );
   },
   render: function () {
     return (
