@@ -13,6 +13,11 @@ var ImageEditor = React.createClass({
     React.addons.LinkedStateMixin,
     require('react-intl').IntlMixin
   ],
+  getDefaultProps: function () {
+    return {
+      maxBorderRadius: 120
+    };
+  },
   getInitialState: function () {
     return ImageBlock.spec.flatten(this.props.element, {defaults: true});
   },
@@ -58,7 +63,7 @@ var ImageEditor = React.createClass({
           </div>
           <div className="form-group">
             <label>Corner Radius</label>
-            <Slider id="borderRadius" min={0} value={this.state.borderRadius} max={32} unit="px" linkState={this.linkState} />
+            <Slider id="borderRadius" min={0} value={this.state.borderRadius} max={this.props.maxBorderRadius} unit="px" linkState={this.linkState} />
           </div>
         </div>
 
