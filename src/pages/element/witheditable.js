@@ -1,7 +1,9 @@
 module.exports = {
   editText: function(evt) {
-    evt.stopPropagation();
-    evt.preventDefault();
+    if (evt) {
+      evt.stopPropagation();
+      evt.preventDefault();
+    }
     this.refs.element.toggleEditing();
     // calls our setEditing function after changing state
   },

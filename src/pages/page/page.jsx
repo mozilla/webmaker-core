@@ -50,6 +50,19 @@ var Page = React.createClass({
     }
   },
 
+  cacheElementForEdits: function(evt) {
+    // cache the element on the java side
+    var java = platform.getAPI();
+    if (java) {
+      var element = this.state.elements[this.state.currentElementId];
+      if (element) {
+        java.queue('edit-element', JSON.stringify({
+          data: this.expand(element)
+        }));
+      }
+    }
+  },
+
   saveBeforeSwitch: function() {
     this.saveEntirePage(function() {
       platform.goBack();
@@ -169,11 +182,12 @@ var Page = React.createClass({
     }
     return (
       <PageControls addImage={this.addImage}
-                    addText = {() => this.addElement('text')}
+                    addText = {this.addText}
                     addLink = {() => this.addElement('link')}
                     deleteElement={this.deleteElement}
                     toggleAddMenu={this.toggleAddMenu}
                     currentElementId={currentId}
+                    cacheElementForEdits={this.cacheElementForEdits}
                     showAddMenu={this.state.showAddMenu}
                     currentElement={this.state.elements[this.state.currentElementId]}
                     url={url}
@@ -288,7 +302,7 @@ var Page = React.createClass({
    * Factory function for adding elements of a particular type
    * to the page.
    */
-  addElement: function(type, properties) {
+  addElement: function(type, properties, callback) {
     properties = properties || {};
     var highestIndex = this.getHighestIndex();
     var json = types[type].spec.generate();
@@ -316,6 +330,9 @@ var Page = React.createClass({
 
     this.setState(state, function() {
       this.queueEdit(temporaryId);
+      if (callback) {
+        callback(state.elements[temporaryId]);
+      }
     });
 
   },
@@ -329,6 +346,19 @@ var Page = React.createClass({
 
   onImage: function (uri) {
     this.addElement('image', {src: uri});
+  },
+
+  addText: function () {
+    this.addElement('text', null, (newEl) => {
+
+      this.cacheElementForEdits();
+
+      if (window.Platform) {
+        window.Platform.setView(this.uri() + `/elements/${newEl.id}/editor/${newEl.type}`);
+      } else {
+        window.location = `/pages/element/#${newEl.type}`;
+      }
+    });
   },
 
   /**
