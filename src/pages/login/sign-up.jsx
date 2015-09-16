@@ -1,6 +1,7 @@
 var React = require('react/addons');
 var reportError = require('../../lib/errors');
 var api = require('../../lib/api');
+var platform = require('../../lib/platform');
 var keyboard = require('../../lib/keyboard');
 
 var FormInput = require('./form-input.jsx');
@@ -108,20 +109,15 @@ var SignUp = React.createClass({
     api.signUp({json: options}, (err, data) => {
       this.props.setParentState({loading: false});
       if (err) {
-        if (window.Platform) {
-          window.Platform.trackEvent('Login', 'Sign Up', 'Sign Up Error');
-        }
-        this.setState({globalError: err.message || 'Something went wrong.' });
+        platform.trackEvent('Login', 'Sign Up', 'Sign Up Error');
         return;
       }
 
       this.replaceState(this.getInitialState());
 
-      if (window.Platform) {
-        window.Platform.trackEvent('Login', 'Sign Up', 'Sign Up Success');
-        window.Platform.setUserSession(JSON.stringify(data));
-        window.Platform.setView('/main');
-      }
+      platform.trackEvent('Login', 'Sign Up', 'Sign Up Success');
+      platform.setUserSession(JSON.stringify(data));
+      platform.changeViewImmediately('/main');
     });
   },
 
