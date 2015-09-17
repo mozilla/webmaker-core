@@ -30,7 +30,7 @@ module.exports = {
             return console.error('Error remixing project', err);
           }
 
-          window.Platform.trackEvent('Remix', 'Remix', projectId);
+          window.Platform.trackEvent('Remix', 'Remix', projectID);
 
           if (window.Platform) {
             window.Platform.setView(
@@ -74,7 +74,7 @@ module.exports = {
         }
       }, function (err, body) {
         if (err) {
-          window.Platform.trackEvent('Remix', 'Remix Rename Error', projectId);
+          window.Platform.trackEvent('Remix', 'Remix Rename Error', projectID);
           console.error('Could not update project settings.');
         }
       });
