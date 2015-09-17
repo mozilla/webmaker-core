@@ -77,7 +77,7 @@ class Cartesian {
       paddingBottom: this.getAbsDistance('y', 'max'),
       paddingLeft: this.getAbsDistance('x', 'min'),
       marginLeft: -((diffX * this.widthPadded + this.width) / 2) + 'px',
-      marginTop: -((diffY * this.heightPadded + this.height) / 2) + 'px',
+      marginTop: -((diffY * this.heightPadded + this.height) / 2) + 'px'
     };
   }
 

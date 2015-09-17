@@ -4,7 +4,7 @@
     "no-extra-boolean-cast": [1],
     "no-empty": [2],
     "no-console": [0],
-    "comma-dangle": [1],
+    "comma-dangle": [2],
     "no-unused-vars": [1, {"vars": "all", "args": "none"}],
     "linebreak-style": [2, "unix"],
     "semi": [2, "always"]

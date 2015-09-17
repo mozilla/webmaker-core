@@ -87,7 +87,7 @@ module.exports = {
 
     var inputStyle = this.formInputStyle(style);
     assign(inputStyle, {
-      maxWidth: "100%",
+      maxWidth: "100%"
     });
 
     var sizerstyle = assign({}, inputStyle);
