@@ -74,7 +74,7 @@ module.exports = {
         }
       }, function (err, body) {
         if (err) {
-          window.Platform.trackEvent('Remix', 'Remix Rename Error', projectID);
+          window.Platform.trackEvent('Remix', 'Remix Rename Error', this.state.params.project);
           console.error('Could not update project settings.');
         }
       });
