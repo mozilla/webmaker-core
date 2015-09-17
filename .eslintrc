@@ -7,7 +7,7 @@
     "comma-dangle": [1],
     "no-unused-vars": [1, {"vars": "all", "args": "none"}],
     "linebreak-style": [2, "unix"],
-    "semi": [1, "always"]
+    "semi": [2, "always"]
   },
   "env": {
     "commonjs": true,
