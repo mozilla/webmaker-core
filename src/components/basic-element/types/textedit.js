@@ -116,7 +116,7 @@ module.exports = {
 
   // start editing, but only if we were built with the "activate" property
   activate: function() {
-    if (!!this.props.active) {
+    if (this.props.active) {
       this.startEditing();
     }
   },
