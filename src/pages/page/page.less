@@ -27,6 +27,14 @@
       height: 100%;
       background: @softGrey;
 
+      .page-error {
+        padding: 40px;
+
+        &.hidden {
+          display: none;
+        }
+      }
+
       .inner,
       .deselector {
         width: 100%;
@@ -64,6 +72,10 @@
   /* See the end of https://facebook.github.io/react/docs/animation.html#getting-started */
 
   .controls {
+    &.hidden {
+      display: none;
+    }
+
     @_transformDistance: 55px;
     position: fixed;
     bottom: 20px;

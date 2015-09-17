@@ -149,6 +149,12 @@ var Page = React.createClass({
     return (
       <div className="pages-container">
         <div className="page">
+
+          <div className={'page-error' + (this.state.is404 ? '' : ' hidden')}>
+            <h1>404</h1>
+            <p>{ this.getIntlMessage('error_page_404') }</p>
+          </div>
+
           <div className="inner" style={innerStyle}>
             <ElementGroup
               ref="container"
@@ -181,7 +187,9 @@ var Page = React.createClass({
       url = this.uri() + `/elements/${currentId}/editor/${type}`;
     }
     return (
-      <PageControls addImage={this.addImage}
+      <PageControls
+                    hidden={this.state.is404}
+                    addImage={this.addImage}
                     addText = {this.addText}
                     addLink = {() => this.addElement('link')}
                     deleteElement={this.deleteElement}
