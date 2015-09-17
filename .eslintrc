@@ -1,6 +1,6 @@
 {
   "rules": {
-    "indent": [1, 2],
+    "indent": [2, 2],
     "no-extra-boolean-cast": [1],
     "no-empty": [1],
     "no-console": [1],
