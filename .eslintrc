@@ -3,7 +3,7 @@
     "indent": [2, 2],
     "no-extra-boolean-cast": [1],
     "no-empty": [1],
-    "no-console": [1],
+    "no-console": [0],
     "comma-dangle": [1],
     "no-unused-vars": [1, {"vars": "all", "args": "none"}],
     "linebreak-style": [2, "unix"],
