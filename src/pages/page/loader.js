@@ -14,6 +14,12 @@ module.exports = {
     }
   },
 
+  getInitialState: function () {
+    return {
+      is404: false
+    };
+  },
+
   loadComponentData: function() {
     this.setState({loading: false});
 
@@ -25,6 +31,10 @@ module.exports = {
       this.setState({loading: false});
 
       if (err) {
+        this.setState({
+          is404: true
+        });
+
         return reportError(this.getIntlMessage('error_page'), err);
       }
 

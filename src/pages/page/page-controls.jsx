@@ -20,7 +20,10 @@ var PageControls = React.createClass({
 
   render: function() {
     return (
-      <div className={classNames({'controls': true, 'add-active': this.props.showAddMenu})}>
+      <div className={classNames({
+        'controls': true,
+        'hidden': this.props.hidden,
+        'add-active': this.props.showAddMenu })}>
         <div className="add-menu">
           <button className="text"  onClick={this.props.addText} ><img className="icon" src="../../img/text.svg" /></button>
           <button className="image" onClick={this.props.addImage}><img className="icon" src="../../img/camera.svg" /></button>
