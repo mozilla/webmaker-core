@@ -172,9 +172,10 @@ var Page = React.createClass({
   generateControls: function() {
     // Url for link to element editor
     var elements = this.state.elements,
-        currentId = this.state.currentElementId,
-        currentElement = elements[currentId],
-        type, href, url;
+      currentId = this.state.currentElementId,
+      currentElement = elements[currentId],
+      type, href, url;
+
     if (currentElement) {
       type = currentElement.type;
       href = '/pages/element/#' + type;

@@ -128,10 +128,10 @@ var Tinker = React.createClass({
    */
   save: function (onSaveComplete) {
     var element = this.state.element,
-        propertyName = this.state.params.propertyName,
-        spec = elementTypes[element.type].spec,
-        isStyleOrAttribute = spec.isStyleOrAttribute(propertyName),
-        updateObject = {};
+      propertyName = this.state.params.propertyName,
+      spec = elementTypes[element.type].spec,
+      isStyleOrAttribute = spec.isStyleOrAttribute(propertyName),
+      updateObject = {};
 
     var java = platform.getAPI();
 

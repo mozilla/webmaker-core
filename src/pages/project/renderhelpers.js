@@ -13,12 +13,10 @@ module.exports = {
   getBoundingStyle: function() {
     var transformString = `matrix(${this.state.matrix.join(', ')})`;
     return assign({
-        transform: transformString,
-        WebkitTransform: transformString,
-        opacity: this.state.pages.length ? 1 : 0
-      },
-      this.cartesian.getBoundingSize()
-    );
+      transform: transformString,
+      WebkitTransform: transformString,
+      opacity: this.state.pages.length ? 1 : 0
+    }, this.cartesian.getBoundingSize() );
   },
 
   getPageURL: function(params, selectedEl) {

@@ -170,5 +170,5 @@ module.exports = {
     } else if (page.id !== this.state.selectedEl) {
       this.highlightPage(page.id, 'selected');
     }
-  },
+  }
 };

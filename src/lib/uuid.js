@@ -28,7 +28,7 @@ function b(
     ).replace( // replacing
       /[018]/g, // zeroes, ones, and eights with
       b // random hex digits
-    )
+    );
 }
 
 module.exports = b;

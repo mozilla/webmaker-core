@@ -13,7 +13,7 @@ module.exports = {
       return string;
     }
     if (string && typeof string === 'string') {
-      try { result = JSON.parse(string); } catch (e) {}
+      try { result = JSON.parse(string); } catch (e) { console.error(e); }
     }
     return result;
   }

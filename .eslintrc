@@ -1,13 +1,12 @@
 {
   "rules": {
-    "indent": [1, 2],
-    "no-extra-boolean-cast": [1],
-    "no-empty": [1],
-    "no-console": [1],
-    "comma-dangle": [1],
-    "no-unused-vars": [1, {"vars": "all", "args": "none"}],
+    "indent": [2, 2],
+    "no-empty": [2],
+    "no-console": [0],
+    "comma-dangle": [2],
+    "no-unused-vars": [0],
     "linebreak-style": [2, "unix"],
-    "semi": [1, "always"]
+    "semi": [2, "always"]
   },
   "env": {
     "commonjs": true,

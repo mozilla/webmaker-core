@@ -87,7 +87,7 @@ module.exports = {
 
     var inputStyle = this.formInputStyle(style);
     assign(inputStyle, {
-      maxWidth: "100%",
+      maxWidth: "100%"
     });
 
     var sizerstyle = assign({}, inputStyle);
@@ -116,7 +116,7 @@ module.exports = {
 
   // start editing, but only if we were built with the "activate" property
   activate: function() {
-    if (!!this.props.active) {
+    if (this.props.active) {
       this.startEditing();
     }
   },
