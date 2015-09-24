@@ -32,8 +32,8 @@
   },
   "homepage": "https://github.com/mozilla/webmaker-core",
   "engines": {
-    "node": "0.12.x",
-    "npm": "^2.7.4"
+    "node": "4",
+    "npm": "^2.14.4"
   },
   "devDependencies": {
     "autoless": "^0.1.7",
