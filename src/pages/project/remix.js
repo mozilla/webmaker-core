@@ -13,6 +13,7 @@ module.exports = {
         uri: uri
       }, (err, data) => {
         if (err) {
+          window.Platform.trackEvent('Remix', 'Remix Error', err);
           return console.error('Error remixing project', err);
         }
 
@@ -25,8 +26,11 @@ module.exports = {
           uri: `/users/${this.state.params.user}/projects/${this.state.params.project}`
         }, (err, moreData) => {
           if (err) {
+            window.Platform.trackEvent('Remix', 'Remix Error', err);
             return console.error('Error remixing project', err);
           }
+
+          window.Platform.trackEvent('Remix', 'Remix Success', projectID);
 
           if (window.Platform) {
             window.Platform.setView(
@@ -70,6 +74,7 @@ module.exports = {
         }
       }, function (err, body) {
         if (err) {
+          window.Platform.trackEvent('Remix', 'Remix Rename Error', this.state.params.project);
           console.error('Could not update project settings.');
         }
       });
