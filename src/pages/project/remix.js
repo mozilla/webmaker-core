@@ -30,7 +30,7 @@ module.exports = {
             return console.error('Error remixing project', err);
           }
 
-          window.Platform.trackEvent('Remix', 'Remix', projectID);
+          window.Platform.trackEvent('Remix', 'Remix Success', projectID);
 
           if (window.Platform) {
             window.Platform.setView(
