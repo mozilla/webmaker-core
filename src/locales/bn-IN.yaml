@@ -1,0 +1,49 @@
+bn-IN:
+  username: ব্যবহারকারীর নাম
+  password: 'পাসওয়ার্ড '
+  email: ইমেল
+  helpText: পাসওয়ার্ড রিসেট
+  email_me_updates: ওয়েবমেকার সম্পর্কে আপডেট আমায় ইমেইল করুন।
+  join_webmaker: Webmaker-এ যোগ দিন
+  by_joining: যুক্ত হয়ে, আমি মোজিলা ওয়েবমেকারের {linkTerms} এবং {linkPrivacyPolicy} এ সম্মতি প্রদান করছি।
+  privacy_policy: গোপনীয়তা নীতি
+  terms: শর্তাবলী
+  already_join_signin: ইতিমধ্যে যোগ দিয়েছেন? {signinLink}
+  signin: 'সাইন ইন  '
+  dont_have_account: কোন অ্যাকাউন্ট নেই? {joinWebmakerLink}
+  errorUsernameOrPassword: আপনার ব্যবহারকারী নাম বা পাসওয়ার্ড দিয়ে একটি সমস্যা হতে পারে বলে মনে হচ্ছে।
+  color_editor: 'রঙ: {rgbaValue};'
+  Red: লাল
+  Green: সবুজ
+  Blue: নীল
+  Opacity: অস্বচ্ছতা
+  my_project: আমার প্রকল্প
+  log_out: প্রস্থান
+  create_a_project: + প্রকল্প তৈরি করুন
+  open_style_guide: উন্মুক্ত স্টাইল গাইড
+  reset_share_preferences: শেয়ার করার পছন্দ রিসেট করুন
+  loading: লোডিং!
+  title: শিরোনাম
+  done: সম্পূর্ণ
+  edit_label: ট্যাগ সম্পাদনা করুন।
+  change_link_dest: লিঙ্ক গন্তব্য পরিবর্তন করুন।
+  set_link_dest: লিঙ্ক গন্তব্য সেট করুন।
+  corner_radius: দৃষ্টিকোন ব্যাসার্ধ
+  Font: ফন্ট
+  background_color: পটভূমির রঙ
+  no_project_found: দুঃখিত, কোন প্রকল্প পাওয়া যায়নি।
+  error_featured: প্রকল্প উদ্ঘাটনে সমস্যা হয়েছে
+  error_featured_404: কোন উদ্ঘাটিত প্রকল্প পাওয়া যায়নি
+  error_update_element: উপাদান আপডেট করার সময় একটি ত্রুটি ছিল।
+  error_element: উপাদান লোড করার সময় ত্রুটি।
+  error_element_404: উপাদান খুঁজে পাওয়া যায়নি।
+  error_create_make: প্রকল্প তৈরিতে চেষ্টা করা হয়েছে যখন কোন সেশন পাওয়া যায়নি
+  error_create_element: উপকরণ তৈরিতে সমস্যা হয়েছে
+  error_delete_element: উপাদান মুছে ফেলার সময় সমস্যা হয়েছে।
+  error_page: পাতা লোড হতে কোন সমস্যা হয়েছে
+  error_page_404: পাতা লোড করার জন্য পাওয়া যায়নি
+  error_404_element_save: উপকরণ সংরক্ষণের জন্য পাওয়া যায়নি
+  cc: ক্রিয়েটিভ কমন্স
+  ccLicenseSection: কন্টেন্ট {creativecommonsLink} নামের একটি ক্রিয়েটিভ কমন্স লাইসেন্সের আওতায় প্রকাশিত হয়েছে।
+  ccLicenseSectionSub: এর অর্থ হচ্ছে অন্য কেউ আপনার কৃতিত্ব স্বীকার করে আপনার কন্টেন্ট শেয়ার, অভিযোজন, এবং রিমিক্স করতে পারবে এবং একইভাবে তাদের সৃষ্টিকর্মও শেয়ার করতে পারবে, যেভাবে এই লাইসেন্সে বর্ণনা করা হয়েছে।
+  ccAttribution: Attribution-ShareAlike 3.0 Unported
