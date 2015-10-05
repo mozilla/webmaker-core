@@ -3,6 +3,9 @@ var React = require('react/addons');
 var types = require('../../components/basic-element/basic-element.jsx').types;
 var api = require('../../lib/api');
 var reportError = require('../../lib/errors');
+var platform = require('../../lib/platform');
+var dispatcher = require('../../lib/dispatcher');
+
 var update = React.addons.update;
 
 var MAX_ZOOM = 0.5;
@@ -69,6 +72,17 @@ module.exports = {
 
   addPage: function (coords) {
     return () => {
+      var pagesAdded = parseInt(platform.getSharedPreferences('ftu::pages-created', true) || 0, 10);
+
+      pagesAdded++;
+
+      // Trigger FTU
+      if (pagesAdded === 2) {
+        dispatcher.fire('secondPageCreated', {});
+      }
+
+      platform.setSharedPreferences('ftu::pages-created', pagesAdded, true);
+
       var json = {
         x: coords.x,
         y: coords.y,
@@ -156,5 +170,5 @@ module.exports = {
     } else if (page.id !== this.state.selectedEl) {
       this.highlightPage(page.id, 'selected');
     }
-  },
+  }
 };

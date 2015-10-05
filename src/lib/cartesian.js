@@ -77,7 +77,7 @@ class Cartesian {
       paddingBottom: this.getAbsDistance('y', 'max'),
       paddingLeft: this.getAbsDistance('x', 'min'),
       marginLeft: -((diffX * this.widthPadded + this.width) / 2) + 'px',
-      marginTop: -((diffY * this.heightPadded + this.height) / 2) + 'px',
+      marginTop: -((diffY * this.heightPadded + this.height) / 2) + 'px'
     };
   }
 
@@ -110,8 +110,7 @@ class Cartesian {
     var allStr = this.allCoords.map(coords => `${coords.x}/${coords.y}`);
     this.allCoords.forEach(coords => {
       var {x, y} = coords;
-      [
-        {x: x - 1, y},
+      [ {x: x - 1, y},
         {x: x + 1, y},
         {x, y: y - 1},
         {x, y: y + 1}

@@ -72,15 +72,13 @@
       }
     }
 
-    &.source .shim {
-      background-color: rgba(0,0,0,0.2);
-
-      .indicator {
-        background: url(img/oval-droplet.svg) no-repeat center center / 100%;
-      }
+    &.source {
+      opacity: 0.1;
     }
 
     &.target .shim {
+      background: none;
+
       .indicator {
         background: url(img/oval-flag.svg) no-repeat center center / 100%;
       }
@@ -89,6 +87,10 @@
     &.selected {
       border: 8px solid @lightGrey;
       outline: 6px solid @blue;
+    }
+    &.selected.target {
+      border: none;
+      outline: none;
     }
     &.unselected {
       opacity: 0.3;

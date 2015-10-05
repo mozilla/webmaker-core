@@ -14,31 +14,70 @@ var Discover = React.createClass({
   getInitialState: function () {
     return {
       projects: [],
-      loading: false
+      loading: false,
+      pagesLoaded: 0,
+      allPagesLoaded: false
     };
   },
   load: function () {
     this.setState({loading: true});
+
     api({
-      uri: '/discover/' + lang + '?count=25',
+      uri: `/discover/${lang}?page=${this.state.pagesLoaded + 1}&count=5`,
       useCache: true
     }, (err, body) => {
       this.setState({loading: false});
+
       if (err) {
-        return reportError(this.getIntlMessage('error_discovery_get'), err);
+        reportError(this.getIntlMessage('error_discovery_get'), err);
+        return;
       }
 
       if (!body || !body.projects || !body.projects.length) {
-        return reportError(this.getIntlMessage('error_featured_404'));
+        if (this.state.pagesLoaded === 0) {
+          reportError(this.getIntlMessage('error_featured_404'));
+        } else {
+          this.setState({
+            allPagesLoaded: true
+          });
+        }
+
+        return;
+      }
+
+      function shuffleArray(array) {
+        for (var i = array.length - 1; i > 0; i--) {
+          var j = Math.floor(Math.random() * (i + 1));
+          var temp = array[i];
+          array[i] = array[j];
+          array[j] = temp;
+        }
+
+        return array;
       }
 
       this.setState({
-        projects: body.projects
+        projects: this.state.projects.concat(shuffleArray(body.projects)),
+        pagesLoaded: this.state.pagesLoaded + 1
       });
     });
   },
   componentWillMount: function () {
     this.load();
+  },
+  componentDidMount: function () {
+    // Using window for scrolling because setting overflow:scroll on #discover causes display glitches during scroll
+    window.onscroll = function (event) {
+      var endThreshold = 500;
+
+      if (
+        !this.state.allPagesLoaded &&
+        window.scrollY > 0 &&
+        document.querySelector('html').scrollHeight - window.scrollY - 480 <= endThreshold) {
+
+        this.load();
+      }
+    }.bind(this);
   },
   render: function () {
     var cards = this.state.projects.map( project => {

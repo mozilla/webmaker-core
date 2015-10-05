@@ -190,7 +190,10 @@ var Make = React.createClass({
       <div id="make">
         <div className="profile-card">
           <h3>{this.state.user.username}</h3>
-          <p><button className="btn" onClick={this.logout}>{this.getIntlMessage('log_out')}</button></p>
+          <p>
+            <Link className="btn" external="mailto:help@webmaker.org">{this.getIntlMessage('need_help')}</Link>
+            <button className="btn" onClick={this.logout}>{this.getIntlMessage('log_out')}</button>
+          </p>
         </div>
         <button onClick={this.addProject} className="btn btn-create btn-block btn-teal">
           {this.getIntlMessage('create_a_project')}

@@ -30,10 +30,11 @@ var BasicElement = React.createClass({
      */
     safifyScale: function(component, scale) {
       var node  = component.getDOMNode(),
-          style = getComputedStyle(node,null),
-          w = parseInt(style.getPropertyValue('width'), 10),
-          h = parseInt(style.getPropertyValue('height'), 10),
-          e = w>h ? w : h;
+        style = getComputedStyle(node,null),
+        w = parseInt(style.getPropertyValue('width'), 10),
+        h = parseInt(style.getPropertyValue('height'), 10),
+        e = w>h ? w : h;
+
       if(e*scale < BasicElement.minScaledEdgeLength) {
         scale = BasicElement.minScaledEdgeLength/e;
       }

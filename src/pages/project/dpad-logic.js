@@ -1,6 +1,6 @@
 function getTargetCoords(sourceCoords, direction) {
   var cx = sourceCoords.x,
-      cy = sourceCoords.y;
+    cy = sourceCoords.y;
 
   var panTargets = {
     left:  { x: cx - 1, y: cy     },

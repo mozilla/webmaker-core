@@ -9,19 +9,6 @@ var PageControls = React.createClass({
     require("./flattening")
   ],
 
-  cacheElementForEdits: function(evt) {
-    // cache the element on the java side
-    var java = platform.getAPI();
-    if (java) {
-      var element = this.props.currentElement;
-      if (element) {
-        java.queue("edit-element", JSON.stringify({
-          data: this.expand(element)
-        }));
-      }
-    }
-  },
-
   secondaryButtonClass: function(name) {
     var names = {
       secondary: true,
@@ -33,7 +20,10 @@ var PageControls = React.createClass({
 
   render: function() {
     return (
-      <div className={classNames({'controls': true, 'add-active': this.props.showAddMenu})}>
+      <div className={classNames({
+        'controls': true,
+        'hidden': this.props.hidden,
+        'add-active': this.props.showAddMenu })}>
         <div className="add-menu">
           <button className="text"  onClick={this.props.addText} ><img className="icon" src="../../img/text.svg" /></button>
           <button className="image" onClick={this.props.addImage}><img className="icon" src="../../img/camera.svg" /></button>
@@ -45,7 +35,7 @@ var PageControls = React.createClass({
         <button className="add" onClick={this.props.toggleAddMenu}></button>
         <Link
           className={this.secondaryButtonClass("edit")}
-          preNavigation={this.cacheElementForEdits}
+          preNavigation={this.props.cacheElementForEdits}
           url={this.props.url}
           href={this.props.href}>
           <img className="icon" src="../../img/brush.svg" />
