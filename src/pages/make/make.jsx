@@ -176,6 +176,7 @@ var Make = React.createClass({
       return (
         <Card
           showButton={true}
+          showAuthor={false}
           onActionsClick={this.cardActionClick}
           projectID={project.id}
           key={project.id}

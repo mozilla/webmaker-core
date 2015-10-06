@@ -5,6 +5,11 @@ var Card = React.createClass({
   statics: {
     DEFAULT_THUMBNAIL: '../../img/default.svg'
   },
+  getDefaultProps: function(){
+    return {
+      showAuthor: true
+    };
+  },
   actionsClicked: function (e) {
     e.preventDefault();
     e.stopPropagation();
@@ -30,7 +35,7 @@ var Card = React.createClass({
         <div className="meta">
           <div className="text">
             <div className="title">{this.props.title}</div>
-            <div className="author">{this.props.author}</div>
+            <div className="author" hidden={!this.props.showAuthor}>{this.props.author}</div>
           </div>
           <div className="action" hidden={!this.props.showButton}>
             <button onClick={this.actionsClicked}>
