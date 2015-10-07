@@ -40,7 +40,8 @@ var TextEditor = React.createClass({
   mixins: [
     LinkedStateMixin,
     require('./witheditable'),
-    require('./font-selector')
+    require('./font-selector'),
+    require('react-intl').IntlMixin
   ],
   getInitialState: function () {
     return TextBlock.spec.flatten(this.props.element, {defaults: true});
@@ -78,10 +79,14 @@ var TextEditor = React.createClass({
               { this.generateFontSelector() }
             </div>
             <div className="form-group">
-              <label>Color</label>
+	      <label>{this.getIntlMessage('color')}</label>
               <ColorGroup id="color" linkState={this.linkState} colors={colorChoices} params={this.props.params} onLaunchTinker={this.props.save} />
             </div>
             <div className="form-group">
+	      <label>{this.getIntlMessage('background_color')}</label>
+	      <ColorGroup id="backgroundColor" linkState={this.linkState} params={this.props.params} onLaunchTinker={this.props.save} />
+	    </div>
+	    <div className="form-group">
               <label>Text Style</label>
               <CheckboxSet options={textStyleOptions} linkState={this.linkState} />
             </div>
