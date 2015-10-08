@@ -38,6 +38,7 @@ en-US:
   corner_radius: Corner Radius
   Font: Font
   background_color: Background Color
+  background: Background
   no_project_found: Sorry, no projects found.
   error_featured: Error getting discovery projects
   error_featured_404: No discovery projects found
