@@ -20,8 +20,17 @@ var Checkbox = React.createClass({
       uncheckedLabel: false
     };
   },
+  getInitialState: function(){
+    return {
+      icon: this.props.icon
+    };
+  },
   onChange: function (e) {
     var val = e.target.checked ? this.props.checkedLabel : this.props.uncheckedLabel;
+    //There are probably better ways to implement 'checkedIcon', but this will do for now. Maybe inline SVG and CSS styling later on?
+    if (this.props.checkedIcon){
+      this.state.icon = e.target.checked ? this.props.checkedIcon : this.props.icon;
+    }
     this.valueLink.requestChange(val);
   },
   isChecked: function () {
@@ -32,7 +41,7 @@ var Checkbox = React.createClass({
     this.valueLink = linkState(this.props.id);
     return (<label className={classNames('label', {selected: this.isChecked()})}>
       <input className="sr-only" checked={this.isChecked()} onChange={this.onChange} type="checkbox" />
-      <img className="icon" src={this.props.icon}/>
+      <img className="icon" src={this.state.icon}/>
     </label>);
   }
 });
