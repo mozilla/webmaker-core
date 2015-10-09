@@ -6,7 +6,7 @@
 // *****************************************************************************
 //
 
-var React = require('react/addons');
+var React = require('react');
 
 var {parseJSON} = require('../../lib/jsonUtils');
 var render = require('../../lib/render.jsx');

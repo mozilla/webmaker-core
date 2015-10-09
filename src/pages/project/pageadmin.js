@@ -1,12 +1,11 @@
-var React = require('react/addons');
+var React = require('react');
+var update = require('react-addons-update');
 
 var types = require('../../components/basic-element/basic-element.jsx').types;
 var api = require('../../lib/api');
 var reportError = require('../../lib/errors');
 var platform = require('../../lib/platform');
 var dispatcher = require('../../lib/dispatcher');
-
-var update = React.addons.update;
 
 var MAX_ZOOM = 0.5;
 var DEFAULT_ZOOM = 0.5;

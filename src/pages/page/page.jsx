@@ -1,6 +1,7 @@
 // FIXME: TODO: This component is huge and needs further refactoring
 
 var React = require('react');
+var ReactDOM = require('react-dom');
 var classNames = require('classnames');
 var assign = require('react/lib/Object.assign');
 var reportError = require('../../lib/errors');
@@ -94,7 +95,7 @@ var Page = React.createClass({
   },
 
   componentDidMount: function() {
-    var bbox = this.refs.container.getDOMNode().getBoundingClientRect();
+    var bbox = ReactDOM.findDOMNode(this.refs.container).getBoundingClientRect();
     if(bbox) {
       this.setState({
         dims: bbox

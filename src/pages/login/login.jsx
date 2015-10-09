@@ -1,4 +1,4 @@
-var React = require('react/addons');
+var React = require('react');
 var render = require('../../lib/render.jsx');
 
 var Loading = require('../../components/loading/loading.jsx');

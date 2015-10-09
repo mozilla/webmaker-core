@@ -20,7 +20,7 @@ var ElementGroup = React.createClass({
   formElement: function(elementId, properties) {
 
     return (
-      <div className={'el-wrapper' + (properties.isCurrent ? ' current' : '')}>
+      <div key={elementId} className={'el-wrapper' + (properties.isCurrent ? ' current' : '')}>
         <BasicElement key={'positionable' + elementId} id={elementId} {...properties} zIndex={properties.zIndex} />
       </div>
     );

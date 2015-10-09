@@ -35,9 +35,9 @@ var ModalConfirm = React.createClass({
     });
   },
   render: function () {
-    var buttons = this.state.actions.map(action => {
+    var buttons = this.state.actions.map((action, index) => {
       return (
-        <button onClick={this.onButtonClick.bind(this, action)}>{action}</button>
+        <button key={index} onClick={this.onButtonClick.bind(this, action)}>{action}</button>
       );
     });
 

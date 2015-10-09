@@ -1,4 +1,4 @@
-var React = require('react/addons');
+var React = require('react');
 var Link = require('../link/link.jsx');
 
 var Card = React.createClass({
@@ -11,12 +11,12 @@ var Card = React.createClass({
     this.props.onActionsClick.call(this, this.props);
   },
   onImageError: function() {
-    var imageEl = this.refs.imageEl.getDOMNode();
+    var imageEl = this.refs.imageEl;
     imageEl.src = Card.DEFAULT_THUMBNAIL;
     imageEl.onerror = null;
   },
   componentDidMount: function () {
-    var imageEl = this.refs.imageEl.getDOMNode();
+    var imageEl = this.refs.imageEl;
     imageEl.onerror = this.onImageError;
     imageEl.src = this.props.thumbnail || Card.DEFAULT_THUMBNAIL;
   },

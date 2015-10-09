@@ -1,11 +1,12 @@
-var React = require('react/addons');
+var React = require('react');
+var LinkedStateMixin = require('react-addons-linked-state-mixin');
 var classNames = require('classnames');
 
 var ColorGroup = React.createClass({
   statics: {
     defaultColors: ['transparent', '#FFF', '#99CA47', '#EFC246', '#E06A2C', '#69A0FC']
   },
-  mixins: [React.addons.LinkedStateMixin],
+  mixins: [LinkedStateMixin],
   getDefaultProps: function () {
     return {
       colors: this.defaultColors.slice(),
@@ -81,7 +82,7 @@ var ColorGroup = React.createClass({
           transparent: color === 'transparent',
           white: color === '#FFF'
         };
-        return (<label className={classNames(className)}>
+        return (<label key={color} className={classNames(className)}>
           <span className={classNames(innerClassName)} style={{backgroundColor: color}} />
           <input className="sr-only" name="color" type="radio" value={color} checked={this.valueLink.value === color ? true : null} onChange={this.onChange} />
         </label>);

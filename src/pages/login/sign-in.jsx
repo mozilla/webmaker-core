@@ -1,4 +1,5 @@
-var React = require('react/addons');
+var React = require('react');
+var LinkedStateMixin = require('react-addons-linked-state-mixin');
 var api = require('../../lib/api');
 var keyboard = require('../../lib/keyboard');
 
@@ -12,7 +13,7 @@ var FormattedMessage = require('react-intl').FormattedMessage;
 var SignIn = React.createClass({
 
   mixins: [
-    React.addons.LinkedStateMixin,
+    LinkedStateMixin,
     require('../../lib/validators'),
     require('react-intl').IntlMixin
   ],

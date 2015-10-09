@@ -1,5 +1,5 @@
 var should = require('should');
-var React = require('react/addons');
+var React = require('react');
 
 // Polyfill Intl for node -- some versions (>=10) don't support the Intl API
 var areIntlLocalesSupported = require('intl-locales-supported');

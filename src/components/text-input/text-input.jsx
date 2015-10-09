@@ -1,7 +1,8 @@
-var React = require('react/addons');
+var React = require('react');
+var LinkedStateMixin = require('react-addons-linked-state-mixin');
 
 var TextInput = React.createClass({
-  mixins: [React.addons.LinkedStateMixin],
+  mixins: [LinkedStateMixin],
   propTypes: {
     maxlength: React.PropTypes.number.isRequired,
     minlength: React.PropTypes.number

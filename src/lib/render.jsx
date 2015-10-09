@@ -1,4 +1,5 @@
 var React = require('react');
+var ReactDOM = require('react-dom');
 
 var Spindicator = require('../components/spindicator/spindicator.jsx');
 var ModalConfirm = require('../components/modal-confirm/modal-confirm.jsx');
@@ -100,5 +101,5 @@ var Base = React.createClass({
 });
 
 module.exports = function (Route) {
-  React.render(<Base route={Route} />, document.getElementById('app'));
+  ReactDOM.render(<Base route={Route} />, document.getElementById('app'));
 };

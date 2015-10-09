@@ -1,4 +1,5 @@
-var React = require('react/addons');
+var React = require('react');
+var LinkedStateMixin = require('react-addons-linked-state-mixin');
 var classNames = require('classnames');
 
 // Internal -- just the container
@@ -11,7 +12,7 @@ var OptionPanel = React.createClass({
 });
 
 var Checkbox = React.createClass({
-  mixins: [React.addons.LinkedStateMixin],
+  mixins: [LinkedStateMixin],
   getDefaultProps: function () {
     return {
       linkState: this.linkState,
@@ -37,7 +38,7 @@ var Checkbox = React.createClass({
 });
 
 var CheckboxSet = React.createClass({
-  mixins: [React.addons.LinkedStateMixin],
+  mixins: [LinkedStateMixin],
   getDefaultProps: function () {
     return {
       linkState: this.linkState
@@ -51,7 +52,7 @@ var CheckboxSet = React.createClass({
 });
 
 var Radio = React.createClass({
-  mixins: [React.addons.LinkedStateMixin],
+  mixins: [LinkedStateMixin],
   getDefaultProps: function () {
     return {
       linkState: this.linkState

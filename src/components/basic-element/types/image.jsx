@@ -1,4 +1,4 @@
-var React = require('react/addons');
+var React = require('react');
 var assign = require('react/lib/Object.assign');
 var Spec = require('../../../lib/spec');
 
