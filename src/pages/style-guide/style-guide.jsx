@@ -90,12 +90,18 @@ var StyleGuide = React.createClass({
                 <div className="color sapphire"><span>@sapphire</span></div>
                 <div className="color teal"><span>@teal</span></div>
                 <div className="color slate"><span>@slate</span></div>
+                <div className="color darkSlate"><span>@darkSlate</span></div>
                 <div className="color heatherGrey"><span>@heatherGrey</span></div>
                 <div className="color lightGrey"><span>@lightGrey</span></div>
                 <div className="color softGrey"><span>@softGrey</span></div>
                 <div className="color plum"><span>@plum</span></div>
                 <div className="color shadowPlum"><span>@shadowPlum</span></div>
                 <div className="color brick"><span>@brick</span></div>
+                <div className="color aqua"><span>@aqua</span></div>
+                <div className="color green"><span>@green</span></div>
+                <div className="color yellow"><span>@yellow</span></div>
+                <div className="color orange"><span>@orange</span></div>
+                <div className="color purple"><span>@purple</span></div>
               </div>
             </div>
           </div>
