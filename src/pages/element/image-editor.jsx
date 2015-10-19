@@ -24,7 +24,6 @@ var ImageEditor = React.createClass({
   },
   componentDidUpdate: function (prevProps) {
     this.props.cacheEdits(this.state);
-
     // Update state if parent properties change
     if (this.props.element !== prevProps.element) {
       var state = this.getInitialState();
@@ -40,7 +39,7 @@ var ImageEditor = React.createClass({
   },
   render: function () {
     return (
-      <div id="editor">
+      <div id="image-editor" className="editor">
         <div className="editor-preview">
           <ImageBlock {...this.state} />
         </div>

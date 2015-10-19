@@ -77,7 +77,7 @@ var LinkEditor = React.createClass({
   },
   render: function () {
     return (
-      <div id="editor" onClick={this.stopEditing}>
+      <div id="link-editor" className="editor" onClick={this.stopEditing}>
         <div className="editor-preview">
           <div className="el el-link">
             <LinkBlock {...this.state} ref="element" active={true} updateText={this.updateText} setEditMode={this.setEditing} />
@@ -93,10 +93,6 @@ var LinkEditor = React.createClass({
             </button>
           </div>
           <div className="form-group">
-            <label>{this.getIntlMessage('corner_radius')}</label>
-            <Slider id="borderRadius" min={0} value={this.state.borderRadius} max={32} unit="px" linkState={this.linkState} />
-          </div>
-          <div className="form-group">
             <label>{this.getIntlMessage('Font')}</label>
             { this.generateFontSelector() }
           </div>
@@ -108,6 +104,10 @@ var LinkEditor = React.createClass({
             <label>{this.getIntlMessage('background_color')}</label>
             <ColorGroup id="backgroundColor" linkState={this.linkState} params={this.props.params} onLaunchTinker={this.props.save}/>
           </div>
+	  <div className="form-group">
+	    <label>{this.getIntlMessage('corner_radius')}</label>
+	    <Slider id="borderRadius" min={0} value={this.state.borderRadius} max={32} unit="px" linkState={this.linkState} />
+	  </div>
         </div>
       </div>
     );

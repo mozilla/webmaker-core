@@ -68,18 +68,18 @@ var TextEditor = React.createClass({
   },
   render: function () {
     return (
-      <div id="editor" onClick={this.stopEditing}>
-        <form>
-          <div className="editor-preview">
-            <TextBlock {...this.state} ref="element" active={true} updateText={this.updateText} setEditMode={this.setEditing} />
+      <div id="text-editor" className="editor" onClick={this.stopEditing}>
+	<div className="editor-preview">
+	  <TextBlock {...this.state} ref="element" active={true} updateText={this.updateText} setEditMode={this.setEditing} />
+	</div>
+	<div className="editor-options">
+	  <div className="form-group">
+	    <button className="btn btn-block" onClick={this.editText}>{ this.state.editing? "Done" : "Edit text"}</button>
           </div>
           <div className="editor-options">
-            <div className="form-group">
-              <button className="btn btn-block" onClick={this.editText}>{ this.state.editing? "Done" : "Edit text"}</button>
-            </div>
-            <div className="form-group">
-              <label>Font</label>
-              { this.generateFontSelector() }
+	  <div className="form-group">
+	    <label>Font</label>
+	    { this.generateFontSelector() }
             </div>
             <div className="form-group">
               <label>{this.getIntlMessage('text_color')}</label>
@@ -99,7 +99,20 @@ var TextEditor = React.createClass({
               <Radio id="textAlign" options={textAlignOptions} linkState={this.linkState} />
             </div>
           </div>
-        </form>
+	  <div className="form-group">
+	    <label>Color</label>
+	    <ColorGroup id="color" linkState={this.linkState} colors={colorChoices} params={this.props.params} onLaunchTinker={this.props.save} />
+	  </div>
+	  <div className="form-group">
+	    <label>Text Style</label>
+	    <CheckboxSet options={textStyleOptions} linkState={this.linkState} />
+	  </div>
+	  {/* Hide the text alignment editor until multi-line text is added.*/}
+	  <div className="form-group" style={{display: 'none'}}>
+	    <label>Text Alignment</label>
+	    <Radio id="textAlign" options={textAlignOptions} linkState={this.linkState} />
+	  </div>
+	</div>
       </div>
     );
   }
