@@ -101,11 +101,11 @@ var LinkEditor = React.createClass({
             { this.generateFontSelector() }
 	  </div>
 	  <div className="form-group">
-	    <label>{this.getIntlMessage('color')}</label>
+	    <label>{this.getIntlMessage('text_color')}</label>
 	    <ColorGroup id="color" linkState={this.linkState} colors={textColors} params={this.props.params} onLaunchTinker={this.props.save}/>
 	  </div>
 	  <div className="form-group">
-	    <label>{this.getIntlMessage('background')}</label>
+	    <label>{this.getIntlMessage('background_color')}</label>
 	    <ColorGroup id="backgroundColor" linkState={this.linkState} colors={backgroundColors} params={this.props.params} onLaunchTinker={this.props.save}/>
 	  </div>
 	</div>
