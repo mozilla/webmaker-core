@@ -1,5 +1,5 @@
-var React = require('react/addons');
-
+var React = require('react');
+var LinkedStateMixin = require('react-addons-linked-state-mixin');
 var LinkBlock = require('../../components/basic-element/types/link.jsx');
 var ColorGroup = require('../../components/color-group/color-group.jsx');
 var Slider = require('../../components/range/range.jsx');
@@ -9,7 +9,7 @@ var types = require('../../components/basic-element/basic-element.jsx').types;
 
 var LinkEditor = React.createClass({
   mixins: [
-    React.addons.LinkedStateMixin,
+    LinkedStateMixin,
     require('./witheditable'),
     require('./font-selector'),
     require('react-intl').IntlMixin

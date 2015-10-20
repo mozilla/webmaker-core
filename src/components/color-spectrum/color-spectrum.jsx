@@ -31,7 +31,7 @@ var HSV = React.createClass({
   },
   onTouchStart: function(e) {
     e.preventDefault();
-    this.bounding = this.refs.saturationValue.getDOMNode().getBoundingClientRect();
+    this.bounding = this.refs.saturationValue.getBoundingClientRect();
     this.changeSaturationValue(e);
   },
   onTouchMove: function (e) {

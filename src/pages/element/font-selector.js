@@ -1,4 +1,4 @@
-var React = require('react/addons');
+var React = require('react');
 
 /**
  * This is a mixin due to the fact that we rely on this.linkState,

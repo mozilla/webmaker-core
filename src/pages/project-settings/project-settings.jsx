@@ -1,4 +1,5 @@
-var React = require('react/addons');
+var React = require('react');
+var LinkedStateMixin = require('react-addons-linked-state-mixin');
 
 var api = require('../../lib/api');
 var render = require('../../lib/render.jsx');
@@ -14,7 +15,7 @@ var MIN_PROJECT_NAME_LENGTH = 4;
 var ProjectSettings = React.createClass({
 
   mixins: [
-    React.addons.LinkedStateMixin,
+    LinkedStateMixin,
     require('../../lib/router'),
     require('react-intl').IntlMixin
   ],

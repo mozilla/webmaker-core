@@ -1,4 +1,5 @@
-var React = require('react/addons');
+var React = require('react');
+var LinkedStateMixin = require('react-addons-linked-state-mixin');
 
 var TextBlock = require('../../components/basic-element/types/text.jsx');
 var ColorGroup = require('../../components/color-group/color-group.jsx');
@@ -37,7 +38,7 @@ var textAlignOptions = ['left', 'center', 'right'].map(e => {
 
 var TextEditor = React.createClass({
   mixins: [
-    React.addons.LinkedStateMixin,
+    LinkedStateMixin,
     require('./witheditable'),
     require('./font-selector')
   ],

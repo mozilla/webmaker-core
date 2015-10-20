@@ -1,4 +1,4 @@
-var React = require('react/addons');
+var React = require('react');
 var assign = require('react/lib/Object.assign');
 var {SecondaryButton} = require('../../components/action-menu/action-menu.jsx');
 

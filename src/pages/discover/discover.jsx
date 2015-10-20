@@ -1,4 +1,4 @@
-var React = require('react/addons');
+var React = require('react');
 var api = require('../../lib/api');
 var reportError = require('../../lib/errors');
 var i18n = require('../../lib/i18n');

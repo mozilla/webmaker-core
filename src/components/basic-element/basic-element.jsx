@@ -5,6 +5,7 @@
  */
 
 var React = require('react');
+var ReactDOM = require('react-dom');
 var classes = require('classnames');
 var Spec = require('../../lib/spec');
 var touchhandler = require("../../lib/touchhandler");
@@ -29,7 +30,7 @@ var BasicElement = React.createClass({
      * that is visually too small to manipulate.
      */
     safifyScale: function(component, scale) {
-      var node  = component.getDOMNode(),
+      var node = ReactDOM.findDOMNode(component),
         style = getComputedStyle(node,null),
         w = parseInt(style.getPropertyValue('width'), 10),
         h = parseInt(style.getPropertyValue('height'), 10),
@@ -73,7 +74,7 @@ var BasicElement = React.createClass({
     }
 
     var touchHandler = this.touchhandler = touchhandler(this);
-    var dnode = this.getDOMNode();
+    var dnode = ReactDOM.findDOMNode(this);
     dnode.addEventListener("mousedown", touchHandler.startmark);
     dnode.addEventListener("mousemove", touchHandler.panmove);
     dnode.addEventListener("mouseup", touchHandler.endmark);
@@ -91,7 +92,7 @@ var BasicElement = React.createClass({
     dnode.addEventListener("touchend", touchHandler.tapEnd);
 
     // the overlay handles all the two finger touch events
-    var onode = this.refs.overlay.getDOMNode();
+    var onode = this.refs.overlay;
     onode.addEventListener("touchstart", touchHandler.secondFinger);
     onode.addEventListener("touchmove", touchHandler.panmove);
     onode.addEventListener("touchend", touchHandler.endmark);
@@ -127,7 +128,7 @@ var BasicElement = React.createClass({
   //              HTML+JS to solve a problem in React, which has very different ways of
   //              doing so.
   positionButton: function () {
-    var boundingBox = this.refs.styleWrapper.getDOMNode().getBoundingClientRect();
+    var boundingBox = this.refs.styleWrapper.getBoundingClientRect();
     var buttonStyle = this.buttonStyle;
     buttonStyle.y += (((boundingBox.bottom - boundingBox.top) / 2) + 40);
     buttonStyle.angle = 0;
@@ -135,7 +136,7 @@ var BasicElement = React.createClass({
     // FIXME: TODO: this should not be here. This data should be read from state (since we
     //              set it purely during the component's life time), and then use that to
     //              render the button with the correct style in render().
-    var buttonEl = this.refs.metaButton.getDOMNode();
+    var buttonEl = this.refs.metaButton;
     var transformString = Spec.propsToPosition(buttonStyle).transform;
     buttonEl.style.transform = transformString;
     buttonEl.style.webkitTransform = transformString;

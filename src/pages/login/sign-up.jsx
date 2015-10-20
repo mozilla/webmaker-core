@@ -1,4 +1,5 @@
-var React = require('react/addons');
+var React = require('react');
+var LinkedStateMixin = require('react-addons-linked-state-mixin');
 var reportError = require('../../lib/errors');
 var api = require('../../lib/api');
 var keyboard = require('../../lib/keyboard');
@@ -12,7 +13,7 @@ var FormattedMessage = require('react-intl').FormattedMessage;
 // Component for the Sign Up/Create user form. See Login view for usage.
 var SignUp = React.createClass({
 
-  mixins: [require('react-intl').IntlMixin, React.addons.LinkedStateMixin, require('../../lib/validators')],
+  mixins: [require('react-intl').IntlMixin, LinkedStateMixin, require('../../lib/validators')],
 
   // Props:
   //   show

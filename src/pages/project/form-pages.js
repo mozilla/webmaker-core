@@ -1,9 +1,9 @@
-var React = require('react/addons');
+var React = require('react');
 var PageBlock = require("./pageblock.jsx");
 
 module.exports = {
   formPages: function() {
-    return this.state.pages.map((page) => {
+    return this.state.pages.map((page, index) => {
       var props = {
         page,
         selected: page.id === this.state.selectedEl,
@@ -14,7 +14,7 @@ module.exports = {
         interactive: this.state.isPageZoomed,
         onClick: this.onPageClick.bind(this, page)
       };
-      return <PageBlock {...props} />;
+      return <PageBlock key={index} {...props} />;
     });
   }
 };
