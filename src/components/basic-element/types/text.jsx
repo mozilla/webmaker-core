@@ -23,6 +23,12 @@ var spec = new Spec('text', assign({
     default: '#E06A2C',
     editor: 'color'
   },
+  backgroundColor: {
+    category: 'styles',
+    validation: React.PropTypes.string,
+    default: 'transparent',
+    editor: 'color'
+  },
   fontSize: {
     category: 'styles',
     validation: React.PropTypes.number,
@@ -74,7 +80,8 @@ module.exports = React.createClass({
       'fontSize',
       'fontStyle',
       'textDecoration',
-      'textAlign'
+      'textAlign',
+      'backgroundColor'
     ].forEach(function (prop) {
       style[prop] = props[prop];
     });
