@@ -12,18 +12,21 @@ var textStyleOptions = [
   {
     id: 'fontWeight',
     icon: '../../img/B.svg',
+    checkedIcon: '../../img/B-white.svg',
     uncheckedLabel: 'normal',
     checkedLabel: 'bold'
   },
   {
     id: 'fontStyle',
     icon: '../../img/I.svg',
+    checkedIcon: '../../img/I-white.svg',
     uncheckedLabel: 'normal',
     checkedLabel: 'italic'
   },
   {
     id: 'textDecoration',
     icon: '../../img/U.svg',
+    checkedIcon: '../../img/U-white.svg',
     uncheckedLabel: 'none',
     checkedLabel: 'underline'
   }
