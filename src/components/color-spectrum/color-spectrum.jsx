@@ -4,12 +4,14 @@ var Color = require('color');
 
 var HSV = React.createClass({
   getBackgroundColor: function () {
-    var color = this.props.color.clone();
-    color.hsv(color.hue(), 100, 100);
+    //This works around a bug with Color.clone() not creating an exact match
+    var color = new Color().hsl(this.props.color.hsl());
+    color.hsl(color.hue(), 100, 50);
     return color.rgbaString();
   },
   getSaturationValuePosition: function () {
     var hsv = this.props.color.hsv();
+    //This will always jump to the left when the value hits zero, but preventing that would require managing the previous color state
     return {
       top: `${100 - hsv.v}%`,
       left: `${hsv.s}%`
@@ -97,8 +99,8 @@ var ColorSpectrum = React.createClass({
     };
   },
   updateColor: function (color) {
-    // Normalize any updates to rgba
-    this.props.onChange(color.rgbaString());
+    //This was formally normalized to RGBA, but that caused problems with shades of gray not triggering UI hue updates
+    this.props.onChange(color);
   },
   getColor: function(color, defaultColor) {
     // Convert raw color value to a Color instance
