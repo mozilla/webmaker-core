@@ -7,7 +7,7 @@ var api = require('../../lib/api');
 var platform = require('../../lib/platform');
 var types = require('../../components/basic-element/basic-element.jsx').types;
 
-var backgroundColors = ['#9FD0E0', '#99CA47', '#EFC246', '#E06A2C', '#69A0FC', '#8173E4'];
+// var backgroundColors = ['#9FD0E0', '#99CA47', '#EFC246', '#E06A2C', '#69A0FC', '#8173E4'];
 var textColors = ['#FFF', '#99CA47', '#EFC246', '#E06A2C', '#69A0FC', '#8173E4'];
 
 var LinkEditor = React.createClass({
@@ -99,16 +99,16 @@ var LinkEditor = React.createClass({
           <div className="form-group">
             <label>{this.getIntlMessage('Font')}</label>
             { this.generateFontSelector() }
-	  </div>
-	  <div className="form-group">
-	    <label>{this.getIntlMessage('text_color')}</label>
-	    <ColorGroup id="color" linkState={this.linkState} colors={textColors} params={this.props.params} onLaunchTinker={this.props.save}/>
-	  </div>
-	  <div className="form-group">
-	    <label>{this.getIntlMessage('background_color')}</label>
-	    <ColorGroup id="backgroundColor" linkState={this.linkState} colors={backgroundColors} params={this.props.params} onLaunchTinker={this.props.save}/>
-	  </div>
-	</div>
+          </div>
+          <div className="form-group">
+            <label>{this.getIntlMessage('text_color')}</label>
+            <ColorGroup id="color" linkState={this.linkState} colors={textColors} params={this.props.params} onLaunchTinker={this.props.save}/>
+          </div>
+          <div className="form-group">
+            <label>{this.getIntlMessage('background_color')}</label>
+            <ColorGroup id="backgroundColor" linkState={this.linkState} params={this.props.params} onLaunchTinker={this.props.save}/>
+          </div>
+        </div>
       </div>
     );
   }
