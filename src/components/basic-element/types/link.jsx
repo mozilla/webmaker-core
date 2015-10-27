@@ -45,6 +45,16 @@ var spec = new Spec('link', assign({
     category: 'styles',
     validation: React.PropTypes.number,
     default: 3
+  },
+  color: {
+    category: 'styles',
+    validation: React.PropTypes.string,
+    editor: 'color'
+  },
+  boxShadow: {
+    category: 'styles',
+    validation: React.PropTypes.string,
+    default: 'inset 0px 2px 0px rgba(255, 255, 255, 0.3)'
   }
 }, Spec.getPositionProps()));
 
@@ -82,7 +92,7 @@ var Link = React.createClass({
       borderRadius: props.borderRadius,
       backgroundColor: props.backgroundColor,
       border: `1px solid ${darken(props.backgroundColor, 0.4)}`,
-      color: getContrastingColor(props.backgroundColor),
+      color: props.color || getContrastingColor(props.backgroundColor),
       fontFamily: props.fontFamily,
       whiteSpace: props.whiteSpace
     };
