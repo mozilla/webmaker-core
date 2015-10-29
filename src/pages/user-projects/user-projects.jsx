@@ -2,6 +2,8 @@ var React = require('react');
 var api = require('../../lib/api');
 var reportError = require('../../lib/errors');
 var i18n = require('../../lib/i18n');
+var router = require('../../lib/router');
+var platform = require('../../lib/platform');
 
 var render = require('../../lib/render.jsx');
 var Card = require('../../components/card/card.jsx');
@@ -9,8 +11,8 @@ var Loading = require('../../components/loading/loading.jsx');
 
 var lang = i18n.isSupportedLanguage(i18n.currentLanguage) ? i18n.currentLanguage : i18n.defaultLang;
 
-var Discover = React.createClass({
-  mixins: [require('react-intl').IntlMixin],
+var UserProjects = React.createClass({
+  mixins: [router,require('react-intl').IntlMixin],
   getInitialState: function () {
     return {
       projects: [],
@@ -23,7 +25,7 @@ var Discover = React.createClass({
     this.setState({loading: true});
 
     api({
-      uri: `/discover/${lang}?page=${this.state.pagesLoaded + 1}&count=5`,
+      uri: `/users/${this.state.params.user}/projects`,
       useCache: true
     }, (err, body) => {
       this.setState({loading: false});
@@ -80,6 +82,13 @@ var Discover = React.createClass({
     }.bind(this);
   },
   render: function () {
+
+    //This should probably be somewhere other than render where it only gets set once, but I can't seem to pin where. 
+    //Sets status bar title in Android.
+    if (!this.state.loading && this.state.projects.length) {
+      platform.setTitle(this.state.projects[0].author.username);
+    }
+
     var cards = this.state.projects.map( project => {
       return (
         <Card
@@ -88,12 +97,13 @@ var Discover = React.createClass({
           href="/pages/project"
           thumbnail={project.thumbnail[320]}
           title={project.title}
-          author={project.author} />
+          author={project.author}
+          showAuthor={false} />
       );
     });
 
     return (
-      <div id="discover">
+      <div id="userProjects">
         {cards}
         <div hidden={this.state.loading || this.state.projects}>{this.getIntlMessage('no_project_found')}</div>
         <Loading on={this.state.loading} />
@@ -102,4 +112,4 @@ var Discover = React.createClass({
   }
 });
 
-render(Discover);
+render(UserProjects);

@@ -27,15 +27,17 @@ var Card = React.createClass({
   },
   render: function () {
     return (
-      <Link url={this.props.url} href={this.props.href} className="card">
-        <div className="thumbnail">
-          <img ref="imageEl" />
-        </div>
+      <div className="card">
+        <Link url={this.props.url} href={this.props.href} >
+          <div className="thumbnail">
+            <img ref="imageEl" />
+          </div>
+        </Link>
 
         <div className="meta">
           <div className="text">
             <div className="title">{this.props.title}</div>
-            <div className="author" hidden={!this.props.showAuthor}>{this.props.author}</div>
+            <div className="author" hidden={!this.props.showAuthor}><Link href={"/pages/user-projects/"} url={`/users/${this.props.author.id}/projects`} className="authorLink">{this.props.author.username}</Link></div>
           </div>
           <div className="action" hidden={!this.props.showButton}>
             <button onClick={this.actionsClicked}>
@@ -43,7 +45,7 @@ var Card = React.createClass({
             </button>
           </div>
         </div>
-      </Link>
+      </div>
     );
   }
 });
