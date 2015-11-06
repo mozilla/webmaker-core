@@ -119,6 +119,18 @@ var BasicElement = React.createClass({
         zIndex: this.props.zIndex
       });
     }
+
+    // Adjust padding around element wrapper as needed (less when it gets bigger)
+
+    var elStyleWrapper = this.refs.styleWrapper;
+
+    if (
+      (elStyleWrapper.clientWidth - (parseInt(elStyleWrapper.style.padding, 10) * 2)) * this.props.scale > 200 ||
+      (elStyleWrapper.clientHeight - (parseInt(elStyleWrapper.style.padding, 10) * 2)) * this.props.scale > 200) {
+      elStyleWrapper.style.padding = `0`;
+    } else {
+      elStyleWrapper.style.padding = `10px`;
+    }
   },
 
   // Right now the button position is based on the rendered DOM, so we're setting it directly post-render.
