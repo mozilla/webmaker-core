@@ -18,6 +18,10 @@ var PAGE_HEIGHT = 440;
 var DRAG_BOUNDS_THRESHOLD = 40;
 
 var BasicElement = React.createClass({
+  mixins: [
+    require('react-intl').IntlMixin
+  ],
+
   statics: {
     types: {
       image: require('./types/image.jsx'),
@@ -170,24 +174,11 @@ var BasicElement = React.createClass({
       if (window.Platform) {
         window.Platform.setView(`/users/${this.props.targetUserId}/projects/${this.props.targetProjectId}/pages/${this.props.targetPageId}`);
       }
-    } else {
-      dispatcher.fire('linkDestinationClicked', this.props);
+    } else if (this.props.targetWebURL) {
+      if (window.Platform) {
+        window.Platform.openExternalUrl(this.props.targetWebURL);
+      }
     }
-  },
-
-  generateDestinationButton: function() {
-    return (
-      <div className="el-container" key={this.props.key + '-2'}>
-        {/* using onTouchEnd because onClick doesn't work for some reason...touchhandler.js preventing it? */}
-        <button
-          ref="metaButton"
-          className="btn meta-button"
-          onTouchEnd={this.onLinkDestClick}>
-            <img className="icon" src="../../img/flag.svg" />
-            {this.props.targetPageId ? 'Follow Link' : 'Set Destination'}
-        </button>
-      </div>
-    );
   },
 
   generateElement: function() {
@@ -223,7 +214,21 @@ var BasicElement = React.createClass({
             { this.generateElement() }
           </div>
         </div>
-        { this.props.type === 'link' ? this.generateDestinationButton() : false }
+
+        <div className="el-container" hidden={!(this.props.type === 'link' && (!!this.props.targetPageId || !!this.props.targetWebURL))} key={this.props.key * -1}>
+          {/* using onTouchEnd because onClick doesn't work for some reason...touchhandler.js preventing it? */}
+          <button
+            ref="metaButton"
+            className="btn meta-button"
+            onTouchEnd={this.onLinkDestClick}>
+              <img className="icon" src="../../img/flag.svg" />
+              {
+                /* TODO : webmaker-browser has no localized -core strings, but this isn't used there anyway.
+                We should either supply the same localization data to -browser or make getIntlMessage fail silently for projects. */
+              }
+              { window.Platform ? this.getIntlMessage('follow_link') : '' }
+          </button>
+        </div>
       </div>
     );
   },

@@ -9,7 +9,7 @@ var ModalConfirm = React.createClass({
       body: '',
       attribution: undefined,
       icon: '',
-      buttonText: 'OK, got it!',
+      buttons: [],
       callback: null
     };
   },
@@ -19,11 +19,11 @@ var ModalConfirm = React.createClass({
   hide: function () {
     this.refs.shim.hide();
   },
-  onConfirmClick: function () {
+  onConfirmClick: function (button) {
     this.hide();
 
-    if (this.state.callback) {
-      this.state.callback.call();
+    if (button.callback) {
+      button.callback.call();
     }
   },
   componentDidMount: function () {
@@ -41,6 +41,16 @@ var ModalConfirm = React.createClass({
     });
   },
   render: function () {
+    var buttons = this.state.buttons.map((button, i) => {
+      return (
+        <button
+          key={i}
+          onClick={this.onConfirmClick.bind(this, button)}
+          className="btn btn-block">
+          {button.text}
+        </button>);
+    });
+
     return (
       <Shim ref="shim" className="modal-confirm">
         <div className="window">
@@ -52,7 +62,7 @@ var ModalConfirm = React.createClass({
           </header>
           <div className="content">
             <p>{this.state.body}</p>
-            <button onClick={this.onConfirmClick} className="btn btn-block">{this.state.buttonText}</button>
+            {buttons}
             <div hidden={!this.state.attribution} className="attribution">
               <img src="../../img/cc.svg"/>
               <span>{this.state.attribution}</span>
