@@ -5,11 +5,13 @@ var TextInput = React.createClass({
   mixins: [LinkedStateMixin],
   propTypes: {
     maxlength: React.PropTypes.number.isRequired,
-    minlength: React.PropTypes.number
+    minlength: React.PropTypes.number,
+    onEnterPressed: React.PropTypes.func,
+    placeholder: React.PropTypes.string,
+    type: React.PropTypes.string
   },
   getInitialState: function () {
     return {
-      inputLength: 0,
       text: '',
       isTooLong: false
     };
@@ -18,17 +20,29 @@ var TextInput = React.createClass({
     this.valueLink.requestChange(e.target.value);
 
     this.setState({
-      inputLength: e.target.value.length,
       isTooLong: e.target.value.length > this.props.maxlength ? true : false
     });
   },
   validate: function () {
-    if ((!this.props.minlength || this.state.inputLength > this.props.minlength) &&
-      this.state.inputLength <= this.props.maxlength) {
+    if ((!this.props.minlength || this.valueLink.value.length > this.props.minlength) &&
+      this.valueLink.value.length <= this.props.maxlength) {
       return true;
     } else {
       return false;
     }
+  },
+  onKeyDown: function (event) {
+    // Fire callback (if defined) if enter is pressed
+    if (event.keyCode === 13) {
+      if (this.props.onEnterPressed) {
+        this.props.onEnterPressed.call(this, {
+          value: event.target.value
+        });
+      }
+    }
+  },
+  blur: function () {
+    this.refs.input.blur();
   },
   render: function () {
     var linkState = this.props.linkState || this.linkState;
@@ -39,12 +53,14 @@ var TextInput = React.createClass({
         <label>{this.props.label}</label>
 
         <input
+          placeholder={this.props.placeholder}
+          onKeyDown={this.onKeyDown}
           value={this.valueLink.value}
           ref="input"
           onChange={this.onChange}
-          type="text"/>
+          type={this.props.type || "text"}/>
 
-        <div className="indicator">{this.state.inputLength} / {this.props.maxlength}</div>
+        <div className="indicator">{this.valueLink.value.length} / {this.props.maxlength}</div>
       </div>
     );
   }

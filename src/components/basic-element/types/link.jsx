@@ -26,6 +26,11 @@ var spec = new Spec('link', assign({
     validation: React.PropTypes.string,
     default: ''
   },
+  targetWebURL: {
+    category: 'attributes',
+    validation: React.PropTypes.string,
+    default: ''
+  },
   href: {
     category: 'attributes',
     validation: React.PropTypes.string,

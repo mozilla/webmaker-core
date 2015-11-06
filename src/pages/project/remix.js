@@ -54,7 +54,9 @@ module.exports = {
           body: `This is your copy of ${this.state.routeData.title}. You can add or change anything. The original will stay the same. Have fun!`,
           attribution: this.state.routeData.originalAuthor,
           icon: 'tinker.png',
-          buttonText: 'OK, got it!'
+          buttons: [{
+            text: this.getIntlMessage('got_it')
+          }]
         }
       });
 
