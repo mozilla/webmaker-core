@@ -7,7 +7,8 @@ var Card = React.createClass({
   },
   getDefaultProps: function(){
     return {
-      showAuthor: true
+      showAuthor: true,
+      showActions: false
     };
   },
   actionsClicked: function (e) {
@@ -39,7 +40,7 @@ var Card = React.createClass({
             <div className="title">{this.props.title}</div>
             <div className="author" hidden={!this.props.showAuthor}><Link href={"/pages/user-projects/"} url={`/users/${this.props.author.id}/projects`} className="authorLink">{this.props.author.username}</Link></div>
           </div>
-          <div className="action" hidden={!this.props.showButton}>
+          <div className="action" hidden={!this.props.showActions}>
             <button onClick={this.actionsClicked}>
               <img src="../../img/more-dots.svg"/>
             </button>

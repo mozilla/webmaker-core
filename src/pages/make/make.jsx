@@ -6,9 +6,10 @@ var platform = require('../../lib/platform');
 var reportError = require('../../lib/errors');
 
 var render = require('../../lib/render.jsx');
-var Card = require('../../components/card/card.jsx');
 var Loading = require('../../components/loading/loading.jsx');
 var Link = require('../../components/link/link.jsx');
+var ProjectList = require ('../../components/project-list/project-list.jsx');
+
 
 var Make = React.createClass({
   mixins: [router, require('react-intl').IntlMixin],
@@ -147,7 +148,7 @@ var Make = React.createClass({
         callback: (event) => {
           if (event.label === 'Delete') {
             this.setState({loading: true});
-
+            console.log(e);
             api({
               method: 'DELETE',
               uri: `/users/${this.state.user.id}/projects/${e.projectID}`
@@ -172,21 +173,21 @@ var Make = React.createClass({
 
   render: function () {
 
-    var cards = this.state.projects.map(project => {
-      return (
-        <Card
-          showButton={true}
-          showAuthor={false}
-          onActionsClick={this.cardActionClick}
-          projectID={project.id}
-          key={project.id}
-          url={"/users/" + project.author.id + "/projects/" + project.id}
-          href="/pages/project"
-          thumbnail={project.thumbnail[320]}
-          title={project.title}
-          author={project.author.username} />
-      );
-    });
+    // var cards = this.state.projects.map(project => {
+    //   return (
+    //     <Card
+    //       showButton={true}
+    //       showAuthor={false}
+    //       onActionsClick={this.cardActionClick}
+    //       projectID={project.id}
+    //       key={project.id}
+    //       url={"/users/" + project.author.id + "/projects/" + project.id}
+    //       href="/pages/project"
+    //       thumbnail={project.thumbnail[320]}
+    //       title={project.title}
+    //       author={project.author.username} />
+    //   );
+    // });
     return (
       <div id="make">
         <div className="profile-card">
@@ -199,7 +200,7 @@ var Make = React.createClass({
         <button onClick={this.addProject} className="btn btn-create btn-block btn-teal">
           {this.getIntlMessage('create_a_project')}
         </button>
-        {cards}
+        <ProjectList showAuthor={false} showActions={true} author={this.state.user.id} onActionsClick={this.cardActionClick}/>
         <Loading on={this.state.loading} />
         <Link url="/style-guide" hidden={!platform.isDebugBuild()} className="btn btn-create btn-block btn-teal">
            {this.getIntlMessage('open_style_guide')}
