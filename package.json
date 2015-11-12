@@ -77,7 +77,7 @@
     "react-dom": "0.14.0",
     "react-hammerjs": "0.3.0",
     "react-intl": "1.2.0",
-    "xhr": "2.1.0"
+    "xhr": "2.2.0"
   },
   "jshintConfig": {
     "esnext": true
