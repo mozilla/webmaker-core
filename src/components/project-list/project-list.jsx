@@ -7,7 +7,6 @@ var platform = require('../../lib/platform');
 
 var render = require('../../lib/render.jsx');
 var Card = require('../../components/card/card.jsx');
-var Loading = require('../../components/loading/loading.jsx');
 
 var lang = i18n.isSupportedLanguage(i18n.currentLanguage) ? i18n.currentLanguage : i18n.defaultLang;
 
@@ -25,15 +24,25 @@ var ProjectList = React.createClass({
     //Other passable props: author (id)
     return {
       shuffle: false,
-      infiniteScroll: true,
+      infiniteScroll: false,
       showAuthor: true,
       setTitle: false,
       showActions: false,
-      actionsClicked: ()=>{}
+      useCache: false,
+      actionsClicked: ()=>{},
+      onLoadStart: () =>{},
+      onLoadEnd: () =>{}
     };
+  },
+  //For updating when new projects are created
+  componentDidUpdate: function (prevProps) {
+    if (this.props.isVisible && !prevProps.isVisible) {
+      this.load();
+    }
   },
   load: function () {
     this.setState({loading: true});
+    this.props.onLoadStart();
 
     var apiPath = `/discover/${lang}?page=${this.state.pagesLoaded + 1}&count=5`;
     
@@ -43,15 +52,16 @@ var ProjectList = React.createClass({
     
     api({
       uri: apiPath,
-      useCache: true
+      useCache: this.props.useCache
     }, (err, body) => {
-      this.setState({loading: false});
+      this.setState({loading:false});
+      this.props.onLoadEnd();
 
       if (err) {
         reportError(this.getIntlMessage('error_discovery_get'), err);
         return;
       }
-
+      //Logic for discover mode
       if (!body || !body.projects || !body.projects.length) {
         if (this.state.pagesLoaded === 0) {
           reportError(this.getIntlMessage('error_featured_404'));
@@ -76,11 +86,14 @@ var ProjectList = React.createClass({
       }
 
 
+      //This may need to change with hashtag implementation, as it differes depending on the back end returning pages or not
       var appendProjects = (projects) => {
         if(this.props.shuffle){
+          //Assumes pagination
           return this.state.projects.concat(shuffleArray(projects));
         } else {
-          return this.state.projects.concat(projects);
+          //Assumes all results returned at once
+          return projects;
         }
       };
 
@@ -95,17 +108,18 @@ var ProjectList = React.createClass({
   },
   componentDidMount: function () {
     // Using window for scrolling because setting overflow:scroll on #discover causes display glitches during scroll
-    window.onscroll = function (event) {
-      var endThreshold = 500;
-
-      if (
-        !this.state.allPagesLoaded &&
-        window.scrollY > 0 &&
-        document.querySelector('html').scrollHeight - window.scrollY - 480 <= endThreshold) {
-
-        this.load();
-      }
-    }.bind(this);
+    if(this.props.infiniteScroll){
+      window.onscroll = function (event) {
+        var endThreshold = 500;
+        if (
+          !this.state.allPagesLoaded &&
+          window.scrollY > 0 &&
+          document.querySelector('html').scrollHeight - window.scrollY - 480 <= endThreshold) {
+          console.log('scroll load');
+          this.load();
+        }
+      }.bind(this);
+    }
   },
   render: function () {
 
@@ -136,7 +150,6 @@ var ProjectList = React.createClass({
       <div className="projectList">
         {cards}
         <div hidden={this.state.loading || this.state.projects}>{this.getIntlMessage('no_project_found')}</div>
-        <Loading on={this.state.loading} />
       </div>
     );
   }

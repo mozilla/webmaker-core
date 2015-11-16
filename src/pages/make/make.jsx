@@ -19,14 +19,15 @@ var Make = React.createClass({
       loading: true
     };
   },
+  //Something to do with this
   componentDidUpdate: function (prevProps) {
     if (this.props.isVisible && !prevProps.isVisible) {
       this.load();
     }
   },
-  componentDidMount: function () {
-    this.load();
-  },
+  // componentDidMount: function () {
+  //   this.load();
+  // },
   onError: function (err) {
 
     // TODO: Find a better way to create users in the API db if no attempt
@@ -39,31 +40,6 @@ var Make = React.createClass({
   },
   onEmpty: function () {
     this.setState({loading: false});
-  },
-  load: function () {
-    // No user found, so nothing to load.
-    if (!this.state.user) {
-      return this.onEmpty();
-    }
-
-    this.setState({loading: true});
-
-    api({
-      uri: `/users/${this.state.user.id}/projects`
-    }, (err, body) => {
-      if (err) {
-        return this.onError(err);
-      }
-
-      if (!body || !body.projects || !body.projects.length) {
-        return this.onEmpty();
-      }
-
-      this.setState({
-        loading: false,
-        projects: body.projects
-      });
-    });
   },
   addProject: function () {
     var defaultTitle = this.getIntlMessage('my_project');
@@ -140,7 +116,12 @@ var Make = React.createClass({
     platform.clearUserSession();
     platform.setView('/login/sign-in');
   },
-
+  loadStart: function() {
+    this.setState({loading: true});
+  },
+  loadEnd: function() {
+    this.setState({loading: false});
+  },
   cardActionClick: function (e) {
     dispatcher.fire('modal-switch:show', {
       config: {
@@ -148,7 +129,6 @@ var Make = React.createClass({
         callback: (event) => {
           if (event.label === 'Delete') {
             this.setState({loading: true});
-            console.log(e);
             api({
               method: 'DELETE',
               uri: `/users/${this.state.user.id}/projects/${e.projectID}`
@@ -161,7 +141,7 @@ var Make = React.createClass({
 
               platform.trackEvent('Make', 'Delete Project', 'Project Deleted');
               console.log('Deleted project: ' + e.projectID);
-              this.load();
+              this.refs.projects.load();
             });
           } else if (event.label === 'Share') {
             platform.shareProject(this.state.user.id, e.projectID);
@@ -172,22 +152,6 @@ var Make = React.createClass({
   },
 
   render: function () {
-
-    // var cards = this.state.projects.map(project => {
-    //   return (
-    //     <Card
-    //       showButton={true}
-    //       showAuthor={false}
-    //       onActionsClick={this.cardActionClick}
-    //       projectID={project.id}
-    //       key={project.id}
-    //       url={"/users/" + project.author.id + "/projects/" + project.id}
-    //       href="/pages/project"
-    //       thumbnail={project.thumbnail[320]}
-    //       title={project.title}
-    //       author={project.author.username} />
-    //   );
-    // });
     return (
       <div id="make">
         <div className="profile-card">
@@ -200,8 +164,8 @@ var Make = React.createClass({
         <button onClick={this.addProject} className="btn btn-create btn-block btn-teal">
           {this.getIntlMessage('create_a_project')}
         </button>
-        <ProjectList showAuthor={false} showActions={true} author={this.state.user.id} onActionsClick={this.cardActionClick}/>
         <Loading on={this.state.loading} />
+        <ProjectList ref="projects" isVisible={this.props.isVisible} onLoadStart={this.loadStart} onLoadEnd={this.loadEnd} showAuthor={false} showActions={true} author={this.state.user.id} onActionsClick={this.cardActionClick}/>
         <Link url="/style-guide" hidden={!platform.isDebugBuild()} className="btn btn-create btn-block btn-teal">
            {this.getIntlMessage('open_style_guide')}
         </Link>
