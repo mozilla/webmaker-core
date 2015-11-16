@@ -12,6 +12,17 @@ var lang = i18n.isSupportedLanguage(i18n.currentLanguage) ? i18n.currentLanguage
 
 var ProjectList = React.createClass({
   mixins: [router,require('react-intl').IntlMixin],
+  propTypes: {
+    shuffle: React.PropTypes.bool,
+    infiniteScroll: React.PropTypes.bool,
+    showAuthor: React.PropTypes.bool,
+    setTitle: React.PropTypes.bool,
+    showActions: React.PropTypes.bool,
+    useCache: React.PropTypes.bool,
+    onLoadStart: React.PropTypes.func,
+    onLoadEnd: React.PropTypes.func,
+    onActionsClick: React.PropTypes.func 
+  },
   getInitialState: function () {
     return {
       projects: [],
