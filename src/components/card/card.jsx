@@ -36,9 +36,10 @@ var Card = React.createClass({
         </Link>
 
         <div className="meta">
+          <Link className="avatar" hidden={!this.props.showAuthor} href={"/pages/user-projects/"} url={`/users/${this.props.author.id}/projects`}><img width="47" height="47" src="../../img/avatar-icon.svg" /></Link>
           <div className="text">
             <div className="title">{this.props.title}</div>
-            <div className="author" hidden={!this.props.showAuthor}><Link href={"/pages/user-projects/"} url={`/users/${this.props.author.id}/projects`} className="authorLink">{this.props.author.username}</Link></div>
+            <Link className="author"  hidden={!this.props.showAuthor} href={"/pages/user-projects/"} url={`/users/${this.props.author.id}/projects`}>{this.props.author.username}</Link>
           </div>
           <div className="action" hidden={!this.props.showActions}>
             <button onClick={this.actionsClicked}>

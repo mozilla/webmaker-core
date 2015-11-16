@@ -19,15 +19,11 @@ var Make = React.createClass({
       loading: true
     };
   },
-  //Something to do with this
   componentDidUpdate: function (prevProps) {
     if (this.props.isVisible && !prevProps.isVisible) {
       this.load();
     }
   },
-  // componentDidMount: function () {
-  //   this.load();
-  // },
   onError: function (err) {
 
     // TODO: Find a better way to create users in the API db if no attempt

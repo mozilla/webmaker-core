@@ -28,10 +28,7 @@ var ProjectList = React.createClass({
       showAuthor: true,
       setTitle: false,
       showActions: false,
-      useCache: false,
-      actionsClicked: ()=>{},
-      onLoadStart: () =>{},
-      onLoadEnd: () =>{}
+      useCache: false
     };
   },
   //For updating when new projects are created
@@ -42,7 +39,9 @@ var ProjectList = React.createClass({
   },
   load: function () {
     this.setState({loading: true});
-    this.props.onLoadStart();
+    if(this.props.onLoadStart){
+      this.props.onLoadStart();
+    }
 
     var apiPath = `/discover/${lang}?page=${this.state.pagesLoaded + 1}&count=5`;
     
@@ -54,8 +53,12 @@ var ProjectList = React.createClass({
       uri: apiPath,
       useCache: this.props.useCache
     }, (err, body) => {
+      
       this.setState({loading:false});
-      this.props.onLoadEnd();
+      
+      if(this.props.onLoadEnd){
+        this.props.onLoadEnd();
+      }
 
       if (err) {
         reportError(this.getIntlMessage('error_discovery_get'), err);
