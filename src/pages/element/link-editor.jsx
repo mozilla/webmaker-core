@@ -84,30 +84,32 @@ var LinkEditor = React.createClass({
           </div>
         </div>
         <div className="editor-options">
-          <div className="form-group">
-            <button className="btn btn-block" onClick={this.editText}>{ this.state.editing? this.getIntlMessage('done') : this.getIntlMessage('edit_label')}</button>
+          <div className="editor-scroll">
+            <div className="form-group">
+              <button className="btn btn-block" onClick={this.editText}>{ this.state.editing? this.getIntlMessage('done') : this.getIntlMessage('edit_label')}</button>
+            </div>
+            <div className="form-group">
+              <button onClick={this.onDestClick} className="btn btn-block">
+                <img className="icon" src="../../img/flag.svg" /> {this.state.targetPageId ? this.getIntlMessage('change_link_dest') : this.getIntlMessage('set_link_dest')}
+              </button>
+            </div>
+            <div className="form-group">
+              <label>{this.getIntlMessage('Font')}</label>
+              { this.generateFontSelector() }
+            </div>
+            <div className="form-group">
+              <label>{this.getIntlMessage('text_color')}</label>
+              <ColorGroup id="color" linkState={this.linkState} colors={textColors} params={this.props.params} onLaunchTinker={this.props.save}/>
+            </div>
+            <div className="form-group">
+              <label>{this.getIntlMessage('background_color')}</label>
+              <ColorGroup id="backgroundColor" linkState={this.linkState} params={this.props.params} onLaunchTinker={this.props.save}/>
+            </div>
+            <div className="form-group">
+              <label>{this.getIntlMessage('corner_radius')}</label>
+              <Slider id="borderRadius" min={0} value={this.state.borderRadius} max={32} unit="px" linkState={this.linkState} />
+            </div>
           </div>
-          <div className="form-group">
-            <button onClick={this.onDestClick} className="btn btn-block">
-              <img className="icon" src="../../img/flag.svg" /> {this.state.targetPageId ? this.getIntlMessage('change_link_dest') : this.getIntlMessage('set_link_dest')}
-            </button>
-          </div>
-          <div className="form-group">
-            <label>{this.getIntlMessage('Font')}</label>
-            { this.generateFontSelector() }
-          </div>
-          <div className="form-group">
-            <label>{this.getIntlMessage('text_color')}</label>
-            <ColorGroup id="color" linkState={this.linkState} colors={textColors} params={this.props.params} onLaunchTinker={this.props.save}/>
-          </div>
-          <div className="form-group">
-            <label>{this.getIntlMessage('background_color')}</label>
-            <ColorGroup id="backgroundColor" linkState={this.linkState} params={this.props.params} onLaunchTinker={this.props.save}/>
-          </div>
-	  <div className="form-group">
-	    <label>{this.getIntlMessage('corner_radius')}</label>
-	    <Slider id="borderRadius" min={0} value={this.state.borderRadius} max={32} unit="px" linkState={this.linkState} />
-	  </div>
         </div>
       </div>
     );

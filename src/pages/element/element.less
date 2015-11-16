@@ -78,7 +78,7 @@
 // them too specific and therefore really difficult to override
 @editor-preview-height: 150px;
 .editor-preview {
-  box-shadow: 0px 2px 6px gray;
+  box-shadow: 0px 4px 10px 0px rgba(84,94,102,0.30);
   text-align: center;
   background: @softGrey;
   height: 150px;
@@ -102,10 +102,16 @@
   }
 }
 
+.editor-scroll{
+  background-image: url("./img/scrubber.svg");
+  background-position-x: 100%;
+  background-repeat-x: no-repeat;
+  padding-right: 40px;
+}
 .editor-options {
   font-size: 15px;
   margin-top: @editor-preview-height;
-  padding: 20px 50px 20px 20px;
+  padding: 20px 0px 20px 20px;
   height: calc(~"100% - " @editor-preview-height);
   overflow-y: scroll;
   label, input {
