@@ -41,17 +41,33 @@ var WebLink = React.createClass({
     });
   },
 
-  commitURL: function () {
+  validate: function () {
     /* https://gist.github.com/dperini/729294 */
     var urlRegex = /^(?:(?:https?|ftp):\/\/)(?:\S+(?::\S*)?@)?(?:(?!(?:10|127)(?:\.\d{1,3}){3})(?!(?:169\.254|192\.168)(?:\.\d{1,3}){2})(?!172\.(?:1[6-9]|2\d|3[0-1])(?:\.\d{1,3}){2})(?:[1-9]\d?|1\d\d|2[01]\d|22[0-3])(?:\.(?:1?\d{1,2}|2[0-4]\d|25[0-5])){2}(?:\.(?:[1-9]\d?|1\d\d|2[0-4]\d|25[0-4]))|(?:(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)(?:\.(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)*(?:\.(?:[a-z\u00a1-\uffff]{2,}))\.?)(?::\d{2,5})?(?:[/?#]\S*)?$/i;
 
-    var url = this.refs.url.valueLink.value;
+    var url = this.refs.url.valueLink.value.trim();
 
     // Validate input to see if it's a url
-    if (url.match(urlRegex)) {
-      this.save(url, () => window.Platform.goBack());
+    if (url.match(urlRegex) || url === '') {
+      return url;
     } else if (`http://${url}`.match(urlRegex)) {
-      this.save(`http://${url}`, () => window.Platform.goBack());
+      return `http://${url}`;
+    } else {
+      return null;
+    }
+  },
+
+  componentDidUpdate: function () {
+    if (this.validate()) {
+      this.refs.error.hide();
+    }
+  },
+
+  commitURL: function () {
+    var validatedURL = this.validate();
+
+    if (validatedURL !== null) {
+      this.save(validatedURL, () => window.Platform.goBack());
     } else {
       this.refs.url.blur();
       this.refs.error.show();
