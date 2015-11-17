@@ -6,6 +6,7 @@ var Slider = require('../../components/range/range.jsx');
 var api = require('../../lib/api');
 var platform = require('../../lib/platform');
 var types = require('../../components/basic-element/basic-element.jsx').types;
+var dispatcher = require('../../lib/dispatcher');
 
 // var backgroundColors = ['#9FD0E0', '#99CA47', '#EFC246', '#E06A2C', '#69A0FC', '#8173E4'];
 var textColors = ['#FFF', '#99CA47', '#EFC246', '#E06A2C', '#69A0FC', '#8173E4'];
@@ -35,7 +36,7 @@ var LinkEditor = React.createClass({
     }
 
   },
-  onDestClick: function () {
+  gotoSetLinkDest: function (type) {
     var expanded = types.link.spec.expand(this.state);
 
     var metadata = {
@@ -46,14 +47,6 @@ var LinkEditor = React.createClass({
       userID: this.props.params.user
     };
 
-    var handler = (err, data) => {
-      if (err) {
-        console.error('There was an error updating the element', err);
-      }
-      var pickerView = `/users/${this.props.params.user}/projects/${this.props.params.project}/link`;
-      platform.setView(pickerView, JSON.stringify(metadata));
-    };
-
     var java = platform.getAPI();
 
     if(java) {
@@ -61,19 +54,40 @@ var LinkEditor = React.createClass({
         data: expanded,
         metadata: metadata
       }));
-      handler();
-    }
 
-    else {
-      api({
-        method: 'patch',
-        uri: `/users/${metadata.userID}/projects/${metadata.projectID}/pages/${metadata.pageID}/elements/${metadata.elementID}`,
-        json: {
-          attributes: expanded.attributes,
-          styles: expanded.styles
-        }
-      }, handler);
+      if (type === `page`) {
+        platform.setView(
+          `/users/${this.props.params.user}/projects/${this.props.params.project}/link`,
+          JSON.stringify(metadata)
+        );
+      } else if (type === `web-link`) {
+        platform.setView(`/web-link`);
+      }
+    } else {
+      console.warn(`This feature only works on Android.`);
     }
+  },
+  onDestClick: function () {
+    dispatcher.fire('modal-confirm:show', {
+      config: {
+        buttons: [
+          {
+            text: this.getIntlMessage('dest_btn_page'),
+            callback: () => {
+              this.gotoSetLinkDest(`page`);
+            }
+          }, {
+            text: this.getIntlMessage('dest_btn_web'),
+            callback: () => {
+              this.gotoSetLinkDest(`web-link`);
+            }
+          }
+        ],
+        header: this.getIntlMessage('link_header'),
+        body: this.getIntlMessage('link_editor_help'),
+        icon: 'tinker.png'
+      }
+    });
   },
   render: function () {
     return (
