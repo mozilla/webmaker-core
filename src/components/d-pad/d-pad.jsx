@@ -1,4 +1,4 @@
-var React = require('react/addons');
+var React = require('react');
 
 module.exports = React.createClass({
   propTypes: {
@@ -24,10 +24,10 @@ module.exports = React.createClass({
       return;
     }
 
-    this.refs.btnUp.getDOMNode().style.bottom = boundingRect.bottom - 3 + 'px';
-    this.refs.btnDown.getDOMNode().style.top = boundingRect.bottom - 3 + 'px';
-    this.refs.btnLeft.getDOMNode().style.right = boundingRect.right - 3 + 'px';
-    this.refs.btnRight.getDOMNode().style.left = boundingRect.right - 3 + 'px';
+    this.refs.btnUp.style.bottom = boundingRect.bottom - 3 + 'px';
+    this.refs.btnDown.style.top = boundingRect.bottom - 3 + 'px';
+    this.refs.btnLeft.style.right = boundingRect.right - 3 + 'px';
+    this.refs.btnRight.style.left = boundingRect.right - 3 + 'px';
   },
   render: function () {
     return (

@@ -1,4 +1,5 @@
-var React = require('react/addons');
+var React = require('react');
+var LinkedStateMixin = require('react-addons-linked-state-mixin');
 var classNames = require('classnames');
 
 // Internal -- just the container
@@ -11,7 +12,7 @@ var OptionPanel = React.createClass({
 });
 
 var Checkbox = React.createClass({
-  mixins: [React.addons.LinkedStateMixin],
+  mixins: [LinkedStateMixin],
   getDefaultProps: function () {
     return {
       linkState: this.linkState,
@@ -19,25 +20,43 @@ var Checkbox = React.createClass({
       uncheckedLabel: false
     };
   },
+  getInitialState: function(){
+    //Takes state passed down from parent and binds the value of the key "this.props.id" to this.valueLink
+    var linkState = this.props.linkState;
+    this.valueLink = linkState(this.props.id);
+    return {
+      //Sets checked status the first time based on inherited state (which was passed using linkState)
+      checked: this.valueLink.value === this.props.checkedLabel,
+      icon: this.getIcon(this.valueLink.value === this.props.checkedLabel)
+    };
+  },
+  getIcon: function(checkStatus){
+    //There are probably better ways to implement 'checkedIcon', but this will do for now. Maybe inline SVG and CSS styling later on?
+    //This has a param so it can be used for initial state and onChange
+    //If there is a checkedIcon and it's checked, use that
+    if(this.props.checkedIcon && checkStatus){
+      return this.props.checkedIcon;
+    } else {
+      //Otherwise return default icon
+      return this.props.icon;
+    }
+  },
   onChange: function (e) {
     var val = e.target.checked ? this.props.checkedLabel : this.props.uncheckedLabel;
     this.valueLink.requestChange(val);
-  },
-  isChecked: function () {
-    return this.valueLink.value === this.props.checkedLabel;
+    this.setState({checked: e.target.checked});
+    this.setState({icon: this.getIcon(e.target.checked)});
   },
   render: function () {
-    var linkState = this.props.linkState;
-    this.valueLink = linkState(this.props.id);
-    return (<label className={classNames('label', {selected: this.isChecked()})}>
-      <input className="sr-only" checked={this.isChecked()} onChange={this.onChange} type="checkbox" />
-      <img className="icon" src={this.props.icon}/>
+    return (<label className={classNames('label', {selected: this.state.checked})}>
+      <input className="sr-only" checked={this.state.checked} onChange={this.onChange} type="checkbox" />
+      <img className="icon" src={this.state.icon}/>
     </label>);
   }
 });
 
 var CheckboxSet = React.createClass({
-  mixins: [React.addons.LinkedStateMixin],
+  mixins: [LinkedStateMixin],
   getDefaultProps: function () {
     return {
       linkState: this.linkState
@@ -51,7 +70,7 @@ var CheckboxSet = React.createClass({
 });
 
 var Radio = React.createClass({
-  mixins: [React.addons.LinkedStateMixin],
+  mixins: [LinkedStateMixin],
   getDefaultProps: function () {
     return {
       linkState: this.linkState

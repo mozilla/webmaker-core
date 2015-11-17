@@ -48,7 +48,7 @@ module.exports = {
    * @return {int} An integer representing the scale transform
    */
   getMaxPageSize: function () {
-    var elWrapper = this.refs.map.getDOMNode();
+    var elWrapper = this.refs.map;
 
     var MARGIN = 60; // Gutter around pages
 
@@ -147,7 +147,7 @@ module.exports = {
     var boundingBox = this.getPageBoundingRect();
 
     if (this.refs.btnZoomOut) {
-      var btnZoomOut = this.refs.btnZoomOut.getDOMNode();
+      var btnZoomOut = this.refs.btnZoomOut;
 
       btnZoomOut.style.top = (boundingBox.top - (btnZoomOut.clientHeight / 2)) + 'px';
       btnZoomOut.style.left = (boundingBox.left - (btnZoomOut.clientWidth / 2)) + 'px';
@@ -166,7 +166,7 @@ module.exports = {
       });
     }
 
-    var elBounding = this.refs.bounding.getDOMNode();
+    var elBounding = this.refs.bounding;
 
     // Turn off animation flag (used to block interactions)
     elBounding.addEventListener('transitionend', (event) => {

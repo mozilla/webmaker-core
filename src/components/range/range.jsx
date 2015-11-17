@@ -1,7 +1,8 @@
-var React = require('react/addons');
+var React = require('react');
+var LinkedStateMixin = require('react-addons-linked-state-mixin');
 
 module.exports = React.createClass({
-  mixins: [React.addons.LinkedStateMixin],
+  mixins: [LinkedStateMixin],
   getDefaultProps: function () {
     return {
       id: 'value',
@@ -24,23 +25,23 @@ module.exports = React.createClass({
       this.props.onChange(value);
     }
   },
+  getDisplayValue: function(){
+    if (this.props.percentage) {
+      return `${Math.round(this.props.value/this.props.max * 100)}%`;
+    } else {
+      return `${this.props.value}${this.props.unit}`;
+    }
+  },
   render: function () {
     var linkState = this.props.linkState || this.linkState;
     var valueLink = this.valueLink = linkState(this.props.id);
 
     var currentValue = parseFloat(valueLink.value);
-    var displayValue;
-
-    if (this.props.percentage) {
-      displayValue = `${Math.round(currentValue/this.props.max * 100)}%`;
-    } else {
-      displayValue = `${currentValue}${this.props.unit}`;
-    }
 
     return (
       <div className="range">
-        <input value={currentValue} min={this.props.min} max={this.props.max} step={this.props.step} type="range" onChange={this.onChange} />
-        <div className={'range-summary' + (currentValue === this.props.min ? ' min' : '')}>{displayValue}</div>
+        <input value={parseFloat(this.props.value)} min={this.props.min} max={this.props.max} step={this.props.step} type="range" onChange={this.onChange} />
+        <div className={'range-summary' + (currentValue === this.props.min ? ' min' : '')}>{this.getDisplayValue()}</div>
       </div>
     );
   }

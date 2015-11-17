@@ -19,6 +19,7 @@ en-US:
   dont_have_account: Don’t have an account? {joinWebmakerLink}
   errorUsernameOrPassword: Looks like there might be a problem with your username or password.
   color_editor: 'color: {rgbaValue};'
+  text_color: Text Color
   Red: Red
   Green: Green
   Blue: Blue

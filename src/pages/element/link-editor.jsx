@@ -1,5 +1,5 @@
-var React = require('react/addons');
-
+var React = require('react');
+var LinkedStateMixin = require('react-addons-linked-state-mixin');
 var LinkBlock = require('../../components/basic-element/types/link.jsx');
 var ColorGroup = require('../../components/color-group/color-group.jsx');
 var Slider = require('../../components/range/range.jsx');
@@ -7,9 +7,12 @@ var api = require('../../lib/api');
 var platform = require('../../lib/platform');
 var types = require('../../components/basic-element/basic-element.jsx').types;
 
+// var backgroundColors = ['#9FD0E0', '#99CA47', '#EFC246', '#E06A2C', '#69A0FC', '#8173E4'];
+var textColors = ['#FFF', '#99CA47', '#EFC246', '#E06A2C', '#69A0FC', '#8173E4'];
+
 var LinkEditor = React.createClass({
   mixins: [
-    React.addons.LinkedStateMixin,
+    LinkedStateMixin,
     require('./witheditable'),
     require('./font-selector'),
     require('react-intl').IntlMixin
@@ -96,6 +99,10 @@ var LinkEditor = React.createClass({
           <div className="form-group">
             <label>{this.getIntlMessage('Font')}</label>
             { this.generateFontSelector() }
+          </div>
+          <div className="form-group">
+            <label>{this.getIntlMessage('text_color')}</label>
+            <ColorGroup id="color" linkState={this.linkState} colors={textColors} params={this.props.params} onLaunchTinker={this.props.save}/>
           </div>
           <div className="form-group">
             <label>{this.getIntlMessage('background_color')}</label>

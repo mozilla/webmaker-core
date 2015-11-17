@@ -1,4 +1,4 @@
-var React = require('react/addons');
+var React = require('react');
 var dispatcher = require('../../lib/dispatcher');
 
 var Snackbar = React.createClass({
