@@ -129,7 +129,6 @@ var ProjectList = React.createClass({
           !this.state.allPagesLoaded &&
           window.scrollY > 0 &&
           document.querySelector('html').scrollHeight - window.scrollY - 480 <= endThreshold) {
-          console.log('scroll load');
           this.load();
         }
       }.bind(this);
