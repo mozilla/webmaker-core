@@ -3,6 +3,7 @@ var assign = require('react/lib/Object.assign');
 var {getContrastingColor, darken} = require('../../../lib/color');
 var Spec = require('../../../lib/spec');
 var dispatcher = require('../../../lib/dispatcher');
+var Color = require("color");
 
 var spec = new Spec('link', assign({
   innerHTML: {
@@ -88,13 +89,15 @@ var Link = React.createClass({
   render: function() {
     var props = this.props;
 
+    var shadowOpacity = new Color(props.backgroundColor).alpha();
     var style = {
       borderRadius: props.borderRadius,
       backgroundColor: props.backgroundColor,
       border: `1px solid ${darken(props.backgroundColor, 0.4)}`,
       color: props.color || getContrastingColor(props.backgroundColor),
       fontFamily: props.fontFamily,
-      whiteSpace: props.whiteSpace
+      whiteSpace: props.whiteSpace,
+      boxShadow: `inset 0px 2px 0px rgba(255, 255, 255, ${0.3*shadowOpacity})`
     };
 
     var Element = this.props.activelink ? 'a' : 'span';

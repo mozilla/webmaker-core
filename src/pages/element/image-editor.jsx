@@ -1,4 +1,5 @@
-var React = require('react/addons');
+var React = require('react');
+var LinkedStateMixin = require('react-addons-linked-state-mixin');
 var classNames = require('classnames');
 var ColorGroup = require('../../components/color-group/color-group.jsx');
 var Slider = require('../../components/range/range.jsx');
@@ -10,7 +11,7 @@ colorChoices[0] = '#444444';
 
 var ImageEditor = React.createClass({
   mixins: [
-    React.addons.LinkedStateMixin,
+    LinkedStateMixin,
     require('react-intl').IntlMixin
   ],
   getDefaultProps: function () {

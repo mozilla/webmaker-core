@@ -11,6 +11,7 @@ var ColorSpectrum = require('../../components/color-spectrum/color-spectrum.jsx'
 var Loading = require('../../components/loading/loading.jsx');
 
 var elementTypes = require('../../components/basic-element/basic-element.jsx').types;
+var Color = require('color');
 
 /**
  * Tinker: Advanced editor for specific element attributes or styles
@@ -161,10 +162,17 @@ var Tinker = React.createClass({
   getEditorValue: function () {
     return this.state.element && this.state.element[this.state.params.propertyName];
   },
-
+  //Added this extra function to handle HSV color picker not updating UI properly with grey colors
+  setEditorValueHSL: function (value) {
+    var edits = {};
+    edits[this.state.params.propertyName] = value.hslaString();
+    this.setState({
+      element: assign({}, this.state.element, edits)
+    });
+  },
   setEditorValue: function (value) {
     var edits = {};
-    edits[this.state.params.propertyName] = value;
+    edits[this.state.params.propertyName] = value.rgbaString();
     this.setState({
       element: assign({}, this.state.element, edits)
     });
@@ -182,7 +190,7 @@ var Tinker = React.createClass({
           </div>
           <div className="color-preview">
             <code><FormattedMessage message={this.getIntlMessage('color_editor')}
-                      rgbaValue={this.getEditorValue()} /></code>
+                      rgbaValue={new Color(this.getEditorValue()).rgbString()} /></code>
             <div className="color-preview-right">
               <div className="color-preview-swatch"><div style={{backgroundColor: this.getEditorValue()}} /></div>
             </div>
@@ -191,7 +199,7 @@ var Tinker = React.createClass({
             {
               title: 'Color Spectrum',
               menu: <img className="icon" src="../../img/pencil.svg" />,
-              body: <ColorSpectrum HSB={true} Alpha={true} color={this.getEditorValue()} onChange={this.setEditorValue} />
+              body: <ColorSpectrum HSB={true} Alpha={true} color={this.getEditorValue()} onChange={this.setEditorValueHSL} />
             },
             {
               title: 'RGBA Picker',

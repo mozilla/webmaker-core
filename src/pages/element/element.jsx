@@ -1,4 +1,4 @@
-var React = require('react/addons');
+var React = require('react');
 var reportError = require('../../lib/errors');
 var router = require('../../lib/router');
 var api = require('../../lib/api');
@@ -209,4 +209,3 @@ render(React.createClass({
     </div>);
   }
 }));
-
