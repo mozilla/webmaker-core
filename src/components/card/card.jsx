@@ -7,7 +7,8 @@ var Card = React.createClass({
   },
   getDefaultProps: function(){
     return {
-      showAuthor: true
+      showAuthor: true,
+      showActions: false
     };
   },
   actionsClicked: function (e) {
@@ -27,23 +28,26 @@ var Card = React.createClass({
   },
   render: function () {
     return (
-      <Link url={this.props.url} href={this.props.href} className="card">
-        <div className="thumbnail">
-          <img ref="imageEl" />
-        </div>
+      <div className="card">
+        <Link url={this.props.url} href={this.props.href} >
+          <div className="thumbnail">
+            <img ref="imageEl" />
+          </div>
+        </Link>
 
         <div className="meta">
+          <Link className="avatar" hidden={!this.props.showAuthor} href={"/pages/user-projects/"} url={`/users/${this.props.author.id}/projects`}><img width="47" height="47" src="../../img/avatar-icon.svg" /></Link>
           <div className="text">
             <div className="title">{this.props.title}</div>
-            <div className="author" hidden={!this.props.showAuthor}>{this.props.author}</div>
+            <Link className="author"  hidden={!this.props.showAuthor} href={"/pages/user-projects/"} url={`/users/${this.props.author.id}/projects`}>{this.props.author.username}</Link>
           </div>
-          <div className="action" hidden={!this.props.showButton}>
+          <div className="action" hidden={!this.props.showActions}>
             <button onClick={this.actionsClicked}>
               <img src="../../img/more-dots.svg"/>
             </button>
           </div>
         </div>
-      </Link>
+      </div>
     );
   }
 });
