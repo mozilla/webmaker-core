@@ -68,18 +68,18 @@ var TextEditor = React.createClass({
   },
   render: function () {
     return (
-      <div id="editor" onClick={this.stopEditing}>
-        <form>
-          <div className="editor-preview">
-            <TextBlock {...this.state} ref="element" active={true} updateText={this.updateText} setEditMode={this.setEditing} />
-          </div>
-          <div className="editor-options">
+      <div id="text-editor" className="editor" onClick={this.stopEditing}>
+        <div className="editor-preview">
+          <TextBlock {...this.state} ref="element" active={true} updateText={this.updateText} setEditMode={this.setEditing} />
+        </div>
+        <div className="editor-options">
+          <div className="editor-scroll">
             <div className="form-group">
               <button className="btn btn-block" onClick={this.editText}>{ this.state.editing? "Done" : "Edit text"}</button>
             </div>
             <div className="form-group">
               <label>Font</label>
-              { this.generateFontSelector() }
+                { this.generateFontSelector() }
             </div>
             <div className="form-group">
               <label>{this.getIntlMessage('text_color')}</label>
@@ -99,7 +99,7 @@ var TextEditor = React.createClass({
               <Radio id="textAlign" options={textAlignOptions} linkState={this.linkState} />
             </div>
           </div>
-        </form>
+        </div>
       </div>
     );
   }
