@@ -10,10 +10,12 @@ var classes = require('classnames');
 var Spec = require('../../lib/spec');
 var touchhandler = require("../../lib/touchhandler");
 var dispatcher = require('../../lib/dispatcher');
+//Required for Object.assign support in Android
+require("babel/polyfill");
 
 var PAGE_WIDTH = 320;
 var PAGE_HEIGHT = 440;
-var DRAG_BOUNDS_THRESHOLD = 100;
+var DRAG_BOUNDS_THRESHOLD = 40;
 
 var BasicElement = React.createClass({
   statics: {
@@ -119,17 +121,26 @@ var BasicElement = React.createClass({
         zIndex: this.props.zIndex
       });
     }
-
+  },
+  componentWillUpdate: function(nextProps, nextState) {
     // Adjust padding around element wrapper as needed (less when it gets bigger)
+    // It's in componentWillUpdate so it doesn't trigger extra re-renders.
+    // It still might be a little smelly though, perhaps better off in the render method?
 
     var elStyleWrapper = this.refs.styleWrapper;
 
-    if (
-      (elStyleWrapper.clientWidth - (parseInt(elStyleWrapper.style.padding, 10) * 2)) * this.props.scale > 200 ||
-      (elStyleWrapper.clientHeight - (parseInt(elStyleWrapper.style.padding, 10) * 2)) * this.props.scale > 200) {
+    var paddingLeft = elStyleWrapper.style.paddingLeft || 0;
+    var paddingRight = elStyleWrapper.style.paddingRight || 0;
+    var paddingTop = elStyleWrapper.style.paddingTop || 0;
+    var paddingBottom = elStyleWrapper.style.paddingBottom || 0;
+    var scaledWidth = (elStyleWrapper.clientWidth - (parseInt(paddingLeft, 10) + parseInt(paddingRight, 10))) * this.props.scale;
+    var scaledHeight = (elStyleWrapper.clientHeight - (parseInt(paddingTop, 10) + parseInt(paddingBottom, 10))) * this.props.scale;
+
+    if ( scaledWidth > 200 || scaledHeight > 200 ) {
       elStyleWrapper.style.padding = `0`;
     } else {
-      elStyleWrapper.style.padding = `10px`;
+      //Account for shrinking touch target by increasing padding relative to scale
+      elStyleWrapper.style.padding = `${20/this.props.scale}px`;
     }
   },
 
@@ -181,7 +192,14 @@ var BasicElement = React.createClass({
 
   generateElement: function() {
     var Element = BasicElement.types[this.props.type];
-    return <Element ref="contentElement" {...this.props} />;
+    //The following shenanigans are to fix a bug with sans-serif fonts rendering differently across platforms
+    //It could be done in each element type's file, but that'd be a little WET
+    var passedProps = {};
+    Object.assign(passedProps, this.props);
+    if(passedProps.fontFamily==="sans-serif"){
+      passedProps.fontFamily = "Roboto";
+    }
+    return <Element ref="contentElement" {...passedProps} />;
   },
 
   render: function() {

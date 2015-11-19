@@ -15,7 +15,7 @@ var spec = new Spec('text', assign({
   fontFamily: {
     category: 'styles',
     validation: React.PropTypes.string,
-    default: 'sans-serif'
+    default: 'Roboto'
   },
   color: {
     category: 'styles',
