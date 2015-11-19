@@ -16,6 +16,17 @@ module.exports = {
     });
   },
 
+  componentWillMount: function () {
+    var java = platform.getAPI();
+
+    this.props.update({
+      onBackPressed: () => {
+        java.clearPayloads(`link-element`);
+        window.Platform.goBack();
+      }
+    });
+  },
+
   setDestination: function () {
     var java = platform.getAPI();
 
@@ -35,38 +46,8 @@ module.exports = {
       });
       java.queue("edit-element", serialized);
       platform.goBack();
+    } else {
+      console.warn(`This feature only works in Android.`);
     }
-
-    // fall back to the original API way of doing things
-    else {
-
-      var patchedState = this.state.routeData.linkState;
-
-      patchedState = types.link.spec.expand(patchedState);
-
-      // Patch old attributes object to prevent overwritten properties
-      patchedState.attributes.targetPageId = this.state.selectedEl;
-      patchedState.attributes.targetProjectId = this.state.params.project;
-      patchedState.attributes.targetUserId = this.state.params.user;
-
-      this.setState({loading: true});
-      api({
-        method: 'patch',
-        uri: `/users/${this.state.routeData.userID}/projects/${this.state.routeData.projectID}/pages/${this.state.routeData.pageID}/elements/${this.state.routeData.elementID}`,
-        json: {
-          attributes: patchedState.attributes
-        }
-      }, (err, data) => {
-        this.setState({loading: false});
-        if (err) {
-          reportError('There was an error updating the element', err);
-        }
-
-        if (window.Platform) {
-          window.Platform.goBack();
-        }
-      });
-    }
-
   }
 };
