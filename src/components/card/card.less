@@ -11,54 +11,62 @@
   box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.3);
 
   .avatar{
-    margin-right: 15px;
+    margin-right: 10px;
     img{
       display: block;
     }
   }
 
   .thumbnail {
-    padding: 6px 0 0 0;
+    padding: 0;
     height: 0;
-    padding-bottom: 61.875%;
+    padding-bottom: 64.875%;
     img {
       display: block;
       position: relative;
 
-      width: calc(100% - 4px);
+      width: 100%;
       margin: 0 auto;
       background: #efefef;
     }
   }
 
   .meta {
-    width: calc(100% - 2px);
-    margin: 6px auto;
-    padding: 2px 0 10px 10px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 0 0 10px 10px;
     font-size: 1.2rem;
     display: flex;
     align-items: center;
+    align-content: center;
 
     .text {
       flex: 1;
       word-wrap: break-word;
+      padding: 5px 0 0 0;
+    }
+
+    .title {
+      line-height: 1.2rem;
     }
 
     .action {
       button {
+        margin: 5px 0 0 0;
         padding: 5px 15px 5px 20px; // ~40x40px tap size
         border: 0;
         background: none;
         line-height: 0;
         img {
-          width: 6px;
+          width: 5px;
         }
       }
     }
   }
 
   .author {
-    color: @blue;
+    color: @slate;
+    opacity: 0.6;
     font-size: 1rem;
     text-decoration: none;
   }
