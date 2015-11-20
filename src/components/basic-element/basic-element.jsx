@@ -88,11 +88,6 @@ var BasicElement = React.createClass({
     dnode.addEventListener("touchmove", touchHandler.panmove);
     dnode.addEventListener("touchend", touchHandler.endmark);
 
-    // Handle taps
-    dnode.addEventListener("touchstart", touchHandler.tapStart);
-    dnode.addEventListener("touchmove", touchHandler.tapMove);
-    dnode.addEventListener("touchend", touchHandler.tapEnd);
-
     // the overlay handles all the two finger touch events
     var onode = this.refs.overlay;
     onode.addEventListener("touchstart", touchHandler.secondFinger);
@@ -137,7 +132,7 @@ var BasicElement = React.createClass({
     var scaledHeight = (elStyleWrapper.clientHeight - (parseInt(paddingTop, 10) + parseInt(paddingBottom, 10))) * this.props.scale;
 
     if ( scaledWidth > 200 || scaledHeight > 200 ) {
-      elStyleWrapper.style.padding = `0`;
+      elStyleWrapper.style.padding = `1px`;
     } else {
       //Account for shrinking touch target by increasing padding relative to scale
       elStyleWrapper.style.padding = `${20/this.props.scale}px`;
@@ -213,7 +208,7 @@ var BasicElement = React.createClass({
     );
 
     var wrapperStyle = Spec.propsToPosition(this.getInitialState());
-
+    
     // Note: we're rending the element off of this.props, NOT this.state:
     return (
       <div className="el-wrapper">
@@ -259,6 +254,7 @@ var BasicElement = React.createClass({
     x = (x > edgeX) ? edgeX : (x < -edgeX) ? -edgeX : x;
     y = (y > edgeY) ? edgeY : (y < -edgeY) ? -edgeY : y;
 
+    //In the future, to improve performance perhaps we can update position while dragging but not within the react state
     this.setState({ x: x, y: y }, this.onUpdate);
   },
 

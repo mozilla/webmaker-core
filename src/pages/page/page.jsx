@@ -280,7 +280,7 @@ var Page = React.createClass({
       var elements = this.state.elements;
       var element = elements[elementId];
       var highestIndex = this.getHighestIndex();
-      if (element.zIndex !== highestIndex) {
+      if (this.state.currentElementId === this.state.previousElementId && element.zIndex !== highestIndex) {
         element.zIndex = highestIndex + 1;
         this.setState({elements}, function() {
           this.queueEdit(elementId);
@@ -299,8 +299,10 @@ var Page = React.createClass({
       var elements = this.state.elements;
       var element = elements[elementId];
       elements[elementId] = assign(element, newProps);
+      var previousElementId = this.state.currentElementId;
       this.setState({
         elements: elements,
+        previousElementId: previousElementId,
         currentElementId: elementId
       }, function() {
         this.queueEdit(elementId);
