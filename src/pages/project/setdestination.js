@@ -19,12 +19,14 @@ module.exports = {
   componentWillMount: function () {
     var java = platform.getAPI();
 
-    this.props.update({
-      onBackPressed: () => {
-        java.clearPayloads(`link-element`);
-        window.Platform.goBack();
-      }
-    });
+    if (java) {
+      this.props.update({
+        onBackPressed: () => {
+          java.clearPayloads(`link-element`);
+          window.Platform.goBack();
+        }
+      });
+    }
   },
 
   setDestination: function () {
