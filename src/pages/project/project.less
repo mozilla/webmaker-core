@@ -1,3 +1,13 @@
+/* Mixins */
+
+// Create square bounding box based off 160:220 aspect ratio
+.bounding-box(@percentage){
+  width: @percentage;
+  height: 160/220 * @percentage;
+}
+
+/* ******* */
+
 #map {
   position: relative;
   width: 100%;
@@ -65,9 +75,7 @@
       align-items: center;
 
       .indicator {
-        // Create square bounding box based off 160:220 aspect ratio
-        width: 30%;
-        height: 160/220 * 30%;
+        .bounding-box(30%);
         border-radius: 50%;
       }
     }
@@ -75,8 +83,7 @@
     &.source {
       opacity: 0.75;
       .shim .indicator {
-        width: 50%;
-        height: 160/220 * 50%;
+        .bounding-box(50%);
         border-radius: 50%;
         background: url(img/oval-source.svg) no-repeat center center / 100%;
         opacity: 0.85;
