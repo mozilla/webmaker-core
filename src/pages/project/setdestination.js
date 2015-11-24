@@ -8,10 +8,18 @@ module.exports = {
   componentDidMount: function () {
     // Handle button actions
     dispatcher.on('linkClicked', (event) => {
-      if (event.props.targetPageId && this.state.isPageZoomed) {
-        this.zoomToPage( this.pageIdToCoords(event.props.targetPageId) );
+      if (event.props.targetWebURL) {
+        if (window.Platform) {
+          window.Platform.openExternalUrl(event.props.targetWebURL);
+        } else {
+          document.location.href = event.props.targetWebURL;
+        }
       } else {
-        this.highlightPage(event.props.targetPageId, 'selected');
+        if (event.props.targetPageId && this.state.isPageZoomed) {
+          this.zoomToPage( this.pageIdToCoords(event.props.targetPageId) );
+        } else {
+          this.highlightPage(event.props.targetPageId, 'selected');
+        }
       }
     });
   },
@@ -42,6 +50,7 @@ module.exports = {
       element.attributes.targetPageId    = this.state.selectedEl;
       element.attributes.targetProjectId = this.state.params.project;
       element.attributes.targetUserId    = this.state.params.user;
+      element.attributes.targetWebURL    = ``; // Remove web url
 
       var serialized = JSON.stringify({
         data: element

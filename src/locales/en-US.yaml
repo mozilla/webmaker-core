@@ -62,3 +62,12 @@ en-US:
   ftu-share-project: Share this project with anyone!
   ftu-remix: Make your own version of this – hit 'Remix!'
   need_help: Need Help?
+  link_editor_help: You can link your button to another page or to a destination on the web
+  link_header: Link Destination
+  dest_btn_page: A page in this project
+  dest_btn_web: Web URL
+  got_it: OK, got it!
+  web_link_intro: A link can take us to any page or image on the web with an "address" or URL.
+  web_link_label: URL
+  invalid_url: Please enter a valid URL.
+  follow_link: Follow Link

@@ -79,18 +79,23 @@ module.exports = {
       return;
     }
 
-    this.setState({
-      isBoundingBoxAnimating: true
-    });
+    if (this.state.previousCoords && !(this.state.previousCoords.x === coords.x || this.state.previousCoords.y === coords.y)) {
+      this.setState({
+        isBoundingBoxAnimating: true
+      });
+    }
 
     // TODO: Adjust size when window resizes
     var zoom = this.getMaxPageSize();
     var {x, y} = this.cartesian.getFocusTransform(coords, zoom);
 
+    var previousCoords = this.state.zoomedPageCoords;
+
     this.setState({
       matrix: [zoom, 0, 0, zoom, x, y],
       isPageZoomed: true,
-      zoomedPageCoords: coords
+      zoomedPageCoords: coords,
+      previousCoords: previousCoords
     });
   },
 
@@ -158,11 +163,6 @@ module.exports = {
     if (window) {
       window.addEventListener('resize', (event) => {
         this.setZoomOutButtonPosition();
-
-        // Resize zoomed page
-        if (this.state.isPageZoomed) {
-          this.zoomToPage(this.state.zoomedPageCoords);
-        }
       });
     }
 
