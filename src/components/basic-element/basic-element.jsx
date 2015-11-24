@@ -268,8 +268,9 @@ var BasicElement = React.createClass({
   },
 
   handleRotationAndScale: function(angle, scale) {
+    //Snap to zero if it's close by checking abs value of angle
     this.setState({
-      angle: angle,
+      angle: Math.abs(angle) < 0.15 ? 0 : angle,
       scale: BasicElement.safifyScale(this.refs.contentElement, scale)
     }, function() {
       this.onUpdate();
