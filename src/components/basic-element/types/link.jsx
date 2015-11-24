@@ -108,7 +108,14 @@ var Link = React.createClass({
     var Element = this.props.activelink ? 'a' : 'span';
     var content = this.makeEditable(props.innerHTML, style);
 
-    return <Element className="btn" style={style} onClick={this.onClick} href={props.href}>{content}</Element>;
+    return (
+      <Element className="btn" style={ style } onClick={ this.onClick } href={ props.href }>
+        { content }
+        <span>
+          <img hidden={ !this.props.targetWebURL } className="icon" src="../../img/external-url.svg" />
+        </span>
+      </Element>
+    );
   }
 });
 
