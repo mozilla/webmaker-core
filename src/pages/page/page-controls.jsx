@@ -27,7 +27,7 @@ var PageControls = React.createClass({
         <div className="add-menu">
           <button className="text"  onClick={this.props.addText} ><img className="icon" src="../../img/text.svg" /></button>
           <button className="image" onClick={this.props.addImage}><img className="icon" src="../../img/camera.svg" /></button>
-          <button className="link"  onClick={this.props.addLink} ><img className="icon" src="../../img/link.svg" /></button>
+          <button className="link-button"  onClick={this.props.addLink} ><img className="icon" src="../../img/link.svg" /></button>
         </div>
         <button className={this.secondaryButtonClass("delete")} onClick={this.props.deleteElement} active={this.props.currentElementId===-1}>
           <img className="icon" src="../../img/trash.svg" />
@@ -38,7 +38,7 @@ var PageControls = React.createClass({
           preNavigation={this.props.cacheElementForEdits}
           url={this.props.url}
           href={this.props.href}>
-          <img className="icon" src="../../img/brush.svg" />
+          <img className="icon" src="../../img/pencil-blue.svg" />
         </Link>
       </div>
     );
