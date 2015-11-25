@@ -31,6 +31,7 @@
     var transform = resetTransform();
     var tapStart;
     var tapDiff = 0;
+    var tapDuration = 500; //ms
     var mark = copy(positionable.state);
     var handlers = {
       /**
@@ -52,6 +53,15 @@
           transform.y1 = evt.clientY || evt.touches[0].pageY;
           positionable.setState({ touchactive: true });
         } else { handlers.secondFinger(evt); }
+
+        var timeStart = new Date();
+
+        //For detecting taps
+        tapStart = {
+          x1: evt.touches[0].pageX,
+          y1: evt.touches[0].pageY,
+          timeStart: timeStart
+        };
       },
 
       /**
@@ -60,6 +70,20 @@
       panmove: function(evt) {
         evt.preventDefault();
         evt.stopPropagation();
+
+        //Detect if finger moves too much for it to be considered a tap
+        var {x1, y1, time} = tapStart;
+        var x2 = evt.touches[0].pageX;
+        var y2 = evt.touches[0].pageY;
+        var dx = x2 - x1;
+        var dy = y2 - y1;
+        tapDiff = Math.sqrt(dx * dx + dy * dy);
+
+        //Detect if it's moved too little in too short a time to be considered a pan
+        if((new Date() - tapStart.timeStart < tapDuration) && tapDiff <= 2){
+          return;
+        }
+
         if (debug) { timedLog("panmove"); }
         if (!transform.x1 && !transform.y1) {
           return;
@@ -90,6 +114,18 @@
         mark = copy(positionable.state);
         var modified = transform.modified;
         transform = resetTransform();
+
+        // Only fire a tap if it's under the threshold
+        if (tapDiff < MAX_TAP_THRESHOLD && (new Date() - tapStart.timeStart <= tapDuration) && positionable.onTap) {
+          positionable.setState({touchactive: false}, function() {
+            if(positionable.onTap){
+              positionable.onTap();
+            }
+          });
+          return;
+        }
+        // Reset
+        tapDiff = 0;
         positionable.setState({ touchactive: false }, function() {
           if (positionable.onTouchEnd) {
             positionable.onTouchEnd(modified);
@@ -171,42 +207,6 @@
         // If there are no fingers left on the screen,
         // we have not finished the handling
         return evt.touches.length !== 0;
-      },
-
-      tapStart: function (evt) {
-
-        tapStart = {
-          x1: evt.touches[0].pageX,
-          y1: evt.touches[0].pageY
-        };
-
-      },
-
-      tapMove: function (evt) {
-        var {x1, y1} = tapStart;
-        var x2 = evt.touches[0].pageX;
-        var y2 = evt.touches[0].pageY;
-        var dx = x2 - x1;
-        var dy = y2 - y1;
-        tapDiff = Math.sqrt(dx * dx + dy * dy);
-      },
-
-      tapEnd: function (evt) {
-
-        // Don't do anything for second touches
-        if (evt.touches.length) {
-          return;
-        }
-
-        // Only fire a tap if it's under the threshold
-        if (tapDiff < MAX_TAP_THRESHOLD && positionable.onTap) {
-          positionable.onTap();
-        }
-
-        // Reset
-        tapStart = null;
-        tapDiff = 0;
-
       }
     };
 
