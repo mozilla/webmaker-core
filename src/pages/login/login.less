@@ -1,4 +1,5 @@
 #login {
+  height: 100vh;
   padding: 20px 0 0 0;
   background: @blue;
   color: @white;
@@ -17,10 +18,46 @@
     }
   }
 
-  .editor-options {
-    margin-top: 0;
+  .login-options {
     padding: 10px 0;
-    font-size: 14px;
+    font-size: 15px;
+    label, input {
+      width: 85%;
+      display: block;
+      margin: 12px auto;
+    }
+    .form-group {
+      margin: 0;
+      border-bottom: 2px solid fade(@white, 15%);
+    }
+    >div:first-of-type {
+      .form-group {
+        border-top: 2px solid fade(@white, 15%);
+      }
+    }
+    .checkbox {
+      display: flex;
+      align-items: center;
+      margin-top: 20px;
+      font-size: 14px;
+      span {
+        padding: 2px 0 0 0;
+      }
+      .checkbox-ui {
+        flex-shrink: 0;
+        display: block;
+        margin-right: 5px;
+        height: 24px;
+        width: 24px;
+        background: url(./img/material-check.png) center center / contain no-repeat;
+      }
+      input:checked + .checkbox-ui {
+        background-image: url(./img/material-check-on.png);
+      }
+      input {
+        .sr-only;
+      }
+    }
   }
 
   a {
@@ -67,24 +104,6 @@
     }
   }
 
-  .editor-options {
-    font-size: 15px;
-    label, input {
-      width: 85%;
-      display: block;
-      margin: 12px auto;
-    }
-    .form-group {
-      margin: 0;
-      border-bottom: 2px solid fade(@white, 15%);
-    }
-    >div:first-of-type {
-      .form-group {
-        border-top: 2px solid fade(@white, 15%);
-      }
-    }
-  }
-
   input[type="text"],
   input[type="password"],
   input[type="email"] {
@@ -97,32 +116,6 @@
       font-size: 14px;
       padding-top: 4px;
       opacity: 1;
-    }
-  }
-
-  .editor-options {
-    .checkbox {
-      display: flex;
-      align-items: center;
-      margin-top: 20px;
-      font-size: 14px;
-      span {
-        padding: 2px 0 0 0;
-      }
-      .checkbox-ui {
-        flex-shrink: 0;
-        display: block;
-        margin-right: 5px;
-        height: 24px;
-        width: 24px;
-        background: url(./img/material-check.png) center center / contain no-repeat;
-      }
-      input:checked + .checkbox-ui {
-        background-image: url(./img/material-check-on.png);
-      }
-      input {
-        .sr-only;
-      }
     }
   }
 
@@ -150,5 +143,4 @@
       margin-left: -4px;
     }
   }
-
 }
