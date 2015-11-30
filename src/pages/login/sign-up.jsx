@@ -157,7 +157,7 @@ var SignUp = React.createClass({
     var isValid = Object.keys(errors).length === 0;
 
     return (
-      <form hidden={!this.props.show} className="editor-options" onSubmit={this.onSubmit}>
+      <form hidden={!this.props.show} className="login-options" onSubmit={this.onSubmit}>
         <h3>{this.getIntlMessage('create_account')}</h3>
         {this.fields.map(field => {
           return <FormInput {...field}

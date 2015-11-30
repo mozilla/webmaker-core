@@ -138,7 +138,7 @@ var SignIn = React.createClass({
     var signinLink = (<a href="#" onClick={this.changeMode}>{this.getIntlMessage('join_webmaker')}</a>);
 
     return (
-      <form hidden={!this.props.show} className="editor-options" onSubmit={this.onSubmit}>
+      <form hidden={!this.props.show} className="login-options" onSubmit={this.onSubmit}>
         <h3>{this.getIntlMessage('signin_webmaker')}</h3>
         {this.fields.map(field => {
           return <FormInput {...field}
