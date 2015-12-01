@@ -1,7 +1,7 @@
 var React = require('react');
 var classNames = require('classnames');
 
-var Loader = React.createClass({
+var Loading = React.createClass({
   mixins: [require('react-intl').IntlMixin],
   getDefaultProps: function () {
     return {
@@ -20,4 +20,4 @@ var Loader = React.createClass({
   }
 });
 
-module.exports = Loader;
+module.exports = Loading;
