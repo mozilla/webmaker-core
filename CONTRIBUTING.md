@@ -7,6 +7,10 @@
 
 ## Code Style for Patches
 
+For basic file formatting rules, we use [EditorConfig](http://editorconfig.org/). There's an `.editorconfig` in the root of the project.
+
+Please ensure your editor either supports EditorConfig by default or has a plugin installed for it.
+
 ### JavaScript
 
 JS files must pass ESLint using the provided [.eslintrc](https://github.com/mozilla/webmaker-core/blob/develop/.eslintrc) settings.
