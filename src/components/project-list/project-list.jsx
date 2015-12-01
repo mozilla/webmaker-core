@@ -35,7 +35,7 @@ var ProjectList = React.createClass({
     //Other passable props: author (id)
     return {
       shuffle: false,
-      infiniteScroll: false,
+      infiniteScroll: true,
       showAuthor: true,
       setTitle: false,
       showActions: false,
@@ -57,7 +57,7 @@ var ProjectList = React.createClass({
     var apiPath = `/discover/${lang}?page=${this.state.pagesLoaded + 1}&count=5`;
     
     if(this.props.author){
-      apiPath = `/users/${this.props.author}/projects`;
+      apiPath = `/users/${this.props.author}/projects?page=${this.state.pagesLoaded + 1}`;
     }
     
     api({
@@ -100,14 +100,11 @@ var ProjectList = React.createClass({
       }
 
 
-      //This may need to change with hashtag implementation, as it differes depending on the back end returning pages or not
       var appendProjects = (projects) => {
         if(this.props.shuffle){
-          //Assumes pagination
           return this.state.projects.concat(shuffleArray(projects));
         } else {
-          //Assumes all results returned at once
-          return projects;
+          return this.state.projects.concat(projects);
         }
       };
 
