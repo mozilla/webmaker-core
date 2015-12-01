@@ -7,6 +7,7 @@ var platform = require('../../lib/platform');
 
 var render = require('../../lib/render.jsx');
 var Card = require('../../components/card/card.jsx');
+var Loading = require('../../components/Loading/loading.jsx');
 
 var lang = i18n.isSupportedLanguage(i18n.currentLanguage) ? i18n.currentLanguage : i18n.defaultLang;
 
@@ -21,7 +22,7 @@ var ProjectList = React.createClass({
     useCache: React.PropTypes.bool,
     onLoadStart: React.PropTypes.func,
     onLoadEnd: React.PropTypes.func,
-    onActionsClick: React.PropTypes.func 
+    onActionsClick: React.PropTypes.func
   },
   getInitialState: function () {
     return {
@@ -55,18 +56,18 @@ var ProjectList = React.createClass({
     }
 
     var apiPath = `/discover/${lang}?page=${this.state.pagesLoaded + 1}&count=5`;
-    
+
     if(this.props.author){
       apiPath = `/users/${this.props.author}/projects?page=${this.state.pagesLoaded + 1}`;
     }
-    
+
     api({
       uri: apiPath,
       useCache: this.props.useCache
     }, (err, body) => {
-      
+
       this.setState({loading:false});
-      
+
       if(this.props.onLoadEnd){
         this.props.onLoadEnd();
       }
@@ -150,7 +151,7 @@ var ProjectList = React.createClass({
     });
 
 
-    //This should probably be somewhere other than render where it only gets set once, but I can't seem to pin where. 
+    //This should probably be somewhere other than render where it only gets set once, but I can't seem to pin where.
     //Sets status bar title in Android.
     if (window.Platform && this.props.setTitle && !this.state.loading && this.state.projects.length) {
       platform.setTitle(this.state.projects[0].author.username);
@@ -158,6 +159,7 @@ var ProjectList = React.createClass({
 
     return (
       <div className="projectList">
+        <Loading on={this.state.loading}></Loading>
         {cards}
         <div hidden={this.state.loading || this.state.projects}>{this.getIntlMessage('no_project_found')}</div>
       </div>
