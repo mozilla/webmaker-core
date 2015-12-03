@@ -57,6 +57,7 @@ en-US:
   ccTermsOfUse: terms of use
   error_discovery_get: Error getting discovery projects
   badTitle: Title must be between {minLength} and {maxLength} characters
+  badDescription: Description must be less than {maxLength} characters
   ftu-explore: Explore stories around the world
   ftu-make-your-own: ...or make your own!
   ftu-share-project: Share this project with anyone!

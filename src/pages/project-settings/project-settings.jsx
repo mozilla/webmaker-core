@@ -11,6 +11,7 @@ var Alert = require('../../components/alert/alert.jsx');
 
 var MAX_PROJECT_NAME_LENGTH = 128;
 var MIN_PROJECT_NAME_LENGTH = 4;
+var MAX_PROJECT_DESCRIPTION_LENGTH = 100;
 
 var ProjectSettings = React.createClass({
 
@@ -23,6 +24,7 @@ var ProjectSettings = React.createClass({
   getInitialState: function () {
     return {
       title: '',
+      description: '',
       loading: false
     };
   },
@@ -52,6 +54,10 @@ var ProjectSettings = React.createClass({
     if (this.refs.title.validate()) {
       this.refs.invalidAlert.hide();
     }
+
+    if (this.refs.description.validate()) {
+      this.refs.invalidAlert2.hide();
+    }
   },
 
   render: function () {
@@ -68,6 +74,12 @@ var ProjectSettings = React.createClass({
           <Alert ref="invalidAlert">
             <FormattedMessage message={this.getIntlMessage('badTitle')} minLength={MIN_PROJECT_NAME_LENGTH} maxLength={MAX_PROJECT_NAME_LENGTH} />
           </Alert>
+
+          <TextInput id="description" ref="description" label="Description" maxlength={MAX_PROJECT_DESCRIPTION_LENGTH} linkState={this.linkState} />
+          <Alert ref="invalidAlert2">
+            <FormattedMessage message={this.getIntlMessage('badDescription')} maxLength={MAX_PROJECT_DESCRIPTION_LENGTH} />
+          </Alert>
+
           <button hidden={window.Platform} onClick={this.save}>DEBUG:Save</button>
         </div>
 
@@ -101,11 +113,16 @@ var ProjectSettings = React.createClass({
       }
 
       this.setState({
-        title: body.project.title
+        title: body.project.title,
+        description: body.project.description
       });
 
       this.refs.title.setState({
         inputLength: body.project.title.length
+      });
+
+      this.refs.description.setState({
+        inputLength: body.project.description.length
       });
     });
   },
@@ -114,14 +131,15 @@ var ProjectSettings = React.createClass({
    * Persists changes to project settings.
    */
   save: function (onSaveComplete) {
-    if (this.refs.title.validate()) {
+    if (this.refs.title.validate() && this.refs.description.validate()) {
       // Update project settings via the API
       this.setState({loading: true});
       api({
         method: 'PATCH',
         uri: this.uri(),
         json: {
-          title: this.state.title
+          title: this.state.title,
+          description: this.state.description
         }
       }, (err, body) => {
         this.setState({loading: false});
@@ -134,7 +152,13 @@ var ProjectSettings = React.createClass({
         }
       });
     } else {
-      this.refs.invalidAlert.show();
+      if (!this.refs.title.validate()) {
+        this.refs.invalidAlert.show();
+      }
+
+      if (!this.refs.description.validate()) {
+        this.refs.invalidAlert2.show();
+      }
     }
   }
 });

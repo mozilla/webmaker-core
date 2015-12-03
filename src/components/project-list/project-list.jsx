@@ -143,6 +143,7 @@ var ProjectList = React.createClass({
           thumbnail={project.thumbnail[320]}
           projectID={project.id}
           title={project.title}
+          description={project.description}
           author={project.author}
           showAuthor={this.props.showAuthor}
           showActions={this.props.showActions}
