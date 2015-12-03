@@ -26,7 +26,8 @@ var BasicElement = React.createClass({
     types: {
       image: require('./types/image.jsx'),
       text: require('./types/text.jsx'),
-      link: require('./types/link.jsx')
+      link: require('./types/link.jsx'),
+      page: require('./types/page.jsx')
     },
     // the minimum size of the long-edge of an element, in pixels.
     minScaledEdgeLength: 50,
@@ -199,7 +200,7 @@ var BasicElement = React.createClass({
     );
 
     var wrapperStyle = Spec.propsToPosition(this.getInitialState());
-    
+
     // Note: we're rending the element off of this.props, NOT this.state:
     return (
       <div className="el-wrapper">
