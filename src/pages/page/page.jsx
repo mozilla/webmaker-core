@@ -322,10 +322,11 @@ var Page = React.createClass({
 
     this.setState({loading: true});
 
-    // NOTE: ids 1, 2 and 3 are reserved for test elements
+    // NOTE: ids 1, 2 and 3 are reserved for test elements, 0 is for the page itself
     var temporaryId = 4;
     var keys = Object.keys(this.state.elements);
     if (keys.length > 0) {
+      // Look for highest ID, add 1
       temporaryId = 1 + keys.map(v => parseInt(v,10)).reduce((a,b) => a > b ? a : b);
     }
     json.id = temporaryId;

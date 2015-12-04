@@ -10,13 +10,15 @@ var render = require('../../lib/render.jsx');
 var editors = {
   image: require('./image-editor.jsx'),
   link: require('./link-editor.jsx'),
-  text: require('./text-editor.jsx')
+  text: require('./text-editor.jsx'),
+  page: require('./page-editor.jsx')
 };
 
 var types = require('../../components/basic-element/basic-element.jsx').types;
 
 var hash = window.location.hash && window.location.hash.replace('#', '');
 var testIds = {
+  page: 0,
   image: 1,
   text: 2,
   link: 3
@@ -31,7 +33,12 @@ render(React.createClass({
     if (hash) {
       element = testIds[hash];
     }
-    return `/users/${params.user}/projects/${params.project}/pages/${params.page}/elements/${element}`;
+    //Elements can't have an ID of zero because of logic in page.jsx, so if the incoming URL does, we know it's a page
+    if(element == '0'){ //For editing pages. Intentionally loose equality because URL parsing
+      return `/users/${params.user}/projects/${params.project}/pages/${params.page}`;
+    } else {
+      return `/users/${params.user}/projects/${params.project}/pages/${params.page}/elements/${element}`;
+    }
   },
 
   saveBeforeSwitch: function() {
@@ -92,13 +99,14 @@ render(React.createClass({
       }
       return;
     }
+
     var json = types[edits.type].spec.expand(edits);
 
     this.setState({loading: true});
 
     // Attempt to track change on the java side
     var java = platform.getAPI();
-    if (java) {
+    if (java && json.type !== 'page') {
       java.queue("edited-element", JSON.stringify({
         element: this.params,
         data: json
@@ -146,7 +154,11 @@ render(React.createClass({
       if (err) {
         return reportError(this.getIntlMessage('error_element'), err);
       }
-
+      if (data.page) {
+        data.page.type = 'page';
+        this.setState({element: data.page});
+        return;
+      }
       if (!data || !data.element) {
         return reportError(this.getIntlMessage('error_element_404'));
       }
@@ -204,7 +216,7 @@ render(React.createClass({
 
     return (<div id="editor">
       <Editor {...props} />
-      <button hidden={window.Platform} onClick={this.save}>DEBUG:SAVE</button>
+      <button style={{position: 'absolute', top: 0}} hidden={window.Platform} onClick={this.save}>DEBUG:SAVE</button>
       <Loading on={this.state.loading}/>
     </div>);
   }

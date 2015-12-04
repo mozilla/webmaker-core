@@ -350,11 +350,18 @@ api.getElement = function (options, callback) {
   api.requiredOptions(options, ['user', 'project', 'page', 'element']);
   api.requiredCallback(callback);
   var uri = `${api.BASE_URI}/users/${options.user}/projects/${options.project}/pages/${options.page}/elements/${options.element}`;
+  if(options.element == '0'){
+    uri = `${api.BASE_URI}/users/${options.user}/projects/${options.project}/pages/${options.page}`;
+  }
   xhr({
     method: 'GET',
     uri
   }, function (err, resp, body) {
-    callback(api.createErrorResponse(err, resp, body), parseJSON(body).element);
+    var element = parseJSON(body).element || parseJSON(body).page;
+    if(parseJSON(body).page){
+      element.type = "page";
+    }
+    callback(api.createErrorResponse(err, resp, body), element);
   });
 };
 
@@ -362,6 +369,9 @@ api.updateElement = function (options, callback) {
   api.requiredOptions(options, ['user', 'project', 'page', 'element', 'json']);
   api.requiredCallback(callback);
   var uri = `${api.BASE_URI}/users/${options.user}/projects/${options.project}/pages/${options.page}/elements/${options.element}`;
+  if(options.element == '0'){
+    uri = `${api.BASE_URI}/users/${options.user}/projects/${options.project}/pages/${options.page}`;
+  }
   xhr({
     method: 'PATCH',
     uri,
