@@ -24,7 +24,7 @@ module.exports = {
   componentDidUpdate: function(prevProps, prevState) {
     if (this.refs.input) {
       this.resizeInput();
-      var el = this.refs.input.getDOMNode();
+      var el = this.refs.input;
       el.focus();
 
       // we only want to put the cursor at the end on the very first
@@ -53,8 +53,8 @@ module.exports = {
 
   resizeInput: function() {
     if (this.refs.input) {
-      var input = this.refs.input.getDOMNode();
-      var sizer = this.refs.sizer.getDOMNode();
+      var input = this.refs.input;
+      var sizer = this.refs.sizer;
       sizer.textContent = input.value;
       setTimeout(function() {
         if (sizer.scrollWidth > 5) {
@@ -71,8 +71,7 @@ module.exports = {
       background: "transparent",
       border: "none",
       height: "100%",
-      whiteSpace: "pre",
-      margin: "-1px -4px -1px 1px"
+      whiteSpace: "pre"
     });
     return inputStyle;
   },
@@ -104,7 +103,7 @@ module.exports = {
     });
 
     if(this.refs.sizer) {
-      var sizer = this.refs.sizer.getDOMNode();
+      var sizer = this.refs.sizer;
       inputStyle.width = sizer.scrollWidth;
     }
 
@@ -159,7 +158,7 @@ module.exports = {
       if(!this.state.editing) {
         this.onTextUpdate({
           target: {
-            value: this.props.innerHTML.trim()
+            value: this.props.innerHTML
           }
         });
       }
