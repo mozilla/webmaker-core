@@ -165,6 +165,7 @@ var Tinker = React.createClass({
   //Added this extra function to handle HSV color picker not updating UI properly with grey colors
   setEditorValueHSL: function (value) {
     var edits = {};
+    this.preventInvisibleColors(value);
     edits[this.state.params.propertyName] = value.hslaString();
     this.setState({
       element: assign({}, this.state.element, edits)
@@ -172,12 +173,19 @@ var Tinker = React.createClass({
   },
   setEditorValue: function (value) {
     var edits = {};
+    this.preventInvisibleColors(value);
     edits[this.state.params.propertyName] = value.rgbaString();
     this.setState({
       element: assign({}, this.state.element, edits)
     });
   },
-
+  preventInvisibleColors: function(value) {
+    var currentColor = Color(this.state.element.color).values;
+    var nextColor = value.values;
+    if(currentColor.alpha === 0 && nextColor.alpha === 0){
+      nextColor.alpha = 1;
+    }
+  },
   render: function () {
     var contents;
     if (this.state.element) {
