@@ -48,9 +48,9 @@ var HSV = React.createClass({
           <div className="saturation-black" />
           <div ref="marker" className="sl-marker" style={this.getSaturationValuePosition()}/>
         </div>
-        <input value={this.props.color.hue()} min={0} max={359} className="hue" type="range" orient="vertical" onChange={this.changeHue} />
       </div>
       <div className="spectrum-right" />
+      <input value={this.props.color.hue()} min={0} max={359} className="hue" type="range" orient="vertical" onChange={this.changeHue} />
     </div>);
   }
 });
@@ -116,7 +116,7 @@ var ColorSpectrum = React.createClass({
   render: function () {
     var color = this.getColor(this.props.color, this.props.defaultColor);
 
-    return (<div>
+    return (<div className={this.props.RGB?'editor-scroll':''}>
       <div className="form-group" hidden={!this.props.HSB}>
         <HSV color={color} onChange={this.updateColor} />
       </div>

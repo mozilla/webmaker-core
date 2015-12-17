@@ -2,9 +2,10 @@
 * Spectrum color picker
 */
 .spectrum-container {
-  @_pickerHeight: 140px;
+  @_pickerHeight: calc(~"100vh -" 377px);
   @_rangeWidth: 40px;
   @_margin: 20px;
+  position: relative;
   display: flex;
   .spectrum-left {
     position: relative;
@@ -49,13 +50,12 @@
   .hue {
     -webkit-appearance: none;
     transform: rotate(90deg);
+    transform-origin: 0 0;
     position: absolute;
-    right: 0;
-    top: 50%;
+    top: @_margin;
     width: @_pickerHeight;
     height: @_rangeWidth;
     margin-top: -(@_rangeWidth/2);
-    margin-right: -(@_pickerHeight/2 + @_margin + (@_rangeWidth/2));
     z-index: 1;
     background: transparent;
   }

@@ -3,10 +3,13 @@
 */
 .tabs {
   .tab-menu {
-    margin: 0 0 20px 0;
+    margin: 0 0 20px -20px;
     padding: 0;
     list-style: none;
     display: flex;
+    background: #31344f;
+    position: fixed;
+    width: 100%;
     li {
       margin: 0;
       padding: 0;
@@ -26,6 +29,7 @@
       justify-content: center;
       padding: 10px;
       width: 100%;
+      box-shadow: 0 2px 0 #404467;
       &.selected {
         box-shadow: 0 2px 0 @white;
         .icon {
@@ -44,5 +48,8 @@
     &.selected {
       display: block;
     }
+  }
+  .tab-content{
+    margin-top: 64px;
   }
 }
