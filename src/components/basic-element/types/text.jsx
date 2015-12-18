@@ -53,6 +53,10 @@ var spec = new Spec('text', assign({
     category: 'styles',
     validation: React.PropTypes.string,
     default: 'center'
+  },
+  whiteSpace: {
+    category: 'styles',
+    default: 'pre'
   }
 }, Spec.getPositionProps()));
 
@@ -81,7 +85,8 @@ module.exports = React.createClass({
       'fontStyle',
       'textDecoration',
       'textAlign',
-      'backgroundColor'
+      'backgroundColor',
+      'whiteSpace'
     ].forEach(function (prop) {
       style[prop] = props[prop];
     });
