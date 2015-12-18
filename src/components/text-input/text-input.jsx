@@ -17,10 +17,11 @@ var TextInput = React.createClass({
     };
   },
   onChange: function (e) {
-    this.valueLink.requestChange(e.target.value);
+    this.valueLink.requestChange(e.target.innerHTML);
 
     this.setState({
-      isTooLong: e.target.value.length > this.props.maxlength ? true : false
+      inputLength: e.target.innerText.length,
+      isTooLong: e.target.innerText.length > this.props.maxlength ? true : false
     });
   },
   validate: function () {
@@ -34,6 +35,9 @@ var TextInput = React.createClass({
   onKeyDown: function (event) {
     // Fire callback (if defined) if enter is pressed
     if (event.keyCode === 13) {
+      // Prevent newlines
+      event.preventDefault();
+
       if (this.props.onEnterPressed) {
         this.props.onEnterPressed.call(this, {
           value: event.target.value
@@ -52,13 +56,13 @@ var TextInput = React.createClass({
       <div className={'text-input' + (this.state.isTooLong ? ' maxed' : '')}>
         <label>{this.props.label}</label>
 
-        <input
-          placeholder={this.props.placeholder}
-          onKeyDown={this.onKeyDown}
-          value={this.valueLink.value}
+        <div className="input" contentEditable
+          dangerouslySetInnerHTML={{__html: this.valueLink.value}}
           ref="input"
-          onChange={this.onChange}
-          type={this.props.type || "text"}/>
+          onKeyDown={this.onKeyDown}
+          onInput={this.onChange}
+          onBlur={this.onChange}
+          type="text"/>
 
         <div className="indicator">{this.valueLink.value.length} / {this.props.maxlength}</div>
       </div>

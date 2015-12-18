@@ -34,11 +34,19 @@
   .meta {
     width: 100%;
     margin: 0 auto;
-    padding: 10px 0 10px 10px;
+    padding: 10px;
     font-size: 1.2rem;
-    display: flex;
-    align-items: center;
-    align-content: center;
+
+    .wrapper {
+      display: flex;
+      align-items: center;
+      align-content: center;
+    }
+
+    .description {
+      margin-top: 10px;
+      font-size: 15px;
+    }
 
     .text {
       flex: 1;
@@ -53,7 +61,7 @@
     .action {
       button {
         margin: 5px 0 0 0;
-        padding: 5px 15px 5px 20px; // ~40x40px tap size
+        padding: 5px 5px 5px 20px; // ~40x40px tap size
         border: 0;
         background: none;
         line-height: 0;
@@ -63,6 +71,7 @@
       }
     }
   }
+
 
   .author {
     color: @slate;
