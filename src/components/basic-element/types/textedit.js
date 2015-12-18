@@ -99,12 +99,13 @@ module.exports = {
       width: "auto",
       height: "auto",
       position: "fixed",
-      padding: "0 2px"
+      padding: "0"
     });
 
     if(this.refs.sizer) {
       var sizer = this.refs.sizer;
       inputStyle.width = sizer.scrollWidth;
+      inputStyle.padding = 0;
     }
 
     return [
