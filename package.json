@@ -57,7 +57,7 @@
     "npm-run-all": "^1.2.2",
     "proxyquire": "^1.4.0",
     "rimraf": "^2.3.2",
-    "should": "^7.1.0",
+    "should": "^8.0.2",
     "tmp": "^0.0.28",
     "watch": "^0.16.0",
     "webpack": "^1.7.3",
