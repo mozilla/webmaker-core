@@ -145,7 +145,7 @@ var Page = React.createClass({
    */
   generatePagesContainer: function() {
     var innerStyle = {
-      backgroundColor: this.state.styles.backgroundColor
+      backgroundColor: this.state.styles.backgroundColor || "#F2F6FC"
     };
     return (
       <div className="pages-container">
@@ -318,6 +318,14 @@ var Page = React.createClass({
     properties = properties || {};
     var highestIndex = this.getHighestIndex();
     var json = types[type].spec.generate();
+
+    //Get styles of last element of this type worked on in this project and merge them with the spec
+    if(platform){
+      var savedStyles = platform.getSharedPreferences(`${this.state.params.project}-${type}`, true) || "{}";
+      savedStyles = JSON.parse(savedStyles);
+      Object.assign(json.styles, savedStyles);
+    }
+
     json.styles.zIndex = highestIndex + 1;
 
     this.setState({loading: true});

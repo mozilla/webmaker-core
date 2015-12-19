@@ -102,6 +102,19 @@ render(React.createClass({
 
     var json = types[edits.type].spec.expand(edits);
 
+    //Save these styles so the next element of this type in this project looks the same by default
+    if (platform) {
+      //Pass this to stringify to filter out the styles we don't want to duplicate
+      var replacer = function(key, value){
+        if(['x','y','angle','scale'].includes(key)){
+          return undefined;
+        } else {
+          return value;
+        }
+      };
+      platform.setSharedPreferences(`${this.state.params.project}-${this.state.element.type}`, JSON.stringify(json.styles, replacer), true);
+    }
+
     this.setState({loading: true});
 
     // Attempt to track change on the java side
