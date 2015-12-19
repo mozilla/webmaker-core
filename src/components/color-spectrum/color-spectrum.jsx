@@ -99,7 +99,7 @@ var ColorSpectrum = React.createClass({
     };
   },
   updateColor: function (color) {
-    //This was formally normalized to RGBA, but that caused problems with shades of gray not triggering UI hue updates
+    //This was formerly normalized to RGBA, but that caused problems with shades of gray not triggering UI hue updates
     this.props.onChange(color);
   },
   getColor: function(color, defaultColor) {
