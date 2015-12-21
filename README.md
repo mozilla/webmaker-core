@@ -10,9 +10,9 @@ If you'd like to become a Beta tester for the Android app, you can [opt in here]
 
 ## Contribute
 
-This repository contains the core features of Webmaker. We utilize the [wiki](https://github.com/mozilla/webmaker-core/wiki) and [issues](https://github.com/mozilla/webmaker-core/issues) to track the whole project. The Android code resides at [webmaker-android](https://github.com/mozilla/webmaker-android/) and the desktop view at [webmaker-browser](https://github.com/mozilla/webmaker-browser/).
+This repository contains the core features of Webmaker. We utilize the [wiki](https://github.com/mozilla/webmaker-core/wiki) and [issues](https://github.com/mozilla/webmaker-core/issues) to track the whole project. The Android code resides at [webmaker-android](https://github.com/mozilla/webmaker-android/) and the desktop viewer at [webmaker-browser](https://github.com/mozilla/webmaker-browser/).
 
-Found a bug? Have an idea? File a [new issues](https://github.com/mozilla/webmaker-core/issues/new).
+Found a bug? Have an idea? File [new issues](https://github.com/mozilla/webmaker-core/issues/new).
 
 ## Roadmap
 
