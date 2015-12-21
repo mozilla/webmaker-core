@@ -2,6 +2,27 @@
 
 [![Build Status](https://travis-ci.org/mozilla/webmaker-core.svg)](https://travis-ci.org/mozilla/webmaker-core)
 
+![Webmaker Screenshots](https://dl.dropboxusercontent.com/u/43783651/Mozilla/Android/Webmaker%20Intro.png)
+
+## Feature Priorities
+
+The Webmaker team has identified a few areas of focus to advance the project. These frame our features and bug fixes in terms of the needs of our users and help set priorities as we iterate toward a well rounded product experience.
+
+Take a look at our set of [Feature Priorities](https://github.com/mozilla/webmaker-core/wiki/Feature-Priorities)
+
+## Design
+
+The UI Design Toolkit, which contains the major user interface elements, colours, and patterns used throughout the app can be found on the [Webmaker Wiki](https://github.com/mozilla/webmaker-core/wiki/Design). The toolkit will give you what you need to start contributing Design to this project.
+
+If you have any questions about Design feel free to speak to @ricardo on IRC or email <mailto:ricardo@mozillafoundation.org><ricardo@mozillafoundation.org>
+
+
+## Quality Testing
+
+Whenever we release a new version of the app, we always test our release candidates. If you are interested in testing the app, head over to the [Quality Testing](https://github.com/mozilla/webmaker-core/wiki/Webmaker-Quality-Testing) section of the Wiki. You will find instructions to become a Beta tester. You will also find quality testing scripts that make testing a whole lot easier.
+
+## Development
+
 `webmaker-core` is the React based core for the Webmaker app. It's a series of webviews that are integrated into the various platforms running Webmaker (currently: [Android](https://github.com/mozilla/webmaker-android), [Browser](https://github.com/mozilla/webmaker-browser)).
 
 If you'd like to become a beta tester for the Android app, you can opt in by opening this URL on your device: [https://play.google.com/apps/testing/org.mozilla.webmaker](https://play.google.com/apps/testing/org.mozilla.webmaker)
@@ -177,20 +198,3 @@ This step requires that you have the required credential to upload the resource 
 If you do not have the credential please speak @alicoding on IRC or any of the coordinator of the project for Webmaker on Transifex.
 
 NOTE: There should be a weekly cycle where we upload the file on Transifex to avoid any problem that could occur.
-
-## Feature Priorities
-
-The Webmaker team has identified a few areas of focus to advance the project. These frame our features and bug fixes in terms of the needs of our users and help set priorities as we iterate toward a well rounded product experience.
-
-Take a look at our set of [Feature Priorities](https://github.com/mozilla/webmaker-core/wiki/Feature-Priorities)
-
-## Design
-
-The UI Design Toolkit, which contains the major user interface elements, colours, and patterns used throughout the app can be found on the [Webmaker Wiki](https://github.com/mozilla/webmaker-core/wiki/Design). The toolkit will give you what you need to start contributing Design to this project.
-
-If you have any questions about Design feel free to speak to @ricardo on IRC or email <mailto:ricardo@mozillafoundation.org><ricardo@mozillafoundation.org>
-
-
-## Quality Testing
-
-Whenever we release a new version of the app, we always test our release candidates. If you are interested in testing the app, head over to the [Quality Testing](https://github.com/mozilla/webmaker-core/wiki/Webmaker-Quality-Testing) section of the Wiki. You will find instructions to become a Beta tester. You will also find quality testing scripts that make testing a whole lot easier.
