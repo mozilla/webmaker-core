@@ -1,15 +1,18 @@
 /*********************************************************
 * Range
 */
+@range_height: 2px;
+@range_vertical-margin: 20px;
+@range_total-height: @range_height + @range_vertical-margin*2;
 .range {
   display: flex;
   align-items: center;
   input[type=range] {
     -webkit-appearance: none;
     padding: 0;
-    height: 2px;
+    height: @range_height;
     background: @heatherGrey;
-    margin: 20px 0;
+    margin: @range_vertical-margin 0;
     &::before {
       content: '';
     }

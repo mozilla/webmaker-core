@@ -1,8 +1,9 @@
 /*********************************************************
 * Spectrum color picker
 */
+//Default height of the picker, but gets overridden in tinker page for its layout
 .spectrum-container {
-  @_pickerHeight: calc(~"100vh -" 377px);
+  @_spectrum-pickerHeight: 140px;
   @_rangeWidth: 40px;
   @_margin: 20px;
   position: relative;
@@ -14,7 +15,7 @@
   .saturation {
     position: relative;
     width: 100%;
-    height: @_pickerHeight;
+    height: @_spectrum-pickerHeight;
   }
   .saturation-white,
   .saturation-black {
@@ -53,7 +54,7 @@
     transform-origin: 0 0;
     position: absolute;
     top: @_margin;
-    width: @_pickerHeight;
+    width: @_spectrum-pickerHeight;
     height: @_rangeWidth;
     margin-top: -(@_rangeWidth/2);
     z-index: 1;
