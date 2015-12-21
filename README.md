@@ -1,4 +1,36 @@
-# webmaker-core
+# Webmaker
+
+Webmaker enables people to discover, create, and share rich content from their mobile device. It brings a few of the web’s best ingredients to a mobile-first content creation platform. Webmaker goes beyond a soundbite or filtered photo to enable truly creative projects. It is free, open-source, and independent.
+
+Webmaker is currently available in the Android Play store. Projects can be shared and viewed from any web browser on mobile or desktop.
+
+![webmaker Screenshots](https://cloud.githubusercontent.com/assets/1119821/11938290/da74305a-a7e7-11e5-9438-c61256a9b19f.png)
+
+If you'd like to become a Beta tester for the Android app, you can [opt in here](https://play.google.com/apps/testing/org.mozilla.webmaker).
+
+## Contribute
+
+This repository contains the core features of Webmaker. We utilize the [wiki](https://github.com/mozilla/webmaker-core/wiki) and [issues](https://github.com/mozilla/webmaker-core/issues) to track the whole project. The Android code resides at [webmaker-android](https://github.com/mozilla/webmaker-android/) and the desktop viewer at [webmaker-browser](https://github.com/mozilla/webmaker-browser/).
+
+Found a bug? Have an idea? File [new issues](https://github.com/mozilla/webmaker-core/issues/new).
+
+## Roadmap
+
+The Webmaker team has identified a few areas of focus to advance the project. These frame our features and bug fixes in terms of the needs of our users and help set priorities as we iterate toward a well rounded product experience.
+
+Take a look at our set of [Feature Priorities](https://github.com/mozilla/webmaker-core/wiki/Feature-Priorities)
+
+## Quality Testing
+
+Whenever we release a new version of the app, we always test our release candidates. If you are interested in testing the app, head over to the [Quality Testing](https://github.com/mozilla/webmaker-core/wiki/Webmaker-Quality-Testing) section of the Wiki. You will find instructions to become a Beta tester. You will also find quality testing scripts that make testing a whole lot easier.
+
+## Design
+
+The UI Design Toolkit, which contains the major user interface elements, colours, and patterns used throughout the app can be found on the [Webmaker Wiki](https://github.com/mozilla/webmaker-core/wiki/Design). The toolkit will give you what you need to start contributing Design to this project.
+
+If you have any questions about Design feel free to speak to @ricardo on IRC or email <mailto:ricardo@mozillafoundation.org><ricardo@mozillafoundation.org>
+
+## webmaker-core development
 
 [![Build Status](https://travis-ci.org/mozilla/webmaker-core.svg)](https://travis-ci.org/mozilla/webmaker-core)
 
