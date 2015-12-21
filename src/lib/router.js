@@ -27,6 +27,7 @@ module.exports = {
         project: 1,
         page: 1,
         element: 1,
+        tag: 'test',
         propertyName: 'borderColor'
       };
     }
