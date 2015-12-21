@@ -4,7 +4,7 @@ Webmaker enables people to discover, create, and share rich content from their m
 
 Webmaker is currently available in the Android Play store. Projects can be shared and viewed from any web browser on mobile or desktop.
 
-![Webmaker Screenshots](https://dl.dropboxusercontent.com/u/43783651/Mozilla/Android/Webmaker%20Intro.png)
+![webmaker Screenshots](https://cloud.githubusercontent.com/assets/1119821/11938290/da74305a-a7e7-11e5-9438-c61256a9b19f.png)
 
 If you'd like to become a Beta tester for the Android app, you can [opt in here](https://play.google.com/apps/testing/org.mozilla.webmaker).
 
