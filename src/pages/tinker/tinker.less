@@ -1,18 +1,21 @@
+
 #tinker {
+  @_spectrum-pickerHeight: calc(~"100vh -" @editorPreviewHeight + @color-preview-height + @tabs_total-height + @editor-form-group_margin-bottom + @range_total-height + @element-label_margin-bottom + @editor-options-font-size*1.5); //line height of a label
   @_bg: #31344F;
   @_bgLight: #414468;
   @_greenText: #98FE90;
+  @color-preview-height: 55px;
+  @editorPreviewHeight: 140px;
+  @editor-options-font-size: 15px;
 
   background-color: @_bg;
   color: @white;
-  font-size: 15px;
+  font-size: @editor-options-font-size;
 
   height: 100%;
   overflow: hidden;
 
   .editor-flex-container {
-    display: flex;
-    flex-direction: column;
     height: 100%;
     overflow: hidden;
   }
@@ -20,8 +23,12 @@
   .editor-options {
     flex-grow: 1;
     overflow: scroll;
-    padding: 10px 20px;
+    padding: 0 20px 10px 20px;
     margin-top: 0;
+  }
+  .editor-scroll{
+    background-image: url("./img/scrubber-white.svg");
+    margin-right: -20px;
   }
 
   .editor-preview,
@@ -30,11 +37,15 @@
   }
 
   .editor-preview {
-    height: 140px;
+    height: @editorPreviewHeight;
     button.debug {
       position: absolute;
       color: #333;
     }
+  }
+
+  .tab-content{
+    margin-top: @tabs_total-height;
   }
 
   .range {
@@ -54,6 +65,7 @@
     display: flex;
     align-items: center;
     margin-top: 140px;
+    height: @color-preview-height;
     .color-preview-right {
       flex-grow: 1;
       display: flex;
@@ -73,6 +85,14 @@
         right: 0;
         border-radius: 2px;
       }
+    }
+  }
+  .spectrum-container{
+    .saturation{
+      height: @_spectrum-pickerHeight;
+    }
+    .hue{
+      width: @_spectrum-pickerHeight;
     }
   }
 }

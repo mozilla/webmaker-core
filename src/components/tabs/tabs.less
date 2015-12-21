@@ -1,12 +1,19 @@
 /*********************************************************
 * Tabs
 */
+@tabs_iconHeight: 24px;
+@tabs_tab-btn-padding: 10px;
+@tabs_tab-menu-bottom-margin: 20px;
+@tabs_total-height: @tabs_iconHeight + @tabs_tab-btn-padding * 2 + @tabs_tab-menu-bottom-margin;
 .tabs {
   .tab-menu {
-    margin: 0 0 20px 0;
+    margin: 0 0 @tabs_tab-menu-bottom-margin -20px;
     padding: 0;
     list-style: none;
     display: flex;
+    background: #31344f;
+    position: fixed;
+    width: 100%;
     li {
       margin: 0;
       padding: 0;
@@ -18,14 +25,14 @@
       }
     }
     .tab-btn {
-      padding: 0;
       background: none;
       border: none;
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 10px;
+      padding: @tabs_tab-btn-padding;
       width: 100%;
+      box-shadow: 0 2px 0 #404467;
       &.selected {
         box-shadow: 0 2px 0 @white;
         .icon {
@@ -35,7 +42,7 @@
       .icon {
         opacity: 0.3;
         display: block;
-        height: 24px;
+        height: @tabs_iconHeight;
       }
     }
   }
@@ -43,6 +50,10 @@
     display: none;
     &.selected {
       display: block;
+    }
+    .editor-scroll{
+      padding-top: 0;
+      padding-bottom: 50px;
     }
   }
 }
