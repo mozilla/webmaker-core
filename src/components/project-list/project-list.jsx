@@ -14,7 +14,6 @@ var lang = i18n.isSupportedLanguage(i18n.currentLanguage) ? i18n.currentLanguage
 var ProjectList = React.createClass({
   mixins: [router,require('react-intl').IntlMixin],
   propTypes: {
-    shuffle: React.PropTypes.bool,
     infiniteScroll: React.PropTypes.bool,
     showAuthor: React.PropTypes.bool,
     setTitle: React.PropTypes.bool,
@@ -35,7 +34,6 @@ var ProjectList = React.createClass({
   getDefaultProps: function() {
     //Other passable props: author (id)
     return {
-      shuffle: false,
       infiniteScroll: true,
       showAuthor: true,
       setTitle: false,
@@ -49,16 +47,19 @@ var ProjectList = React.createClass({
       this.load();
     }
   },
-  load: function () {
+  load: function (startFromPage = 1) {
+    if(startFromPage <= 1){
+      this.setState({allPagesLoaded:false});
+    }
     this.setState({loading: true});
     if(this.props.onLoadStart){
       this.props.onLoadStart();
     }
 
-    var apiPath = `/discover/${lang}?page=${this.state.pagesLoaded + 1}&count=5`;
+    var apiPath = `/discover/${lang}?page=${startFromPage}&count=5`;
 
     if(this.props.author){
-      apiPath = `/users/${this.props.author}/projects?page=${this.state.pagesLoaded + 1}`;
+      apiPath = `/users/${this.props.author}/projects?page=${startFromPage}`;
     }
 
     api({
@@ -76,7 +77,6 @@ var ProjectList = React.createClass({
         reportError(this.getIntlMessage('error_discovery_get'), err);
         return;
       }
-      //Logic for discover mode
       if (!body || !body.projects || !body.projects.length) {
         if (this.state.pagesLoaded === 0) {
           reportError(this.getIntlMessage('error_featured_404'));
@@ -89,29 +89,16 @@ var ProjectList = React.createClass({
         return;
       }
 
-      function shuffleArray(array) {
-        for (var i = array.length - 1; i > 0; i--) {
-          var j = Math.floor(Math.random() * (i + 1));
-          var temp = array[i];
-          array[i] = array[j];
-          array[j] = temp;
-        }
-
-        return array;
-      }
-
-
       var appendProjects = (projects) => {
-        if(this.props.shuffle){
-          return this.state.projects.concat(shuffleArray(projects));
-        } else {
+        if(startFromPage > 1){
           return this.state.projects.concat(projects);
+        } else {
+          return body.projects;
         }
       };
-
       this.setState({
         projects: appendProjects(body.projects),
-        pagesLoaded: this.state.pagesLoaded + 1
+        pagesLoaded: startFromPage
       });
     });
   },
@@ -125,9 +112,10 @@ var ProjectList = React.createClass({
         var endThreshold = 500;
         if (
           !this.state.allPagesLoaded &&
+          !this.state.loading &&
           window.scrollY > 0 &&
           document.querySelector('html').scrollHeight - window.scrollY - 480 <= endThreshold) {
-          this.load();
+          this.load(this.state.pagesLoaded + 1);
         }
       }.bind(this);
     }
