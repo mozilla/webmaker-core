@@ -30,7 +30,8 @@ describe('router', function () {
         page: 1,
         element: 1,
         mode: 'play',
-        propertyName: 'borderColor'
+        propertyName: 'borderColor',
+        tag: 'test'
       });
     });
 

@@ -21,7 +21,9 @@ var ProjectList = React.createClass({
     useCache: React.PropTypes.bool,
     onLoadStart: React.PropTypes.func,
     onLoadEnd: React.PropTypes.func,
-    onActionsClick: React.PropTypes.func
+    onActionsClick: React.PropTypes.func,
+    tag: React.PropTypes.string,
+    showDescriptions: React.PropTypes.bool
   },
   getInitialState: function () {
     return {
@@ -38,7 +40,8 @@ var ProjectList = React.createClass({
       showAuthor: true,
       setTitle: false,
       showActions: false,
-      useCache: false
+      useCache: false,
+      showDescriptions: true
     };
   },
   //For updating when new projects are created
@@ -58,7 +61,9 @@ var ProjectList = React.createClass({
 
     var apiPath = `/discover/${lang}?page=${startFromPage}&count=5`;
 
-    if(this.props.author){
+    if (this.props.tag) {
+      apiPath = `/projects/tagged/${this.props.tag}?page=${startFromPage}`;
+    } else if (this.props.author) {
       apiPath = `/users/${this.props.author}/projects?page=${startFromPage}`;
     }
 
@@ -131,7 +136,7 @@ var ProjectList = React.createClass({
           thumbnail={project.thumbnail[320]}
           projectID={project.id}
           title={project.title}
-          description={project.description}
+          description={this.props.showDescriptions ? project.description : ''}
           author={project.author}
           showAuthor={this.props.showAuthor}
           showActions={this.props.showActions}
