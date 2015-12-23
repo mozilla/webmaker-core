@@ -116,7 +116,7 @@ var Make = React.createClass({
   cardActionClick: function (e) {
     dispatcher.fire('modal-switch:show', {
       config: {
-        actions: ['Share', 'Delete'],
+        actions: ['Project Settings', 'Share', 'Delete'],
         callback: (event) => {
           if (event.label === 'Delete') {
             this.setState({loading: true});
@@ -136,6 +136,8 @@ var Make = React.createClass({
             });
           } else if (event.label === 'Share') {
             platform.shareProject(this.state.user.id, e.projectID);
+          } else if (event.label === 'Project Settings') {
+            window.Platform.setView(`/users/${this.state.user.id}/projects/${e.projectID}/settings`);
           }
         }
       }
