@@ -138,8 +138,8 @@ var ProjectSettings = React.createClass({
         method: 'PATCH',
         uri: this.uri(),
         json: {
-          title: this.state.title,
-          description: this.state.description
+          title: this.state.title.replace(/&nbsp;/g, '').trim(),
+          description: this.state.description.replace(/&nbsp;/g, '').trim()
         }
       }, (err, body) => {
         this.setState({loading: false});
