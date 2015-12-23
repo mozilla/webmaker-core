@@ -7,6 +7,7 @@ var platform = require('../../lib/platform');
 
 var render = require('../../lib/render.jsx');
 var Card = require('../../components/card/card.jsx');
+var FeaturedTagCard = require('../../components/featured-tag-card/featured-tag-card.jsx');
 var Loading = require('../../components/loading/loading.jsx');
 
 var lang = i18n.isSupportedLanguage(i18n.currentLanguage) ? i18n.currentLanguage : i18n.defaultLang;
@@ -23,7 +24,8 @@ var ProjectList = React.createClass({
     onLoadEnd: React.PropTypes.func,
     onActionsClick: React.PropTypes.func,
     tag: React.PropTypes.string,
-    showDescriptions: React.PropTypes.bool
+    showDescriptions: React.PropTypes.bool,
+    showFeaturedTags: React.PropTypes.bool
   },
   getInitialState: function () {
     return {
@@ -41,7 +43,8 @@ var ProjectList = React.createClass({
       setTitle: false,
       showActions: false,
       useCache: false,
-      showDescriptions: true
+      showDescriptions: true,
+      showFeaturedTags: false
     };
   },
   //For updating when new projects are created
@@ -49,6 +52,20 @@ var ProjectList = React.createClass({
     if (this.props.isVisible && !prevProps.isVisible) {
       this.load();
     }
+  },
+  fetchFeaturedTags: function () {
+    api({
+      uri: `/featured-tags`,
+      useCache: true
+    }, (err, body) => {
+      if (err) {
+        reportError(this.getIntlMessage('error_featured_tags'), err);
+        return;
+      }
+      if(body.featured){
+        this.setState({featuredTags: body.featured});
+      }
+    });
   },
   load: function (startFromPage = 1) {
     if(startFromPage <= 1){
@@ -108,6 +125,9 @@ var ProjectList = React.createClass({
     });
   },
   componentWillMount: function () {
+    if(this.props.showFeaturedTags){
+      this.fetchFeaturedTags();
+    }
     this.load();
   },
   componentDidMount: function () {
@@ -143,6 +163,18 @@ var ProjectList = React.createClass({
           onActionsClick={this.props.onActionsClick} />
       );
     });
+
+    if(this.state.featuredTags){
+      for (let i in this.state.featuredTags){
+        var indexToInsertAt = 3*i+1;
+        if(cards.length >= indexToInsertAt){
+          var featuredCard = <FeaturedTagCard tag={this.state.featuredTags[i]} key={`featured-${this.state.featuredTags[i]}`}/>;
+          cards.splice(indexToInsertAt,false,featuredCard);
+        } else {
+          break;
+        }
+      }
+    }
 
 
     //This should probably be somewhere other than render where it only gets set once, but I can't seem to pin where.
