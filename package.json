@@ -73,7 +73,7 @@
     "panzoom": "https://github.com/k88hudson/panzoom.git#b3b698d44ed12129c723f76efbd431678a34d96a",
     "react": "0.14.0",
     "react-addons-linked-state-mixin": "0.14.0",
-    "react-addons-update": "0.14.0",
+    "react-addons-update": "0.14.4",
     "react-dom": "0.14.0",
     "react-hammerjs": "0.3.0",
     "react-intl": "1.2.0",
