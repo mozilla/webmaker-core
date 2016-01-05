@@ -21,10 +21,8 @@ var TagList = React.createClass({
     return (
       <div id="tag-list">
         <header>
-          <p>{this.getIntlMessage('hashtag')}</p>
           <div className="tag-name">
             <span>#{this.state.params.tag}</span>
-            <button ref="close" onClick={this.goBack}></button>
           </div>
         </header>
         <ProjectList useCache={false} showDescriptions={true} tag={this.state.params.tag}/>
