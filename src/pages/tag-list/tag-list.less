@@ -2,34 +2,18 @@
   header {
     width: 90%;
     margin: auto;
-
-    p {
-      color: darken(@heatherGrey, 25%);
-      margin-bottom: 0;
-      font-size: 12px;
-    }
   }
   .tag-name {
-    color: darken(@slate, 20%);
+    color: @slate;
     display: flex;
     align-items: center;
     font-size: 36px;
-    border-bottom: 1px solid black;
+    padding-top: 15px;
     margin-bottom: 20px;
     line-height: 1.5;
 
     span {
       flex: 1;
-    }
-
-    button {
-      flex-shrink: 1;
-      color: @white;
-      border: 0;
-      border-radius: 50%;
-      width: 30px;
-      height: 30px;
-      background: @slate url(./img/x.svg) center center / 50% no-repeat;
     }
   }
 }
