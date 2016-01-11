@@ -10,6 +10,7 @@ var React = require('react');
 
 var {parseJSON} = require('../../lib/jsonUtils');
 var render = require('../../lib/render.jsx');
+var api = require('../../lib/api');
 
 var Loading = require('../../components/loading/loading.jsx');
 var {Menu, PrimaryButton, SecondaryButton, FullWidthButton} = require('../../components/action-menu/action-menu.jsx');
@@ -58,6 +59,10 @@ var Project = React.createClass({
   componentDidMount: function () {
     if (window.Platform) {
       var state = window.Platform.getMemStorage('state');
+
+      // Increment project view count in our bespoke analytics:
+      api({uri: `/view-project/${this.state.params.project}`, method: `POST`});
+
       if (this.state.params.mode === 'edit') {
         state = parseJSON(state);
         if (state.params && state.params.project === this.state.params.project) {
