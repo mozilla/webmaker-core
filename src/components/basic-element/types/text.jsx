@@ -54,10 +54,6 @@ var spec = new Spec('text', assign({
     validation: React.PropTypes.string,
     default: 'center'
   },
-  whiteSpace: {
-    category: 'styles',
-    default: 'pre'
-  },
   padding: {
     category: 'styles',
     default: '0 10px'
@@ -90,7 +86,6 @@ module.exports = React.createClass({
       'textDecoration',
       'textAlign',
       'backgroundColor',
-      'whiteSpace',
       'padding'
     ].forEach(function (prop) {
       style[prop] = props[prop];
