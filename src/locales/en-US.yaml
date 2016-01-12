@@ -50,6 +50,7 @@ en-US:
   error_page: There was an error getting the page to load
   error_page_404: Could not find the page to load
   error_404_element_save: Could not find the element to save
+  error_featured_tags: Could not fetch featured tags
   cc: Creative Commons
   ccLicenseSection: Your Webmaker content is published under the Creative Commons {creativecommonsLink} as described in the {termsofuse}.
   ccLicenseSectionSub: This means that others may remix, tweak, and build upon your work even for commercial purposes, as long as they credit you and license their new creations under the identical terms.
@@ -73,3 +74,4 @@ en-US:
   invalid_url: Please enter a valid URL.
   follow_link: Follow Link
   hashtag: Hashtag
+  featured: Featured

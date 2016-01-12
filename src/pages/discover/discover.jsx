@@ -14,7 +14,7 @@ var Discover = React.createClass({
   mixins: [require('react-intl').IntlMixin],
   render: function () {
     return (
-      <ProjectList useCache={true} />
+      <ProjectList useCache={true} showFeaturedTags={true} />
     );
   }
 });
