@@ -2,7 +2,7 @@ global.window = {}
 
 var should = require('should');
 var proxyquire = require('proxyquire');
-var assign = require('react/lib/Object.assign');
+var assign = require('object-assign');
 var api;
 
 // Lets us mock an xhr response based on the uri

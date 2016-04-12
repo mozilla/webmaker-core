@@ -4,5 +4,5 @@ config.js
 npm-debug.log*
 TODO.txt
 dest/
-.env
 src/locales/*.json
+.idea/

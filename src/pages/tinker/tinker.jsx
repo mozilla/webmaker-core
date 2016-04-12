@@ -1,5 +1,5 @@
 var React = require('react');
-var assign = require('react/lib/Object.assign');
+var assign = require('object-assign');
 var FormattedMessage = require('react-intl').FormattedMessage;
 var reportError = require('../../lib/errors');
 var api = require('../../lib/api');
