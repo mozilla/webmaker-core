@@ -62,7 +62,7 @@ var ProjectSettings = React.createClass({
 
   render: function () {
     var creativeCommon = (<Link external="https://creativecommons.org/licenses/by-sa/3.0/">{this.getIntlMessage('ccAttribution')}</Link>);
-    var termsOfUseLink = (<Link external="https://beta.webmaker.org/#/legal">{this.getIntlMessage('ccTermsOfUse')}</Link>);
+    var termsOfUseLink = (<Link external="https://webmaker.org/#/legal">{this.getIntlMessage('ccTermsOfUse')}</Link>);
 
     // TODO: TextInput is using `id` as a prop to indicate what state property to use for linkState
     // This is incredibly confusing.
