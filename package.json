@@ -19,6 +19,25 @@
   "engines": {
     "node": "4.4.x"
   },
+  "scripts": {
+    "start": "npm run build && npm-run-all --parallel webserver watch:**",
+    "config": "node ./npm_tasks/build-config.js > src/config.js",
+    "build": "npm-run-all build:**",
+    "build:clean": "rimraf dest/ && mkdirp dest/",
+    "build:static": "ncp src/static/ dest/",
+    "build:l10njson": "yamlconvert intl-config.json",
+    "build:js": "npm run config && webpack",
+    "build:css": "npm run watch:css -- --no-watch",
+    "build:html": "node ./npm_tasks/bin/build-html",
+    "test": "npm run config && npm-run-all test:**",
+    "test:mocha": "mocha -R spec --compilers js:babel-core/register \"./{src,npm_tasks}/**/*.test.js\"",
+    "test:lint": "eslint --ext .js,.jsx src/",
+    "watch:static": "watch \"npm run build:static\" src/static",
+    "watch:js": "npm run build:js -- -d --watch",
+    "watch:css": "autoless --source-map --autoprefix \"last 2 versions, android >= 4.2\" src dest",
+    "watch:html": "watch \"npm run build:html\" src/html",
+    "webserver": "live-server ./dest --port=4242"
+  },
   "dependencies": {
     "classnames": "^2.2.3",
     "color": "^0.11.1",
@@ -65,24 +84,5 @@
     "watch": "^0.17.1",
     "webpack": "^1.12.15",
     "yaml-intl-xml-json-converter": "^0.0.7"
-  },
-  "scripts": {
-    "start": "npm run build && npm-run-all --parallel webserver watch:**",
-    "config": "node ./npm_tasks/build-config.js > src/config.js",
-    "build": "npm-run-all build:**",
-    "build:clean": "rimraf dest/ && mkdirp dest/",
-    "build:static": "ncp src/static/ dest/",
-    "build:l10njson": "yamlconvert intl-config.json",
-    "build:js": "npm run config && webpack",
-    "build:css": "npm run watch:css -- --no-watch",
-    "build:html": "node ./npm_tasks/bin/build-html",
-    "test": "npm run config && npm-run-all test:**",
-    "test:mocha": "mocha -R spec --compilers js:babel-core/register \"./{src,npm_tasks}/**/*.test.js\"",
-    "test:lint": "eslint --ext .js,.jsx src/",
-    "watch:static": "watch \"npm run build:static\" src/static",
-    "watch:js": "npm run build:js -- -d --watch",
-    "watch:css": "autoless --source-map --autoprefix \"last 2 versions, android >= 4.2\" src dest",
-    "watch:html": "watch \"npm run build:html\" src/html",
-    "webserver": "live-server ./dest --port=4242"
   }
 }
