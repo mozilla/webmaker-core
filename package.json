@@ -74,7 +74,7 @@
     "react": "0.14.0",
     "react-addons-linked-state-mixin": "0.14.0",
     "react-addons-update": "0.14.0",
-    "react-dom": "0.14.0",
+    "react-dom": "0.14.7",
     "react-hammerjs": "0.3.0",
     "react-intl": "1.2.0",
     "xhr": "2.2.0"
