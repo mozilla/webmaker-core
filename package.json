@@ -64,7 +64,7 @@
     "yaml-intl-xml-json-converter": "0.0.7"
   },
   "dependencies": {
-    "classnames": "2.2.1",
+    "classnames": "2.2.3",
     "color": "0.10.1",
     "intl": "1.0.0",
     "lodash.defaults": "3.1.2",
