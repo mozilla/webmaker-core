@@ -1,5 +1,5 @@
 var React = require('react');
-var assign = require('react/lib/Object.assign');
+var assign = require('object-assign');
 var Spec = require('../../../lib/spec');
 
 var BASE_DEFAULT_URL = 'https://stuff.webmaker.org/webmaker-android/default-images/';

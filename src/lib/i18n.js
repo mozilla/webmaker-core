@@ -1,4 +1,4 @@
-var assign = require('react/lib/Object.assign');
+var assign = require('object-assign');
 var messages = require('./messages');
 var locale = navigator.language.split('-');
 locale = locale[1] ? `${locale[0]}-${locale[1].toUpperCase()}` : navigator.language;

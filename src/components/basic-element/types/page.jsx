@@ -1,6 +1,6 @@
 var React = require('react');
 var Spec = require('../../../lib/spec');
-var assign = require('react/lib/Object.assign');
+var assign = require('object-assign');
 
 var spec = new Spec('page', {
   backgroundColor: {

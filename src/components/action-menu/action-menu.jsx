@@ -1,6 +1,6 @@
 var React = require('react');
 var classNames = require('classnames');
-var assign = require('react/lib/Object.assign');
+var assign = require('object-assign');
 var Link = require('../link/link.jsx');
 
 var Menu = React.createClass({

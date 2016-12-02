@@ -1,6 +1,6 @@
 var xhr = require('xhr');
 var defaults = require('lodash.defaults');
-var assign = require('react/lib/Object.assign');
+var assign = require('object-assign');
 
 var config = require('../config');
 var dispatcher = require('./dispatcher');

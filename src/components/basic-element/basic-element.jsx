@@ -11,7 +11,7 @@ var Spec = require('../../lib/spec');
 var touchhandler = require("../../lib/touchhandler");
 var dispatcher = require('../../lib/dispatcher');
 //Required for Object.assign support in Android
-require("babel/polyfill");
+require("babel-polyfill");
 
 var PAGE_WIDTH = 320;
 var PAGE_HEIGHT = 440;

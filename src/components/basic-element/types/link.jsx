@@ -1,5 +1,5 @@
 var React = require('react');
-var assign = require('react/lib/Object.assign');
+var assign = require('object-assign');
 var {getContrastingColor, darken} = require('../../../lib/color');
 var Spec = require('../../../lib/spec');
 var dispatcher = require('../../../lib/dispatcher');

@@ -1,6 +1,6 @@
 var React = require('react');
 var BasicElement = require('../../components/basic-element/basic-element.jsx');
-var assign = require('react/lib/Object.assign');
+var assign = require('object-assign');
 
 var ElementGroup = React.createClass({
   getDefaultProps: function () {
