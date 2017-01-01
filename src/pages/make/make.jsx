@@ -135,7 +135,7 @@ var Make = React.createClass({
               this.refs.projects.load();
             });
           } else if (event.label === 'Share') {
-            platform.shareProject(this.state.user.id, e.projectID);
+            platform.shareProject(this.state.user.id, e.projectID, e.author.username, e.title);
           } else if (event.label === 'Project Settings') {
             window.Platform.setView(`/users/${this.state.user.id}/projects/${e.projectID}/settings`);
           }
