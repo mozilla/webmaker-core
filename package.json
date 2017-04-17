@@ -59,7 +59,7 @@
     "rimraf": "^2.3.2",
     "should": "^8.0.2",
     "tmp": "^0.0.28",
-    "watch": "^0.16.0",
+    "watch": "^0.17.0",
     "webpack": "^1.7.3",
     "yaml-intl-xml-json-converter": "0.0.7"
   },
